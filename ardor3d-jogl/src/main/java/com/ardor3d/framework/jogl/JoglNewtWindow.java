@@ -67,7 +67,8 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
         _drawerGLRunnable = new JoglDrawerRunnable(canvasRenderer);
         _settings = settings;
         _canvasRenderer = canvasRenderer;
-        setAutoSwapBufferMode(false);
+        _canvasRenderer._doSwap = true;// true - do swap in renderer.
+        setAutoSwapBufferMode(false);// false - doesn't swap automatically in JOGL itself
     }
 
     /**
@@ -141,6 +142,11 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
         _newtWindow.setVisible(visible);
     }
 
+    /**
+     * Enables or disables automatic buffer swapping for this JoglNewtWindow. By default this property is set to false
+     * 
+     * @param autoSwapBufferModeEnabled
+     */
     public void setAutoSwapBufferMode(final boolean autoSwapBufferModeEnabled) {
         _newtWindow.setAutoSwapBufferMode(autoSwapBufferModeEnabled);
     }
@@ -188,7 +194,7 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
             _newtWindow.invoke(true, new GLRunnable() {
                 @Override
                 public boolean run(final GLAutoDrawable glAutoDrawable) {
-                    _canvasRenderer.init(_settings, true);// true - do swap in renderer.
+                    _canvasRenderer.init(_settings, _canvasRenderer._doSwap);
                     return true;
                 }
             });

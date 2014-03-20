@@ -26,9 +26,6 @@ import com.ardor3d.framework.DisplaySettings;
  * Ardor3D JOGL AWT heavyweight canvas, AWT component for the OpenGL rendering of Ardor3D with JOGL that supports the
  * AWT input system directly and its abstraction in Ardor3D (com.ardor3d.input.awt)
  * 
- * FIXME there is still a deadlock when using several instances of this class in the same container, see JOGL bug 572
- * Rather use JoglNewtAwtCanvas in this case.
- * 
  */
 public class JoglAwtCanvas extends GLCanvas implements Canvas {
 
