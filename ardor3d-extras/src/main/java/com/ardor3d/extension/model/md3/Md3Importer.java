@@ -106,16 +106,18 @@ public class Md3Importer {
             }
 
             // Parse out tags
-            final Md3Tag[] tags = new Md3Tag[header._numTags];
+            final Md3Tag[][] tags = new Md3Tag[header._numFrames][header._numTags];
             bis.seek(header._offsetTag);
             final Vector3 origin = new Vector3();
             final Matrix3 axis = new Matrix3();
-            for (int i = 0; i < header._numTags; i++) {
-                final String name = bis.readString(64);
-                origin.set(bis.readFloat(), bis.readFloat(), bis.readFloat());
-                axis.set(bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat(),
-                        bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat());
-                tags[i] = new Md3Tag(name, origin, axis);
+            for (int i = 0; i < header._numFrames; i++) {
+                for (int j = 0; j < header._numTags; j++) {
+                    final String name = bis.readString(64).trim();
+                    origin.set(bis.readFloat(), bis.readFloat(), bis.readFloat());
+                    axis.set(bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat(),
+                            bis.readFloat(), bis.readFloat(), bis.readFloat(), bis.readFloat());
+                    tags[i][j] = new Md3Tag(name, origin, axis);
+                }
             }
 
             // Parse out surfaces
