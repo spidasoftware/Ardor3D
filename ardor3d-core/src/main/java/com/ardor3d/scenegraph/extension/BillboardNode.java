@@ -205,6 +205,7 @@ public class BillboardNode extends Node {
             _left.setX(_left.getX() * invLength);
             _left.setY(0.0);
             _left.setZ(_left.getZ() * invLength);
+            _left.normalizeLocal();
 
             // compute the local orientation matrix for the billboard
             _orient.setValue(0, 0, _left.getZ());
@@ -220,13 +221,14 @@ public class BillboardNode extends Node {
             _left.setX(_left.getX() * invLength);
             _left.setY(_left.getY() * invLength);
             _left.setZ(0.0);
+            _left.normalizeLocal();
 
             // compute the local orientation matrix for the billboard
             _orient.setValue(0, 0, _left.getY());
             _orient.setValue(0, 1, _left.getX());
             _orient.setValue(0, 2, 0);
-            _orient.setValue(1, 0, -_left.getY());
-            _orient.setValue(1, 1, _left.getX());
+            _orient.setValue(1, 0, -_left.getX());
+            _orient.setValue(1, 1, _left.getY());
             _orient.setValue(1, 2, 0);
             _orient.setValue(2, 0, 0);
             _orient.setValue(2, 1, 0);
