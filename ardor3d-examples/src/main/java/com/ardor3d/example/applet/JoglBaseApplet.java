@@ -284,7 +284,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
         // Set the location of our example resources.
         try {
             final SimpleResourceLocator srl = new SimpleResourceLocator(ResourceLocatorTool.getClassPathResource(
-                    LwjglBaseApplet.class, "com/ardor3d/example/media/"));
+                    JoglBaseApplet.class, "com/ardor3d/example/media/"));
             ResourceLocatorTool.addResourceLocator(ResourceLocatorTool.TYPE_TEXTURE, srl);
         } catch (final URISyntaxException ex) {
             ex.printStackTrace();

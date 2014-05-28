@@ -30,7 +30,7 @@ import com.ardor3d.util.resource.ResourceLocatorTool;
  * <PRE>
  * &lt;CODE&gt;
  * FREQ=60
- * RENDERER=LWJGL
+ * RENDERER=JOGL
  * WIDTH=1280
  * HEIGHT=1024
  * DEPTH=32
@@ -64,7 +64,7 @@ public class PropertiesGameSettings {
     /**
      * The default renderer flag, used if there is a problem with the properties file.
      */
-    static String DEFAULT_RENDERER = "LWJGL";
+    static String DEFAULT_RENDERER = "JOGL";
 
     static boolean DEFAULT_VERTICAL_SYNC = true;
     static int DEFAULT_DEPTH_BITS = 8;

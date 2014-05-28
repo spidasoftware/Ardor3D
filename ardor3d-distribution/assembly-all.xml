@@ -19,7 +19,6 @@
 				<include>com.ardor3d:ardor3d-effects</include>
 				<include>com.ardor3d:ardor3d-extras</include>
 				<include>com.ardor3d:ardor3d-jogl</include>
-				<include>com.ardor3d:ardor3d-lwjgl</include>
 				<include>com.ardor3d:ardor3d-math</include>
 				<include>com.ardor3d:ardor3d-savable</include>
 				<include>com.ardor3d:ardor3d-swt</include>
@@ -32,7 +31,6 @@
 				<dependencySets>
 					<dependencySet>
 						<excludes>
-							<exclude>*:lwjgl*:*:natives-*</exclude>
 							<exclude>*:jinput*:*:natives-*</exclude>
 						</excludes>
 					</dependencySet>

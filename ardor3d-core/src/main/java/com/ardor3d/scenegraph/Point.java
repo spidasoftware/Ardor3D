@@ -40,7 +40,6 @@ public class Point extends Mesh {
     /**
      * Distance Attenuation fields.
      */
-    // XXX: LWJGL requires 4 floats, but only 3 coefficients are mentioned in the specification?
     // JOGL works fine with 3.
     private final FloatBuffer _attenuationCoefficients = BufferUtils.createFloatBuffer(new float[] { 0.0f, 0f,
             0.000004f, 0f });

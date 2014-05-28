@@ -472,7 +472,7 @@ public interface Renderer {
 
     /**
      * This is a workaround until we make shared Record classes, or open up lower level opengl calls abstracted from
-     * lwjgl/jogl.
+     * jogl.
      * 
      * @param lineWidth
      * @param stippleFactor
@@ -483,7 +483,7 @@ public interface Renderer {
 
     /**
      * This is a workaround until we make shared Record classes, or open up lower level opengl calls abstracted from
-     * lwjgl/jogl.
+     * jogl.
      * 
      * @param pointSize
      * @param antialiased

@@ -109,16 +109,6 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ardor3d-lwjgl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- because we use org.lwjgl.LWJGLException in LwjglSwtExample -->
-        <dependency>
-            <groupId>org.lwjgl.lwjgl</groupId>
-            <artifactId>lwjgl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>ardor3d-awt</artifactId>
             <version>${project.version}</version>
         </dependency>

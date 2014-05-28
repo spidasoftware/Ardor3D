@@ -20,8 +20,6 @@ import com.ardor3d.framework.NativeCanvas;
 import com.ardor3d.framework.Scene;
 import com.ardor3d.framework.jogl.JoglCanvas;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
-import com.ardor3d.framework.lwjgl.LwjglCanvas;
-import com.ardor3d.framework.lwjgl.LwjglCanvasRenderer;
 import com.ardor3d.image.Texture;
 import com.ardor3d.image.TextureStoreFormat;
 import com.ardor3d.image.util.awt.AWTImageLoader;
@@ -49,7 +47,6 @@ import com.ardor3d.util.resource.SimpleResourceLocator;
  * <p>
  * There are several system params you can use to modify the test:
  * <ul>
- * <li>-Djogl=true -- use JoglRenderer and canvas instead of Lwjgl.</li>
  * <li>-Dvsync=true -- ask the canvas to use vertical sync to lock to the monitor refresh rate.</li>
  * <li>-DnoBallCollide=true -- do not do ball-to-ball collision checks.</li>
  * <li>-Dballs=# -- change the number of balls to some integer value. (default is 16)</li>
@@ -138,15 +135,11 @@ public class BubbleMarkExample implements Scene {
      * @return the canvas.
      */
     private NativeCanvas initCanvas() {
-        if ("true".equalsIgnoreCase(System.getProperty("jogl"))) {
-            final JoglCanvasRenderer canvasRenderer = new JoglCanvasRenderer(this);
-            final DisplaySettings settings = new DisplaySettings(width, height, 24, 0, 0, 8, 0, 0, false, false);
-            return new JoglCanvas(canvasRenderer, settings);
-        } else {
-            final LwjglCanvasRenderer canvasRenderer = new LwjglCanvasRenderer(this);
-            final DisplaySettings settings = new DisplaySettings(width, height, 24, 0, 0, 8, 0, 0, false, false);
-            return new LwjglCanvas(settings, canvasRenderer);
-        }
+        // if ("true".equalsIgnoreCase(System.getProperty("jogl"))) {
+        final JoglCanvasRenderer canvasRenderer = new JoglCanvasRenderer(this);
+        final DisplaySettings settings = new DisplaySettings(width, height, 24, 0, 0, 8, 0, 0, false, false);
+        return new JoglCanvas(canvasRenderer, settings);
+        // }
     }
 
     /**

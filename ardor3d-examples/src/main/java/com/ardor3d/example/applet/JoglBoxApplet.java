@@ -22,9 +22,9 @@ import com.ardor3d.scenegraph.shape.Box;
 import com.ardor3d.util.TextureManager;
 
 /**
- * The classic "Box Example" as an Ardor3D/LWJGL applet.
+ * The classic "Box Example" as an Ardor3D/JOGL applet.
  */
-public class LwjglBoxApplet extends LwjglBaseApplet {
+public class JoglBoxApplet extends JoglBaseApplet {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,7 @@ public class LwjglBoxApplet extends LwjglBaseApplet {
             private final Matrix3 _rotate = new Matrix3();
             private double _angle = 0;
 
+            @Override
             public void update(final double time, final Spatial caller) {
                 // update our rotation
                 _angle = _angle + (_timer.getTimePerFrame() * 25);
