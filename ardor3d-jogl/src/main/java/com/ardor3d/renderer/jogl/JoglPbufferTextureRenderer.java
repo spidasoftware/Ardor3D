@@ -331,8 +331,8 @@ public class JoglPbufferTextureRenderer extends AbstractPbufferTextureRenderer {
         try {
             activate();
 
-            _width = _offscreenDrawable.getWidth();
-            _height = _offscreenDrawable.getHeight();
+            _width = _offscreenDrawable.getSurfaceWidth();
+            _height = _offscreenDrawable.getSurfaceHeight();
 
             deactivate();
         } catch (final Exception e) {
