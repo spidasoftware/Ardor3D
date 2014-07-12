@@ -69,11 +69,11 @@ public class ResourceLocatorTool {
                     return new URLResourceSource(u);
                 }
             } catch (final Exception e) {
-                logger.logp(Level.WARNING, ResourceLocatorTool.class.getName(), "locateResource(String, String)", e
-                        .getMessage(), e);
+                logger.logp(Level.WARNING, ResourceLocatorTool.class.getName(), "locateResource(String, String)",
+                        e.getMessage(), e);
             }
 
-            logger.warning("Unable to locate: " + resourceName);
+            logger.warning("Unable to locate: " + resourceName + " of type " + resourceType);
             return null;
         }
     }
