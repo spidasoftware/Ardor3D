@@ -357,25 +357,30 @@ public class ObjExporter {
             final TextureState textureState = (TextureState) mesh.getLocalRenderState(StateType.Texture);
             if (textureState.isEnabled() && textureState.getTexture() != null) {
                 final TextureKey tKey = textureState.getTexture().getTextureKey();
-                final String tmpTextureName = tKey.getSource().getName();
-                final int lastIndexOfUnixPathSeparator = tmpTextureName.lastIndexOf('/');
-                final int lastIndexOfWindowsPathSeparator = tmpTextureName.lastIndexOf('\\');
-                if (lastIndexOfUnixPathSeparator != -1) {
-                    textureName = tmpTextureName.substring(lastIndexOfUnixPathSeparator + 1);
-                } else {
-                    if (lastIndexOfWindowsPathSeparator != -1) {
-                        textureName = tmpTextureName.substring(lastIndexOfWindowsPathSeparator + 1);
+                if (tKey != null && tKey.getSource() != null) {
+                    final String tmpTextureName = tKey.getSource().getName();
+                    final int lastIndexOfUnixPathSeparator = tmpTextureName.lastIndexOf('/');
+                    final int lastIndexOfWindowsPathSeparator = tmpTextureName.lastIndexOf('\\');
+                    if (lastIndexOfUnixPathSeparator != -1) {
+                        textureName = tmpTextureName.substring(lastIndexOfUnixPathSeparator + 1);
                     } else {
-                        textureName = tmpTextureName;
+                        if (lastIndexOfWindowsPathSeparator != -1) {
+                            textureName = tmpTextureName.substring(lastIndexOfWindowsPathSeparator + 1);
+                        } else {
+                            textureName = tmpTextureName;
+                        }
                     }
-                }
-                if (tKey.isFlipped()) {
-                    ObjExporter.logger.warning("The texture " + tmpTextureName
-                            + " will have to be flipped manually when loading this OBJ file");
+                    if (tKey.isFlipped()) {
+                        ObjExporter.logger.warning("The texture " + tmpTextureName
+                                + " will have to be flipped manually when loading this OBJ file");
+                    } else {
+                        ObjExporter.logger.warning("The texture " + tmpTextureName
+                                + " might need to be flipped manually when loading this OBJ file");
+                    }
                 } else {
-                    ObjExporter.logger.warning("The texture " + tmpTextureName
-                            + " might need to be flipped manually when loading this OBJ file");
+                    textureName = null;
                 }
+
             } else {
                 textureName = null;
             }
