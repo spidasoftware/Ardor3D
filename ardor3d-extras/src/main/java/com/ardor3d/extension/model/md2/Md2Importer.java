@@ -10,7 +10,6 @@
 
 package com.ardor3d.extension.model.md2;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -352,28 +351,19 @@ public class Md2Importer {
     }
 
     private Texture loadTexture(final String name) {
-        Texture tex = null;
-        try {
-            if (_textureLocator == null) {
-                tex = TextureManager.load(name, getMinificationFilter(),
-                        isUseCompression() ? TextureStoreFormat.GuessCompressedFormat
-                                : TextureStoreFormat.GuessNoCompressedFormat, isFlipTextureVertically());
-            } else {
-                final ResourceSource source = _textureLocator.locateResource(name);
-                if (source != null) {
-                    tex = TextureManager.load(source, getMinificationFilter(),
-                            isUseCompression() ? TextureStoreFormat.GuessCompressedFormat
-                                    : TextureStoreFormat.GuessNoCompressedFormat, isFlipTextureVertically());
-                }
-            }
-        } catch (final Throwable t) {
-            if (t instanceof IOException
-                    && ((IOException) t).getMessage().equalsIgnoreCase("No suitable reader for given stream")) {
-                // silently ignores this case, the bug 982 of JOGL hasn't been fixed yet
-                return null;
-            } else {
-                throw new RuntimeException("Unable to load the texture from name: " + name, t);
-            }
+        final ResourceSource source;
+        if (_textureLocator == null) {
+            source = ResourceLocatorTool.locateResource(ResourceLocatorTool.TYPE_TEXTURE, name);
+        } else {
+            source = _textureLocator.locateResource(name);
+        }
+        final Texture tex;
+        if (source == null) {
+            tex = null;
+        } else {
+            tex = TextureManager.load(source, getMinificationFilter(),
+                    isUseCompression() ? TextureStoreFormat.GuessCompressedFormat
+                            : TextureStoreFormat.GuessNoCompressedFormat, isFlipTextureVertically());
         }
         return tex;
     }
