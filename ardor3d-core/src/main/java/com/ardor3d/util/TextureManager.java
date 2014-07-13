@@ -50,6 +50,7 @@ final public class TextureManager {
 
     static {
         ContextManager.addContextCleanListener(new ContextCleanListener() {
+            @Override
             public void cleanForContext(final RenderContext renderContext) {
                 TextureManager.cleanAllTextures(null, renderContext, null);
             }
@@ -438,9 +439,12 @@ final public class TextureManager {
 
     private static void handleTextureDelete(final Renderer deleter, final Multimap<Object, Integer> idMap,
             final Map<Object, Future<Void>> futureStore) {
+        if (deleter == null) {
+            return;
+        }
         Object currentGLRef = null;
         // Grab the current context, if any.
-        if (deleter != null && ContextManager.getCurrentContext() != null) {
+        if (ContextManager.getCurrentContext() != null) {
             currentGLRef = ContextManager.getCurrentContext().getGlContextRep();
         }
         // For each affected context...
@@ -453,6 +457,7 @@ final public class TextureManager {
             else {
                 final Future<Void> future = GameTaskQueueManager.getManager(ContextManager.getContextForRef(glref))
                         .render(new RendererCallable<Void>() {
+                            @Override
                             public Void call() throws Exception {
                                 getRenderer().deleteTextureIds(idMap.get(glref));
                                 return null;
