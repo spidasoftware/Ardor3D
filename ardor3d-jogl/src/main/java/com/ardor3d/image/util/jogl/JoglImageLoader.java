@@ -52,7 +52,8 @@ public class JoglImageLoader implements ImageLoader {
     private static final String[] _supportedFormats = new String[] { "." + TextureIO.DDS.toUpperCase(),
             "." + TextureIO.GIF.toUpperCase(), "." + TextureIO.JPG.toUpperCase(), "." + TextureIO.PAM.toUpperCase(),
             "." + TextureIO.PNG.toUpperCase(), "." + TextureIO.PPM.toUpperCase(), "." + TextureIO.SGI.toUpperCase(),
-            "." + TextureIO.TGA.toUpperCase(), "." + TextureIO.TIFF.toUpperCase() };
+            "." + TextureIO.SGI_RGB.toUpperCase(), "." + TextureIO.TGA.toUpperCase(),
+            "." + TextureIO.TIFF.toUpperCase() };
 
     public static String[] getSupportedFormats() {
         return _supportedFormats;
@@ -102,11 +103,104 @@ public class JoglImageLoader implements ImageLoader {
 
     @Override
     public Image load(final InputStream is, final boolean flipped) throws IOException {
-        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, null);
+        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, getFileSuffix(is));
         if (textureData == null) {
             return null;
         }
         return makeArdor3dImage(textureData, flipped);
+    }
+
+    /**
+     * Returns the hypothetical file suffix by looking at the first bytes
+     * 
+     * @param is
+     *            data source
+     * @return file suffix of the data source
+     * @throws IOException
+     */
+    private String getFileSuffix(final InputStream is) throws IOException {
+        String fileSuffix = null;
+        if (is.markSupported()) {
+            is.mark(16);
+            final byte[] b = new byte[8];
+            is.read(b);
+            if (b[0] == 0xff && b[1] == 0xd8) {
+                fileSuffix = TextureIO.JPG;
+            } else {
+                /**
+                 * Apache Commons Imaging and JOGL (jogamp.opengl.util.png.PngHelperInternal.getPngIdSignature()) don't
+                 * use the same signature for PNG files
+                 */
+                if ((b[0] == 0x89 || b[0] == -119) && b[1] == 'P' && b[2] == 'N' && b[3] == 'G' && b[4] == '\r'
+                        && b[5] == '\n' && b[6] == 0x1A && b[7] == '\n') {
+                    // fileSuffix = TextureIO.PNG;//FIXME it doesn't support .fnt files yet
+                } else {
+                    // icns
+                    if (b[0] == 0x69 && b[1] == 0x63 && b[2] == 0x6e && b[3] == 0x73) {
+                        // Apple Icon Image
+                        fileSuffix = "icns";
+                    } else {
+                        // GIF89a
+                        if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46 && b[3] == 0x38 && b[4] == 0x39
+                                && b[5] == 0x61) {
+                            fileSuffix = TextureIO.GIF;
+                        } else {
+                            // BM
+                            if (b[0] == 0x42 && b[1] == 0x4d) {
+                                fileSuffix = "bmp";
+                            } else {
+                                if (b[0] == 0x3A && b[1] == 0xDE && b[2] == 0x68 && b[3] == 0xB1) {
+                                    fileSuffix = "dcx";
+                                } else {
+                                    if (b[0] == 0x0A && b[1] == 0x05 && b[2] == 0x01 && b[3] == 0x08) {
+                                        fileSuffix = "pcx";
+                                    } else {
+                                        if (b[0] == 0x50 && (b[1] == 0x33 || b[1] == 0x36)) {
+                                            fileSuffix = TextureIO.PPM;
+                                        } else {
+                                            if (b[0] == 0x38 && b[1] == 0x42 && b[2] == 0x50 && b[3] == 0x53
+                                                    && b[4] == 0x00 && b[5] == 0x01 && b[6] == 0x00 && b[7] == 0x00
+                                                    && b[8] == 0x00 && b[9] == 0x00) {
+                                                // Adobe PhotoShop
+                                                fileSuffix = "psd";
+                                            } else {
+                                                if (b[0] == 0x49 && b[1] == 0x49 && b[2] == 0x2A && b[3] == 0x00) {
+                                                    fileSuffix = TextureIO.TIFF;
+                                                } else {
+                                                    if (b[0] == 0x01 && b[1] == 0xDA && b[2] == 0x01 && b[3] == 0x01
+                                                            && b[4] == 0x00 && b[5] == 0x03) {
+                                                        fileSuffix = TextureIO.SGI_RGB;
+                                                    } else {
+                                                        if (b[0] == 0x20 && b[1] == 0x53 && b[2] == 0x44
+                                                                && b[3] == 0x44) {
+                                                            fileSuffix = TextureIO.DDS;
+                                                        } else {
+                                                            if (b[0] == 0x50 && b[1] == 0x37) {
+                                                                fileSuffix = TextureIO.PAM;
+                                                            } else {
+                                                                if (b[0] == 0x50 && (b[1] == 0x32 || b[1] == 0x35)) {
+                                                                    fileSuffix = "pgm";
+                                                                } else {
+                                                                    if (b[0] == 0x50 && (b[1] == 0x31 || b[1] == 0x34)) {
+                                                                        fileSuffix = "pbm";
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            is.reset();
+        }
+        return fileSuffix;
     }
 
     private TYPE getBufferDataType(final Buffer buffer) {
