@@ -298,7 +298,8 @@ public class JoglPbufferTextureRenderer extends AbstractPbufferTextureRenderer {
             caps.setDoubleBuffered(false);
             caps.setOnscreen(false);
             caps.setPBuffer(true);
-            _offscreenDrawable = fac.createOffscreenAutoDrawable(null, caps, null, _width, _height, _parentContext);
+            _offscreenDrawable = fac.createOffscreenAutoDrawable(null, caps, null, _width, _height);
+            _offscreenDrawable.setSharedContext(_parentContext);
             _context = _offscreenDrawable.getContext();
 
             _context.makeCurrent();

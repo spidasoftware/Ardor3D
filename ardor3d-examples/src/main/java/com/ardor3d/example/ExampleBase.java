@@ -29,8 +29,8 @@ import com.ardor3d.framework.Updater;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
 import com.ardor3d.framework.jogl.JoglNewtWindow;
 import com.ardor3d.image.TextureStoreFormat;
-import com.ardor3d.image.util.awt.AWTImageLoader;
 import com.ardor3d.image.util.awt.ScreenShotImageExporter;
+import com.ardor3d.image.util.jogl.JoglImageLoader;
 import com.ardor3d.input.GrabbedState;
 import com.ardor3d.input.Key;
 import com.ardor3d.input.MouseButton;
@@ -132,6 +132,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
     protected static int _minAlphaBits = -1;
     protected static int _minStencilBits = -1;
 
+    @Override
     public void run() {
         try {
             _frameHandler.init();
@@ -160,6 +161,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
         _exit = true;
     }
 
+    @Override
     @MainThread
     public void init() {
         final ContextCapabilities caps = ContextManager.getCurrentContext().getCapabilities();
@@ -170,7 +172,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
 
         registerInputTriggers();
 
-        AWTImageLoader.registerLoader();
+        JoglImageLoader.registerLoader();
 
         try {
             SimpleResourceLocator srl = new SimpleResourceLocator(ResourceLocatorTool.getClassPathResource(
@@ -218,6 +220,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
 
     protected abstract void initExample();
 
+    @Override
     @MainThread
     public void update(final ReadOnlyTimer timer) {
         if (_canvas.isClosing()) {
@@ -253,6 +256,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
         // does nothing
     }
 
+    @Override
     @MainThread
     public boolean renderUnto(final Renderer renderer) {
         // Execute renderQueue item
@@ -300,6 +304,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
         }
     }
 
+    @Override
     public PickResults doPick(final Ray3 pickRay) {
         final PrimitivePickResults pickResults = new PrimitivePickResults();
         pickResults.setCheckDistance(true);
@@ -399,6 +404,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
                 dialogRef.set(new PropertiesDialog(settings, dialogImageRef, mainThreadTasks));
             } else {
                 EventQueue.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         dialogRef.set(new PropertiesDialog(settings, dialogImageRef, mainThreadTasks));
                     }
@@ -443,6 +449,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonClickedCondition(MouseButton.RIGHT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
 
                         final Vector2 pos = Vector2.fetchTempInstance().set(
@@ -456,12 +463,14 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
                 }, "pickTrigger"));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ESCAPE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 exit();
             }
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.L), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _lightState.setEnabled(!_lightState.isEnabled());
                 // Either an update or a markDirty is needed here since we did not touch the affected spatial directly.
@@ -470,12 +479,14 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.F4), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _showDepth = !_showDepth;
             }
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.T), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _wireframeState.setEnabled(!_wireframeState.isEnabled());
                 // Either an update or a markDirty is needed here since we did not touch the affected spatial directly.
@@ -484,24 +495,28 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.B), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _showBounds = !_showBounds;
             }
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.C), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 System.out.println("Camera: " + _canvas.getCanvasRenderer().getCamera());
             }
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.N), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _showNormals = !_showNormals;
             }
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.F1), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 _doShot = true;
             }
@@ -511,6 +526,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
                 MouseButton.LEFT), new MouseButtonClickedCondition(MouseButton.RIGHT));
 
         _logicalLayer.registerTrigger(new InputTrigger(clickLeftOrRight, new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 System.err.println("clicked: " + inputStates.getCurrent().getMouseState().getClickCounts());
             }
@@ -518,6 +534,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonPressedCondition(MouseButton.LEFT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                         if (_mouseManager.isSetGrabbedSupported()) {
                             _mouseManager.setGrabbed(GrabbedState.GRABBED);
@@ -526,6 +543,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
                 }));
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonReleasedCondition(MouseButton.LEFT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                         if (_mouseManager.isSetGrabbedSupported()) {
                             _mouseManager.setGrabbed(GrabbedState.NOT_GRABBED);
@@ -534,6 +552,7 @@ public abstract class ExampleBase implements Runnable, Updater, Scene {
                 }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new AnyKeyCondition(), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 System.out.println("Key character pressed: "
                         + inputState.getCurrent().getKeyboardState().getKeyEvent().getKeyChar());
