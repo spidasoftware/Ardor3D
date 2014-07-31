@@ -103,11 +103,26 @@ public class JoglImageLoader implements ImageLoader {
 
     @Override
     public Image load(final InputStream is, final boolean flipped) throws IOException {
-        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, getFileSuffix(is));
+        final String fileSuffix = getFileSuffix(is);
+        /**
+         * JOGL build-in image loading seems to load all images with a different vertical orientation than AWT
+         */
+        final boolean flipRevertEnabled;
+        if (fileSuffix != null
+                && (fileSuffix.equals(TextureIO.DDS) || fileSuffix.equals(TextureIO.JPG)
+                        || fileSuffix.equals(TextureIO.PAM) || fileSuffix.equals(TextureIO.PNG)
+                        || fileSuffix.equals(TextureIO.PPM) || fileSuffix.equals(TextureIO.SGI)
+                        || fileSuffix.equals(TextureIO.SGI_RGB) || fileSuffix.equals(TextureIO.TGA) || fileSuffix
+                            .equals(TextureIO.TIFF))) {
+            flipRevertEnabled = true;
+        } else {
+            flipRevertEnabled = false;
+        }
+        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, fileSuffix);
         if (textureData == null) {
             return null;
         }
-        return makeArdor3dImage(textureData, flipped);
+        return makeArdor3dImage(textureData, flipRevertEnabled ? !flipped : flipped);
     }
 
     /**
@@ -124,7 +139,8 @@ public class JoglImageLoader implements ImageLoader {
             is.mark(16);
             final byte[] b = new byte[8];
             is.read(b);
-            if (b[0] == 0xff && b[1] == 0xd8) {
+            // FIXME test JFIF = 4A 46 49 46 and EXIF = 45 78 69 66 ???
+            if ((b[0] == 0xff && b[1] == 0xd8) || (b[0] == -1 && b[1] == -40)) {
                 fileSuffix = TextureIO.JPG;
             } else {
                 /**
@@ -133,16 +149,16 @@ public class JoglImageLoader implements ImageLoader {
                  */
                 if ((b[0] == 0x89 || b[0] == -119) && b[1] == 'P' && b[2] == 'N' && b[3] == 'G' && b[4] == '\r'
                         && b[5] == '\n' && b[6] == 0x1A && b[7] == '\n') {
-                    // fileSuffix = TextureIO.PNG;//FIXME it doesn't support .fnt files yet
+                    fileSuffix = TextureIO.PNG;
                 } else {
                     // icns
                     if (b[0] == 0x69 && b[1] == 0x63 && b[2] == 0x6e && b[3] == 0x73) {
                         // Apple Icon Image
                         fileSuffix = "icns";
                     } else {
-                        // GIF89a
-                        if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46 && b[3] == 0x38 && b[4] == 0x39
-                                && b[5] == 0x61) {
+                        // GIF87a or GIF89a
+                        if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46 && b[3] == 0x38
+                                && (b[4] == 0x37 || b[4] == 0x39) && b[5] == 0x61) {
                             fileSuffix = TextureIO.GIF;
                         } else {
                             // BM
@@ -183,6 +199,10 @@ public class JoglImageLoader implements ImageLoader {
                                                                 } else {
                                                                     if (b[0] == 0x50 && (b[1] == 0x31 || b[1] == 0x34)) {
                                                                         fileSuffix = "pbm";
+                                                                    } else {
+                                                                        // FIXME crappy workaround. The TGA image format
+                                                                        // has no magic number
+                                                                        // fileSuffix = TextureIO.TGA;
                                                                     }
                                                                 }
                                                             }
