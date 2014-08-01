@@ -20,6 +20,8 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.ardor3d.framework.jogl.CapsUtil;
 import com.ardor3d.image.Image;
@@ -29,6 +31,7 @@ import com.ardor3d.image.util.ImageLoaderUtil;
 import com.ardor3d.scene.state.jogl.util.JoglTextureUtil;
 import com.ardor3d.util.geom.BufferUtils;
 import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.os.Platform;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
 
@@ -49,11 +52,21 @@ public class JoglImageLoader implements ImageLoader {
         }
     };
 
-    private static final String[] _supportedFormats = new String[] { "." + TextureIO.DDS.toUpperCase(),
-            "." + TextureIO.GIF.toUpperCase(), "." + TextureIO.JPG.toUpperCase(), "." + TextureIO.PAM.toUpperCase(),
-            "." + TextureIO.PNG.toUpperCase(), "." + TextureIO.PPM.toUpperCase(), "." + TextureIO.SGI.toUpperCase(),
-            "." + TextureIO.SGI_RGB.toUpperCase(), "." + TextureIO.TGA.toUpperCase(),
-            "." + TextureIO.TIFF.toUpperCase() };
+    private static final String[] _supportedFormats = computeSupportedFormats();
+
+    private static final String[] computeSupportedFormats() {
+        final List<String> supportedFormatsList = new ArrayList<String>();
+        if (Platform.AWT_AVAILABLE) {
+            supportedFormatsList.add("." + TextureIO.GIF.toUpperCase());
+        }
+        supportedFormatsList.add("." + TextureIO.DDS.toUpperCase());
+        supportedFormatsList.add("." + TextureIO.JPG.toUpperCase());
+        supportedFormatsList.add("." + TextureIO.PNG.toUpperCase());
+        supportedFormatsList.add("." + TextureIO.SGI.toUpperCase());
+        supportedFormatsList.add("." + TextureIO.SGI_RGB.toUpperCase());
+        supportedFormatsList.add("." + TextureIO.TGA.toUpperCase());
+        return supportedFormatsList.toArray(new String[supportedFormatsList.size()]);
+    }
 
     public static String[] getSupportedFormats() {
         return _supportedFormats;
@@ -104,19 +117,18 @@ public class JoglImageLoader implements ImageLoader {
     @Override
     public Image load(final InputStream is, final boolean flipped) throws IOException {
         final String fileSuffix = getFileSuffix(is);
-        /**
-         * JOGL build-in image loading seems to load all images with a different vertical orientation than AWT
-         */
         final boolean flipRevertEnabled;
-        if (fileSuffix != null
-                && (fileSuffix.equals(TextureIO.DDS) || fileSuffix.equals(TextureIO.JPG)
-                        || fileSuffix.equals(TextureIO.PAM) || fileSuffix.equals(TextureIO.PNG)
-                        || fileSuffix.equals(TextureIO.PPM) || fileSuffix.equals(TextureIO.SGI)
-                        || fileSuffix.equals(TextureIO.SGI_RGB) || fileSuffix.equals(TextureIO.TGA) || fileSuffix
-                            .equals(TextureIO.TIFF))) {
-            flipRevertEnabled = true;
-        } else {
+        // the GIF format is supported by the AWT SPI, there is no need to flip it once more
+        if (fileSuffix == null || fileSuffix.equals(TextureIO.GIF)) {
             flipRevertEnabled = false;
+        } else {
+            /**
+             * those formats are internally supported by JOGL build-in image loaders which seem to load all images with
+             * a different vertical orientation than AWT
+             */
+            flipRevertEnabled = fileSuffix.equals(TextureIO.DDS) || fileSuffix.equals(TextureIO.JPG)
+                    || fileSuffix.equals(TextureIO.PNG) || fileSuffix.equals(TextureIO.SGI)
+                    || fileSuffix.equals(TextureIO.SGI_RGB) || fileSuffix.equals(TextureIO.TGA);
         }
         final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, fileSuffix);
         if (textureData == null) {
@@ -310,7 +322,7 @@ public class JoglImageLoader implements ImageLoader {
             final int srcFirstPixelIndex = dest.position() / bytesPerPixel;
             final int srcFirstPixelComponentOffset = dest.position() - (srcFirstPixelIndex * bytesPerPixel);
             final int srcFirstColumnIndex = srcFirstPixelIndex % width;
-            final int scrFirstRowIndex = (srcFirstPixelIndex - srcFirstColumnIndex) / height;
+            final int scrFirstRowIndex = (srcFirstPixelIndex - srcFirstColumnIndex) / width;
             final int dstFirstColumnIndex = srcFirstColumnIndex;
             final int dstFirstRowIndex = (height - 1) - scrFirstRowIndex;
             final int dstFirstPixelIndex = dstFirstRowIndex * width + dstFirstColumnIndex;
