@@ -39,6 +39,7 @@ import com.ardor3d.framework.DisplaySettings;
 import com.ardor3d.framework.FrameHandler;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
 import com.ardor3d.framework.jogl.JoglNewtSwtCanvas;
+import com.ardor3d.image.util.ImageLoaderUtil;
 import com.ardor3d.image.util.jogl.JoglImageLoader;
 import com.ardor3d.input.ControllerWrapper;
 import com.ardor3d.input.GrabbedState;
@@ -59,6 +60,7 @@ import com.ardor3d.renderer.Camera;
 import com.ardor3d.util.Timer;
 import com.ardor3d.util.resource.ResourceLocatorTool;
 import com.ardor3d.util.resource.SimpleResourceLocator;
+import com.ardor3d.util.resource.URLResourceSource;
 
 /**
  * This examples demonstrates how to render OpenGL (via JOGL) in a NEWT SWT canvas. FIXME update the thumbnail and the
@@ -248,10 +250,9 @@ public class JoglNewtSwtExample {
             }
         }));
 
-        final JoglImageLoader joglImageLoader = new JoglImageLoader();
         try {
-            _cursor1 = createMouseCursor(joglImageLoader, "com/ardor3d/example/media/input/wait_cursor.png");
-            _cursor2 = createMouseCursor(joglImageLoader, "com/ardor3d/example/media/input/movedata.gif");
+            _cursor1 = createMouseCursor("com/ardor3d/example/media/input/wait_cursor.png");
+            _cursor2 = createMouseCursor("com/ardor3d/example/media/input/movedata.gif");
         } catch (final IOException ioe) {
             ioe.printStackTrace();
         }
@@ -259,10 +260,11 @@ public class JoglNewtSwtExample {
         _showCursor1.put(canvas1, true);
     }
 
-    private static MouseCursor createMouseCursor(final JoglImageLoader joglImageLoader, final String resourceName)
-            throws IOException {
-        final com.ardor3d.image.Image image = joglImageLoader.load(
-                ResourceLocatorTool.getClassPathResourceAsStream(JoglNewtSwtExample.class, resourceName), false);
+    private static MouseCursor createMouseCursor(final String resourceName) throws IOException {
+        final com.ardor3d.image.Image image = ImageLoaderUtil
+                .loadImage(
+                        new URLResourceSource(ResourceLocatorTool.getClassPathResource(JoglNewtSwtExample.class,
+                                resourceName)), false);
 
         return new MouseCursor("cursor1", image, 0, image.getHeight() - 1);
     }
