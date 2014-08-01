@@ -28,14 +28,17 @@ public class AwtFocusWrapper implements FocusWrapper, FocusListener {
         _component = component;
     }
 
+    @Override
     public void focusGained(final FocusEvent e) {
-    // do nothing
+        // do nothing
     }
 
+    @Override
     public void focusLost(final FocusEvent e) {
         _focusLost = true;
     }
 
+    @Override
     public boolean getAndClearFocusLost() {
         final boolean result = _focusLost;
 
@@ -44,6 +47,7 @@ public class AwtFocusWrapper implements FocusWrapper, FocusListener {
         return result;
     }
 
+    @Override
     public void init() {
         _component.addFocusListener(this);
     }

@@ -61,6 +61,7 @@ public class AwtMouseManager implements MouseManager {
         }
     }
 
+    @Override
     public void setCursor(final MouseCursor cursor) {
         if (cursor == MouseCursor.SYSTEM_DEFAULT) {
             if (_grabbedState == GrabbedState.GRABBED) {
@@ -87,6 +88,7 @@ public class AwtMouseManager implements MouseManager {
         }
     }
 
+    @Override
     public void setPosition(final int x, final int y) {
         if (!isSetPositionSupported()) {
             throw new UnsupportedOperationException();
@@ -98,6 +100,7 @@ public class AwtMouseManager implements MouseManager {
                 setMousePosition(x, y);
             } else {
                 SwingUtilities.invokeAndWait(new Runnable() {
+                    @Override
                     public void run() {
                         setMousePosition(x, y);
                     }
@@ -118,6 +121,7 @@ public class AwtMouseManager implements MouseManager {
         _robot.mouseMove(p.x, p.y);
     }
 
+    @Override
     public void setGrabbed(final GrabbedState grabbedState) {
         if (!isSetGrabbedSupported()) {
             throw new UnsupportedOperationException();
@@ -153,14 +157,17 @@ public class AwtMouseManager implements MouseManager {
         return _transparentCursor;
     }
 
+    @Override
     public boolean isSetPositionSupported() {
         return _robot != null;
     }
 
+    @Override
     public boolean isSetGrabbedSupported() {
         return _robot != null;
     }
 
+    @Override
     public GrabbedState getGrabbed() {
         return _grabbedState;
     }

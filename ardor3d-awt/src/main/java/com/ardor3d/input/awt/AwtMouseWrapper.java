@@ -76,12 +76,14 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         }
     }
 
+    @Override
     public void init() {
         _component.addMouseListener(this);
         _component.addMouseMotionListener(this);
         _component.addMouseWheelListener(this);
     }
 
+    @Override
     public synchronized PeekingIterator<MouseState> getEvents() {
         expireClickEvents();
 
@@ -102,6 +104,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         }
     }
 
+    @Override
     public synchronized void mousePressed(final MouseEvent e) {
         final MouseButton b = getButtonForEvent(e);
         if (_clickArmed.contains(b)) {
@@ -122,6 +125,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         addNewState(e, buttons, null);
     }
 
+    @Override
     public synchronized void mouseReleased(final MouseEvent e) {
         initState(e);
         if (_consumeEvents) {
@@ -145,11 +149,13 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         addNewState(e, buttons, null);
     }
 
+    @Override
     public synchronized void mouseDragged(final MouseEvent e) {
         // forward to mouseMoved.
         mouseMoved(e);
     }
 
+    @Override
     public synchronized void mouseMoved(final MouseEvent e) {
         _clickArmed.clear();
         _clicks.clear();
@@ -206,6 +212,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         }
     }
 
+    @Override
     public void mouseWheelMoved(final MouseWheelEvent e) {
         initState(e);
 
@@ -224,8 +231,9 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
     private void addNewState(final MouseEvent mouseEvent, final EnumMap<MouseButton, ButtonState> enumMap,
             final Multiset<MouseButton> clicks) {
         final MouseState newState = new MouseState(mouseEvent.getX(), getArdor3DY(mouseEvent), getDX(mouseEvent),
-                getDY(mouseEvent), (mouseEvent instanceof MouseWheelEvent ? ((MouseWheelEvent) mouseEvent)
-                        .getWheelRotation() : 0), enumMap, clicks);
+                getDY(mouseEvent),
+                (mouseEvent instanceof MouseWheelEvent ? ((MouseWheelEvent) mouseEvent).getWheelRotation() : 0),
+                enumMap, clicks);
 
         synchronized (AwtMouseWrapper.this) {
             _upcomingEvents.add(newState);
@@ -293,6 +301,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
 
     // -- The following interface methods are not used. --
 
+    @Override
     public synchronized void mouseClicked(final MouseEvent e) {
         // Yes, we could use the click count here, but in the interests of this working the same way as SWT and Native,
         // we
@@ -302,6 +311,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         }
     }
 
+    @Override
     public synchronized void mouseEntered(final MouseEvent e) {
         // ignore this
         if (_consumeEvents) {
@@ -309,6 +319,7 @@ public class AwtMouseWrapper implements MouseWrapper, MouseListener, MouseWheelL
         }
     }
 
+    @Override
     public synchronized void mouseExited(final MouseEvent e) {
         // ignore this
         if (_consumeEvents) {

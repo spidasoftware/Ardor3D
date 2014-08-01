@@ -67,6 +67,7 @@ public class ScreenShotImageExporter implements ScreenExportable {
         _useAlpha = useAlpha;
     }
 
+    @Override
     public void export(final ByteBuffer data, final int width, final int height) {
         final BufferedImage img = new BufferedImage(width, height, _useAlpha ? BufferedImage.TYPE_INT_ARGB
                 : BufferedImage.TYPE_INT_RGB);
@@ -105,6 +106,7 @@ public class ScreenShotImageExporter implements ScreenExportable {
         }
     }
 
+    @Override
     public ImageDataFormat getFormat() {
         if (_useAlpha) {
             return ImageDataFormat.RGBA;

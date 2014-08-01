@@ -46,17 +46,21 @@ public class AwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         _component = Preconditions.checkNotNull(component, "component");
     }
 
+    @Override
     public void init() {
         _component.addKeyListener(this);
         _component.addFocusListener(new FocusListener() {
+            @Override
             public void focusLost(final FocusEvent e) {}
 
+            @Override
             public void focusGained(final FocusEvent e) {
                 _pressedList.clear();
             }
         });
     }
 
+    @Override
     public synchronized PeekingIterator<KeyEvent> getEvents() {
         if (_currentIterator == null || !_currentIterator.hasNext()) {
             _currentIterator = new AwtKeyboardIterator();
@@ -65,6 +69,7 @@ public class AwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         return _currentIterator;
     }
 
+    @Override
     public synchronized void keyTyped(final java.awt.event.KeyEvent e) {
         if (_consumeEvents) {
             e.consume();
@@ -72,6 +77,7 @@ public class AwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         }
     }
 
+    @Override
     public synchronized void keyPressed(final java.awt.event.KeyEvent e) {
         final Key pressed = fromKeyEventToKey(e);
         if (!_pressedList.contains(pressed)) {
@@ -83,6 +89,7 @@ public class AwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         }
     }
 
+    @Override
     public synchronized void keyReleased(final java.awt.event.KeyEvent e) {
         final Key released = fromKeyEventToKey(e);
         _upcomingEvents.add(new KeyEvent(released, KeyState.UP, e.getKeyChar()));

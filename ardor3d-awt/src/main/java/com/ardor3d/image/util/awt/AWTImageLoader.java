@@ -61,6 +61,7 @@ public class AWTImageLoader implements ImageLoader {
         ImageLoaderUtil.registerHandler(new AWTImageLoader(), supportedFormats);
     }
 
+    @Override
     public Image load(final InputStream is, final boolean flipImage) throws IOException {
         final BufferedImage image = ImageIO.read(is);
         if (image == null) {
