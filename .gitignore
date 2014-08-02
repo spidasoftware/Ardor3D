@@ -1,5 +1,8 @@
 bin/
+build/
 target/
+.gradle/
 .settings/
 .project
 .classpath
+ardorSettings.properties
