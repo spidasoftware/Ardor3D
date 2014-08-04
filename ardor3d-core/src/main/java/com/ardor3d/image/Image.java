@@ -351,6 +351,7 @@ public class Image implements Serializable, Savable {
         return true;
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_format, "dataformat", ImageDataFormat.RGBA);
         capsule.write(_type, "datatype", PixelDataType.UnsignedByte);
@@ -361,6 +362,7 @@ public class Image implements Serializable, Savable {
         capsule.writeByteBufferList(_data, "data", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _format = capsule.readEnum("dataformat", ImageDataFormat.class, ImageDataFormat.RGBA);
         _type = capsule.readEnum("datatype", PixelDataType.class, PixelDataType.UnsignedByte);
@@ -371,6 +373,7 @@ public class Image implements Serializable, Savable {
         _data = capsule.readByteBufferList("data", null);
     }
 
+    @Override
     public Class<? extends Image> getClassTag() {
         return this.getClass();
     }

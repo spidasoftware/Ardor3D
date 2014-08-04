@@ -1409,6 +1409,7 @@ public abstract class Texture implements Savable {
         _texMatrix.set(matrix);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         if (_storeImage) {
             capsule.write(_image, "image", null);
@@ -1448,6 +1449,7 @@ public abstract class Texture implements Savable {
         capsule.write(_key, "textureKey", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _minificationFilter = capsule.readEnum("minificationFilter", MinificationFilter.class,
                 MinificationFilter.NearestNeighborNoMipMaps);
@@ -1506,6 +1508,7 @@ public abstract class Texture implements Savable {
         _rttPixelDataType = capsule.readEnum("rttPixelDataType", PixelDataType.class, PixelDataType.UnsignedByte);
     }
 
+    @Override
     public Class<? extends Texture> getClassTag() {
         return this.getClass();
     }
