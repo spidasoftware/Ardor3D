@@ -63,6 +63,7 @@ public final class TgaLoader implements ImageLoader {
      * @throws IOException
      *             if an error occurs during read.
      */
+    @Override
     public Image load(final InputStream is, boolean flip) throws IOException {
         boolean flipH = false;
         // open a stream to the file
