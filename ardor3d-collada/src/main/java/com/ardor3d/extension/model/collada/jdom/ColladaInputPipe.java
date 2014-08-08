@@ -77,7 +77,6 @@ public class ColladaInputPipe {
         float_param, bool_param, int_param, name_param, idref_param
     }
 
-    @SuppressWarnings("unchecked")
     public ColladaInputPipe(final ColladaDOMUtil colladaDOMUtil, final Element input) {
         // Setup our type
         try {

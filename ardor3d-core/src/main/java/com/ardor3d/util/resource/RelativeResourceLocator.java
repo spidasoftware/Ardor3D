@@ -34,6 +34,7 @@ public class RelativeResourceLocator implements ResourceLocator {
         return _baseSource;
     }
 
+    @Override
     public ResourceSource locateResource(String resourceName) {
         // Trim off any prepended local dir.
         while (resourceName.startsWith("./") && resourceName.length() > 2) {

@@ -1335,6 +1335,7 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
         final UIHud hud = getHud();
         if (hud != null && getTooltipText() != null) {
             final Callable<Void> show = new Callable<Void>() {
+                @Override
                 public Void call() throws Exception {
 
                     while (true) {
@@ -1526,6 +1527,7 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
      *            current tracked state of the input system.
      * @return true if we want to consider the event "consumed" by the UI system.
      */
+    @Override
     public boolean keyPressed(final Key key, final InputState state) {
         if (!_consumeKeyEvents && getParent() instanceof UIComponent) {
             return ((UIComponent) getParent()).keyPressed(key, state);
@@ -1543,6 +1545,7 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
      *            current tracked state of the input system.
      * @return true if we want to consider the event "consumed" by the UI system.
      */
+    @Override
     public boolean keyHeld(final Key key, final InputState state) {
         if (!_consumeKeyEvents && getParent() instanceof UIComponent) {
             return ((UIComponent) getParent()).keyHeld(key, state);
@@ -1560,6 +1563,7 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
      *            current tracked state of the input system.
      * @return true if we want to consider the event "consumed" by the UI system.
      */
+    @Override
     public boolean keyReleased(final Key key, final InputState state) {
         if (!_consumeKeyEvents && getParent() instanceof UIComponent) {
             return ((UIComponent) getParent()).keyReleased(key, state);

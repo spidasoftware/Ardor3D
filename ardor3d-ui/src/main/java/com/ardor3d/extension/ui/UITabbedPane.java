@@ -301,6 +301,7 @@ public class UITabbedPane extends UIPanel {
     private UITab makeTab(final String label, final SubTex icon) {
         final UITab button = new UITab(label, icon, _placement);
         button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 setCurrentTab(button);
             }

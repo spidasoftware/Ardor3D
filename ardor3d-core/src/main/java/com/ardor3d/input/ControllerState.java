@@ -107,6 +107,7 @@ public class ControllerState {
 
     public List<ControllerEvent> getEvents() {
         Collections.sort(_eventsSinceLastState, new Comparator<ControllerEvent>() {
+            @Override
             public int compare(final ControllerEvent o1, final ControllerEvent o2) {
                 return (int) (o2.getNanos() - o1.getNanos());
             }

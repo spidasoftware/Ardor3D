@@ -30,6 +30,7 @@ public class CylinderFunction3D implements Function3D {
         setFrequency(frequency);
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         final double dx = x * _frequency;
         final double dz = z * _frequency;

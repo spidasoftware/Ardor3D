@@ -394,10 +394,12 @@ final public class TextureKey implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends TextureKey> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_source, "source", null);
         capsule.write(_flipped, "flipped", false);
@@ -406,6 +408,7 @@ final public class TextureKey implements Savable {
         capsule.write(_id, "id", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _source = (ResourceSource) capsule.readSavable("source", null);
         _flipped = capsule.readBoolean("flipped", false);

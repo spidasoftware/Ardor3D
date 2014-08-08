@@ -94,6 +94,7 @@ public class RotatingUIExample extends ExampleBase {
         rotatingLabel.addController(new SpatialController<UICheckBox>() {
             double angle = 0;
 
+            @Override
             public void update(final double time, final UICheckBox caller) {
                 angle += time * 10;
                 angle %= 360;

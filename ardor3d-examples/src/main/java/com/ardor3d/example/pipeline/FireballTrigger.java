@@ -33,6 +33,7 @@ public class FireballTrigger implements TriggerCallback {
         example = AnimationDemoExample.instance;
     }
 
+    @Override
     public void doTrigger(final SkeletonPose applyToPose, final AnimationManager manager) {
         GameTaskQueueManager.getManager(example.getCanvas().getCanvasRenderer().getRenderContext()).update(
                 new Callable<Void>() {

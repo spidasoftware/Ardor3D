@@ -61,12 +61,14 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
         }
     }
 
+    @Override
     public void init() {
         _control.addMouseListener(this);
         _control.addMouseMoveListener(this);
         _control.addMouseWheelListener(this);
     }
 
+    @Override
     public synchronized PeekingIterator<MouseState> getEvents() {
         expireClickEvents();
 
@@ -87,10 +89,12 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
         }
     }
 
+    @Override
     public synchronized void mouseDoubleClick(final MouseEvent mouseEvent) {
     // ignoring this. We'll handle (multi)click in a uniform way
     }
 
+    @Override
     public synchronized void mouseDown(final MouseEvent e) {
         final MouseButton b = getButtonForEvent(e);
         if (_clickArmed.contains(b)) {
@@ -108,6 +112,7 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
         addNewState(e, 0, buttons, null);
     }
 
+    @Override
     public synchronized void mouseUp(final MouseEvent e) {
         initState(e);
 
@@ -170,6 +175,7 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
         return button;
     }
 
+    @Override
     public synchronized void mouseMove(final MouseEvent mouseEvent) {
         _clickArmed.clear();
         _clicks.clear();
@@ -180,6 +186,7 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
         addNewState(mouseEvent, 0, _lastState.getButtonStates(), null);
     }
 
+    @Override
     public synchronized void mouseScrolled(final MouseEvent mouseEvent) {
         initState(mouseEvent);
 

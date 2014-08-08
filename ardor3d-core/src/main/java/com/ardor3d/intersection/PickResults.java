@@ -129,6 +129,7 @@ public abstract class PickResults {
      */
     private static class DistanceComparator implements Comparator<PickData> {
 
+        @Override
         public int compare(final PickData o1, final PickData o2) {
             if (o1.getIntersectionRecord().getClosestDistance() <= o2.getIntersectionRecord().getClosestDistance()) {
                 return -1;

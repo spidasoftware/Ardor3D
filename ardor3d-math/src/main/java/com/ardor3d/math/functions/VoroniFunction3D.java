@@ -58,6 +58,7 @@ public class VoroniFunction3D implements Function3D {
         _seed = seed;
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         final double dx = x * _frequency, dy = y * _frequency, dz = z * _frequency;
 

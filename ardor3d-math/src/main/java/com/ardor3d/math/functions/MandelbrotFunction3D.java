@@ -23,6 +23,7 @@ public class MandelbrotFunction3D implements Function3D {
         setIterations(iterations);
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         double dx = 0;
         double dy = 0;

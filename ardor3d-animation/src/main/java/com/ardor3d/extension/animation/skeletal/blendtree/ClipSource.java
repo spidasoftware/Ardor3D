@@ -61,6 +61,7 @@ public class ClipSource implements BlendTreeSource {
     /**
      * Sets the current time on our AnimationClip instance, accounting for looping and time scaling.
      */
+    @Override
     public boolean setTime(final double globalTime, final AnimationManager manager) {
         final AnimationClipInstance instance = manager.getClipInstance(_clip);
         if (instance.isActive()) {
@@ -98,6 +99,7 @@ public class ClipSource implements BlendTreeSource {
         return instance.isActive();
     }
 
+    @Override
     public void resetClips(final AnimationManager manager, final double globalStartTime) {
         manager.resetClipInstance(_clip, globalStartTime);
     }

@@ -42,6 +42,7 @@ public class GameTask<V> implements Future<V> {
      * @param mayInterruptIfRunning
      *            ignored by this implementation.
      */
+    @Override
     public boolean cancel(final boolean mayInterruptIfRunning) {
         _stateLock.lock();
         try {
@@ -58,6 +59,7 @@ public class GameTask<V> implements Future<V> {
         }
     }
 
+    @Override
     public V get() throws InterruptedException, ExecutionException {
         _stateLock.lock();
         try {
@@ -73,6 +75,7 @@ public class GameTask<V> implements Future<V> {
         }
     }
 
+    @Override
     public V get(final long timeout, final TimeUnit unit) throws InterruptedException, ExecutionException,
             TimeoutException {
         _stateLock.lock();
@@ -92,6 +95,7 @@ public class GameTask<V> implements Future<V> {
         }
     }
 
+    @Override
     public boolean isCancelled() {
         _stateLock.lock();
         try {
@@ -101,6 +105,7 @@ public class GameTask<V> implements Future<V> {
         }
     }
 
+    @Override
     public boolean isDone() {
         _stateLock.lock();
         try {

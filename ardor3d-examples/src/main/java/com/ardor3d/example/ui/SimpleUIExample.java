@@ -90,6 +90,7 @@ public class SimpleUIExample extends ExampleBase {
             private double angle = 0;
             private final Vector3 axis = new Vector3(1, 1, 0.5f).normalizeLocal();
 
+            @Override
             public void update(final double time, final Box caller) {
                 angle += time * 50;
                 angle %= 360;
@@ -171,6 +172,7 @@ public class SimpleUIExample extends ExampleBase {
         tfPassword.setLayoutData(GridLayoutData.WrapAndGrow);
         final UIButton btLogin = new UIButton("login");
         btLogin.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 System.out.println("login as user: " + tfName.getText() + " password: " + tfPassword.getText());
             }
@@ -202,6 +204,7 @@ public class SimpleUIExample extends ExampleBase {
         chatButton.setLayoutData(BorderLayoutData.EAST);
 
         final ActionListener actionListener = new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 applyChat(historyArea, chatField);
             }
@@ -271,6 +274,7 @@ public class SimpleUIExample extends ExampleBase {
         final UILabel lSliderValue = new UILabel("0");
         lSliderValue.setLayoutData(GridLayoutData.SpanAndWrap(2));
         slider.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 lSliderValue.setText(String.valueOf(slider.getValue()));
             }
@@ -333,6 +337,7 @@ public class SimpleUIExample extends ExampleBase {
         multiImgBD.addImage(minute);
 
         clockPanel.addController(new SpatialController<Spatial>() {
+            @Override
             public void update(final double time, final Spatial caller) {
                 final double angle1 = _timer.getTimeInSeconds() % MathUtils.TWO_PI;
                 final double angle2 = (_timer.getTimeInSeconds() / 12.) % MathUtils.TWO_PI;

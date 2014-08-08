@@ -27,6 +27,7 @@ import com.ardor3d.scenegraph.Spatial;
 public class SharedCopyLogic implements CopyLogic {
     private static final Logger logger = Logger.getLogger(SharedCopyLogic.class.getName());
 
+    @Override
     public Spatial copy(final Spatial source, final AtomicBoolean recurse) {
         recurse.set(false);
         if (source instanceof Node) {

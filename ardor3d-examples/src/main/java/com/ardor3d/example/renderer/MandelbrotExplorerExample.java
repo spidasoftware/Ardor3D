@@ -97,6 +97,7 @@ public class MandelbrotExplorerExample extends ExampleBase {
         super.registerInputTriggers();
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonReleasedCondition(MouseButton.LEFT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                         // zoom in
                         final MouseState mouse = inputState.getCurrent().getMouseState();
@@ -112,6 +113,7 @@ public class MandelbrotExplorerExample extends ExampleBase {
                 }));
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonReleasedCondition(MouseButton.RIGHT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                         // zoom out
                         final MouseState mouse = inputState.getCurrent().getMouseState();

@@ -64,6 +64,7 @@ public class RotatingCubeGame implements Updater {
         this.toggleRotationKey = toggleRotationKey;
     }
 
+    @Override
     @MainThread
     public void init() {
         if (inited) {
@@ -119,34 +120,40 @@ public class RotatingCubeGame implements Updater {
         control.setMoveSpeed(MOVE_SPEED);
 
         logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ESCAPE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 exit.exit();
             }
         }));
 
         logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(toggleRotationKey), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 toggleRotation();
             }
         }));
         logicalLayer.registerTrigger(new InputTrigger(new KeyReleasedCondition(Key.U), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 toggleRotation();
             }
         }));
 
         logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ZERO), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 resetCamera(source);
             }
         }));
         logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.NINE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 lookAtZero(source);
             }
         }));
 
         logicalLayer.registerTrigger(new InputTrigger(new AnyKeyCondition(), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final InputState current = inputStates.getCurrent();
 
@@ -172,6 +179,7 @@ public class RotatingCubeGame implements Updater {
         rotationSign *= -1;
     }
 
+    @Override
     @MainThread
     public void update(final ReadOnlyTimer timer) {
         final double tpf = timer.getTimePerFrame();

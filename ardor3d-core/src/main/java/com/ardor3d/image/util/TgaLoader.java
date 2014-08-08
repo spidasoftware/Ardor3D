@@ -378,49 +378,51 @@ public final class TgaLoader implements ImageLoader {
             }
 
         } else if (imageType == TYPE_COLORMAPPED) {
-            final int bytesPerIndex = pixelDepth / 8;
+            if (cMapEntries != null) {
+                final int bytesPerIndex = pixelDepth / 8;
 
-            if (bytesPerIndex == 1) {
-                for (int i = 0; i <= (height - 1); i++) {
-                    if (!flip) {
-                        rawDataIndex = (height - 1 - i) * width * dl;
-                    }
-                    for (int j = 0; j < width; j++) {
-                        final int index = dis.readUnsignedByte();
-                        if (index >= cMapEntries.length || index < 0) {
-                            throw new Ardor3dException("TGA: Invalid color map entry referenced: " + index);
+                if (bytesPerIndex == 1) {
+                    for (int i = 0; i <= (height - 1); i++) {
+                        if (!flip) {
+                            rawDataIndex = (height - 1 - i) * width * dl;
                         }
-                        final ColorMapEntry entry = cMapEntries[index];
-                        rawData[rawDataIndex++] = entry.red;
-                        rawData[rawDataIndex++] = entry.green;
-                        rawData[rawDataIndex++] = entry.blue;
-                        if (dl == 4) {
-                            rawData[rawDataIndex++] = entry.alpha;
-                        }
+                        for (int j = 0; j < width; j++) {
+                            final int index = dis.readUnsignedByte();
+                            if (index >= cMapEntries.length || index < 0) {
+                                throw new Ardor3dException("TGA: Invalid color map entry referenced: " + index);
+                            }
+                            final ColorMapEntry entry = cMapEntries[index];
+                            rawData[rawDataIndex++] = entry.red;
+                            rawData[rawDataIndex++] = entry.green;
+                            rawData[rawDataIndex++] = entry.blue;
+                            if (dl == 4) {
+                                rawData[rawDataIndex++] = entry.alpha;
+                            }
 
-                    }
-                }
-            } else if (bytesPerIndex == 2) {
-                for (int i = 0; i <= (height - 1); i++) {
-                    if (!flip) {
-                        rawDataIndex = (height - 1 - i) * width * dl;
-                    }
-                    for (int j = 0; j < width; j++) {
-                        final int index = flipEndian(dis.readShort());
-                        if (index >= cMapEntries.length || index < 0) {
-                            throw new Ardor3dException("TGA: Invalid color map entry referenced: " + index);
-                        }
-                        final ColorMapEntry entry = cMapEntries[index];
-                        rawData[rawDataIndex++] = entry.red;
-                        rawData[rawDataIndex++] = entry.green;
-                        rawData[rawDataIndex++] = entry.blue;
-                        if (dl == 4) {
-                            rawData[rawDataIndex++] = entry.alpha;
                         }
                     }
+                } else if (bytesPerIndex == 2) {
+                    for (int i = 0; i <= (height - 1); i++) {
+                        if (!flip) {
+                            rawDataIndex = (height - 1 - i) * width * dl;
+                        }
+                        for (int j = 0; j < width; j++) {
+                            final int index = flipEndian(dis.readShort());
+                            if (index >= cMapEntries.length || index < 0) {
+                                throw new Ardor3dException("TGA: Invalid color map entry referenced: " + index);
+                            }
+                            final ColorMapEntry entry = cMapEntries[index];
+                            rawData[rawDataIndex++] = entry.red;
+                            rawData[rawDataIndex++] = entry.green;
+                            rawData[rawDataIndex++] = entry.blue;
+                            if (dl == 4) {
+                                rawData[rawDataIndex++] = entry.alpha;
+                            }
+                        }
+                    }
+                } else {
+                    throw new Ardor3dException("TGA: unknown colormap indexing size used: " + bytesPerIndex);
                 }
-            } else {
-                throw new Ardor3dException("TGA: unknown colormap indexing size used: " + bytesPerIndex);
             }
         }
 

@@ -147,6 +147,7 @@ public class UpdateTextureExample extends ExampleBase {
         _root.attachChild(keyText);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 mode++;
                 mode %= 3;

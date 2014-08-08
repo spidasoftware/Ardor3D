@@ -154,10 +154,12 @@ public class ParticleAppearanceRamp implements Savable {
         }
     }
 
+    @Override
     public Class<? extends ParticleAppearanceRamp> getClassTag() {
         return getClass();
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _entries = capsule.readSavableList("entries", null);
         if (_entries == null) {
@@ -165,6 +167,7 @@ public class ParticleAppearanceRamp implements Savable {
         }
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.writeSavableList(_entries, "entries", null);
     }

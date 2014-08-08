@@ -184,6 +184,7 @@ public class BMTextExample extends ExampleBase {
             final int changeInterval = 20000;
             final List<BMFont> fonts = BMFontLoader.allFonts();
 
+            @Override
             public void update(final double time, final BMText text) {
                 final int t = (int) (System.currentTimeMillis() / changeInterval);
                 final int index = t % fonts.size();
@@ -216,6 +217,7 @@ public class BMTextExample extends ExampleBase {
         final SpatialController<Node> nodeMover = new SpatialController<Node>() {
             Matrix3 rot = new Matrix3();
 
+            @Override
             public void update(final double time, final Node caller) {
                 final long t = System.currentTimeMillis();
                 final double s = Math.cos(t * Math.PI / 10000.0);

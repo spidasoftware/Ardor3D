@@ -136,6 +136,7 @@ public class JoglBasicExample implements Scene {
             private final Matrix3 _rotate = new Matrix3();
             private double _angle = 0;
 
+            @Override
             public void update(final double time, final Box caller) {
                 // update our rotation
                 _angle = _angle + (_timer.getTimePerFrame() * 25);
@@ -191,6 +192,7 @@ public class JoglBasicExample implements Scene {
 
     // ------ Scene methods ------
 
+    @Override
     public boolean renderUnto(final Renderer renderer) {
         if (!_canvas.isClosing()) {
 
@@ -202,6 +204,7 @@ public class JoglBasicExample implements Scene {
         return false;
     }
 
+    @Override
     public PickResults doPick(final Ray3 pickRay) {
         // Ignore
         return null;

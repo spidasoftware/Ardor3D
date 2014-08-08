@@ -199,8 +199,10 @@ public abstract class ComplexSpatialController<T extends Spatial> implements Spa
         return RepeatType.CYCLE.equals(getRepeatType());
     }
 
+    @Override
     public abstract void update(double time, T caller);
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_repeatType, "repeatType", RepeatType.CLAMP);
         capsule.write(_minTime, "minTime", 0);
@@ -209,6 +211,7 @@ public abstract class ComplexSpatialController<T extends Spatial> implements Spa
         capsule.write(_active, "active", true);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _repeatType = capsule.readEnum("repeatType", RepeatType.class, RepeatType.CLAMP);
         _minTime = capsule.readDouble("minTime", 0);
@@ -217,6 +220,7 @@ public abstract class ComplexSpatialController<T extends Spatial> implements Spa
         _active = capsule.readBoolean("active", true);
     }
 
+    @Override
     @SuppressWarnings("rawtypes")
     public Class<? extends ComplexSpatialController> getClassTag() {
         return this.getClass();

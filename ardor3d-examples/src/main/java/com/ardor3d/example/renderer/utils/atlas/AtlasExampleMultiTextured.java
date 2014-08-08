@@ -112,6 +112,7 @@ public class AtlasExampleMultiTextured extends ExampleBase {
 
         // Pack textures into atlas
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.F), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 packIntoAtlas(boxNode);
             }
@@ -119,6 +120,7 @@ public class AtlasExampleMultiTextured extends ExampleBase {
 
         // Combine into one mesh
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.G), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final Mesh merged = MeshCombiner.combine(boxNode);
                 boxNode.detachAllChildren();
@@ -128,6 +130,7 @@ public class AtlasExampleMultiTextured extends ExampleBase {
 
         // Combine into one mesh
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.R), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 resetBoxes();
             }

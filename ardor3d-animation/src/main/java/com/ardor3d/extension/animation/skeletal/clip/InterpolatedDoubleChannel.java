@@ -43,7 +43,7 @@ public class InterpolatedDoubleChannel extends AbstractAnimationChannel {
         super(channelName, times);
         _values = values == null ? null : new double[values.length];
         if (_values != null) {
-            System.arraycopy(values, 0, _values, 0, values.length);
+            System.arraycopy(values, 0, _values, 0, _values.length);
         }
     }
 
@@ -133,6 +133,7 @@ public class InterpolatedDoubleChannel extends AbstractAnimationChannel {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends InterpolatedDoubleChannel> getClassTag() {
         return this.getClass();
     }

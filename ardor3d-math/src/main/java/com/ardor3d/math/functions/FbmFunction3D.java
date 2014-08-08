@@ -54,6 +54,7 @@ public class FbmFunction3D implements Function3D {
         _lacunarity = lacunarity;
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         double sum = 0;
         double dx = x * _frequency, dy = y * _frequency, dz = z * _frequency;

@@ -56,6 +56,7 @@ import com.google.common.collect.Lists;
 public class DdsLoader implements ImageLoader {
     private static final Logger logger = Logger.getLogger(DdsLoader.class.getName());
 
+    @Override
     public Image load(final InputStream is, final boolean flipVertically) throws IOException {
         final LittleEndianDataInput in = new LittleEndianDataInput(is);
 

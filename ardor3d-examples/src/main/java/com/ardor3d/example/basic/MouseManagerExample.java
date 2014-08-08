@@ -107,6 +107,7 @@ public class MouseManagerExample extends ExampleBase {
             _cursor2 = createMouseCursor(awtImageLoader, "com/ardor3d/example/media/input/movedata.gif");
 
             _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.H), new TriggerAction() {
+                @Override
                 public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                     if (useCursorOne) {
                         _mouseManager.setCursor(_cursor1);
@@ -118,11 +119,13 @@ public class MouseManagerExample extends ExampleBase {
             }));
 
             _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.J), new TriggerAction() {
+                @Override
                 public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                     _mouseManager.setCursor(MouseCursor.SYSTEM_DEFAULT);
                 }
             }));
             _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.K), new TriggerAction() {
+                @Override
                 public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                     if (_mouseManager.isSetPositionSupported()) {
                         _mouseManager.setPosition(0, 0);
@@ -132,6 +135,7 @@ public class MouseManagerExample extends ExampleBase {
 
             _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonPressedCondition(MouseButton.LEFT),
                     new TriggerAction() {
+                        @Override
                         public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                             if (_mouseManager.isSetGrabbedSupported()) {
                                 _mouseManager.setGrabbed(GrabbedState.GRABBED);
@@ -140,6 +144,7 @@ public class MouseManagerExample extends ExampleBase {
                     }));
             _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonReleasedCondition(MouseButton.LEFT),
                     new TriggerAction() {
+                        @Override
                         public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                             if (_mouseManager.isSetGrabbedSupported()) {
                                 _mouseManager.setGrabbed(GrabbedState.NOT_GRABBED);

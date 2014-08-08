@@ -232,6 +232,7 @@ public class ColladaManualAnimationExample extends ExampleBase {
         _root.getSceneHints().setCullHint(CullHint.Never);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.K), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showSkeleton = !showSkeleton;
                 if (showSkeleton) {
@@ -243,6 +244,7 @@ public class ColladaManualAnimationExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.M), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showMesh = !showMesh;
                 colladaNode.getSceneHints().setCullHint(showMesh ? CullHint.Dynamic : CullHint.Always);

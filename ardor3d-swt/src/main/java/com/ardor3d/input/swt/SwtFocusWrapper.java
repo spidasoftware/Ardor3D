@@ -30,14 +30,17 @@ public class SwtFocusWrapper implements FocusWrapper, FocusListener {
         _control = checkNotNull(control, "control");
     }
 
+    @Override
     public void focusGained(final FocusEvent focusEvent) {
     // nothing to do
     }
 
+    @Override
     public void focusLost(final FocusEvent focusEvent) {
         _focusLost = true;
     }
 
+    @Override
     public boolean getAndClearFocusLost() {
         final boolean result = _focusLost;
 
@@ -46,6 +49,7 @@ public class SwtFocusWrapper implements FocusWrapper, FocusListener {
         return result;
     }
 
+    @Override
     public void init() {
         _control.addFocusListener(this);
     }

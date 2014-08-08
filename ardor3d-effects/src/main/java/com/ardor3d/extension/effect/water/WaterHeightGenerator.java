@@ -24,6 +24,7 @@ public class WaterHeightGenerator implements HeightGenerator {
     private double speedbig = 0.5;
     private int octaves = 2;
 
+    @Override
     public double getHeight(final double x, final double z, final double time) {
         final double zval = z * scaleybig * 4 + time * speedbig * 4;
         double height = Math.sin(zval);

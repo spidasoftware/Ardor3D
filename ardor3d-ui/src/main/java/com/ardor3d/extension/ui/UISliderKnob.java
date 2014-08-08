@@ -180,6 +180,7 @@ public class UISliderKnob extends UIContainer {
         private int _initialHudLoc;
         private int _delta;
 
+        @Override
         public void startDrag(final int x, final int y) {
             // skip out if not enabled.
             if (!isEnabled()) {
@@ -201,6 +202,7 @@ public class UISliderKnob extends UIContainer {
             }
         }
 
+        @Override
         public void drag(final int x, final int y) {
             if (!isEnabled()) {
                 return;
@@ -228,11 +230,13 @@ public class UISliderKnob extends UIContainer {
                     _parentSlider);
         }
 
+        @Override
         public void endDrag(final UIComponent dropOn, final int x, final int y) {
             // call back to our parent slider, allowing for snapping
             _parentSlider.knobReleased();
         }
 
+        @Override
         public boolean isDragHandle(final UIComponent w, final int x, final int y) {
             // if not enabled, we don't slide
             if (!isEnabled()) {

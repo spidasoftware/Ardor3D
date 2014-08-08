@@ -117,6 +117,7 @@ public class BubbleMarkUIExample extends ExampleBase {
                 Alignment.TOP_LEFT, 5, -5));
         vsync.setSelectable(true);
         vsync.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 _canvas.setVSyncEnabled(vsync.isSelected());
             }
@@ -128,6 +129,7 @@ public class BubbleMarkUIExample extends ExampleBase {
         collide.setSelectable(true);
         collide.setSelected(!skipBallCollide);
         collide.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 skipBallCollide = !collide.isSelected();
             }
@@ -145,6 +147,7 @@ public class BubbleMarkUIExample extends ExampleBase {
         balls16.setSelectable(true);
         balls16.setSelected(true);
         balls16.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 resetBalls(16);
             }
@@ -157,6 +160,7 @@ public class BubbleMarkUIExample extends ExampleBase {
         balls32.setSelectable(true);
         balls32.setSelected(true);
         balls32.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 resetBalls(32);
             }
@@ -169,6 +173,7 @@ public class BubbleMarkUIExample extends ExampleBase {
         balls64.setSelectable(true);
         balls64.setSelected(true);
         balls64.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 resetBalls(64);
             }
@@ -181,6 +186,7 @@ public class BubbleMarkUIExample extends ExampleBase {
         balls128.setSelectable(true);
         balls128.setSelected(true);
         balls128.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 resetBalls(128);
             }

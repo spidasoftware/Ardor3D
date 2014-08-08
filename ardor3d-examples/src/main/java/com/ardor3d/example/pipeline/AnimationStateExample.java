@@ -161,6 +161,7 @@ public class AnimationStateExample extends ExampleBase {
         runWalkButton.addActionListener(new ActionListener() {
             boolean walk = true;
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 if (!walk) {
                     if (manager.getBaseAnimationLayer().doTransition("walk")) {
@@ -181,6 +182,7 @@ public class AnimationStateExample extends ExampleBase {
         punchButton
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, runWalkButton, Alignment.BOTTOM_LEFT, 0, -5));
         punchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 manager.findAnimationLayer("punch").setCurrentState("punch_right", true);
                 punchButton.setEnabled(false);
@@ -192,6 +194,7 @@ public class AnimationStateExample extends ExampleBase {
         playPauseButton.setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, punchButton, Alignment.BOTTOM_LEFT, 0,
                 -5));
         playPauseButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 if (playPauseButton.getText().equals("Pause")) {
                     manager.pause();
@@ -208,6 +211,7 @@ public class AnimationStateExample extends ExampleBase {
         stopButton
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, playPauseButton, Alignment.BOTTOM_LEFT, 0, -5));
         stopButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 manager.stop();
                 playPauseButton.setButtonText("Play");
@@ -220,6 +224,7 @@ public class AnimationStateExample extends ExampleBase {
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, stopButton, Alignment.BOTTOM_LEFT, 0, -5));
         resetAnimCheck.setSelected(false);
         resetAnimCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 manager.setResetClipsOnStop(resetAnimCheck.isSelected());
 
@@ -232,6 +237,7 @@ public class AnimationStateExample extends ExampleBase {
                 0, -5));
         gpuSkinningCheck.setSelected(false);
         gpuSkinningCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 _root.acceptVisitor(new Visitor() {
                     @Override
@@ -257,6 +263,7 @@ public class AnimationStateExample extends ExampleBase {
         vboCheck.setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, gpuSkinningCheck, Alignment.BOTTOM_LEFT, 0, -5));
         vboCheck.setSelected(false);
         vboCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 skNode.getSceneHints().setDataMode(vboCheck.isSelected() ? DataMode.VBO : DataMode.Arrays);
                 gpuShader.setUseAttributeVBO(vboCheck.isSelected());
@@ -270,6 +277,7 @@ public class AnimationStateExample extends ExampleBase {
         skeletonCheck.setSelected(showSkeleton);
         skeletonCheck.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showSkeleton = skeletonCheck.isSelected();
                 boneLabelCheck.setEnabled(showSkeleton);
@@ -283,6 +291,7 @@ public class AnimationStateExample extends ExampleBase {
         boneLabelCheck.setEnabled(showSkeleton);
         boneLabelCheck.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showJointLabels = boneLabelCheck.isSelected();
             }
@@ -396,6 +405,7 @@ public class AnimationStateExample extends ExampleBase {
         // Add a call back to load clips.
         final InputStore input = new InputStore();
         input.getClips().setMissCallback(new MissingCallback<String, AnimationClip>() {
+            @Override
             public AnimationClip getValue(final String key) {
                 try {
                     final ColladaStorage storage1 = colladaImporter.load("collada/skeleton/" + key + ".dae");
@@ -421,6 +431,7 @@ public class AnimationStateExample extends ExampleBase {
 
         // add callback for our UI
         manager.findClipInstance("skeleton.punch").addAnimationListener(new AnimationListener() {
+            @Override
             public void animationFinished(final AnimationClipInstance source) {
                 punchButton.setEnabled(true);
             }

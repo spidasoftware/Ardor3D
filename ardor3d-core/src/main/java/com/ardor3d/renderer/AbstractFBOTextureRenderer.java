@@ -102,18 +102,22 @@ public abstract class AbstractFBOTextureRenderer implements TextureRenderer {
      * 
      * @return the camera this renderer is using.
      */
+    @Override
     public Camera getCamera() {
         return _camera;
     }
 
+    @Override
     public void setBackgroundColor(final ReadOnlyColorRGBA c) {
         _backgroundColor.set(c);
     }
 
+    @Override
     public ReadOnlyColorRGBA getBackgroundColor() {
         return _backgroundColor;
     }
 
+    @Override
     public void render(final Spatial toDraw, final Texture tex, final int clear) {
         try {
             ContextManager.getCurrentContext().pushFBOTextureRenderer(this);
@@ -140,6 +144,7 @@ public abstract class AbstractFBOTextureRenderer implements TextureRenderer {
         }
     }
 
+    @Override
     public void render(final Scene toDraw, final Texture tex, final int clear) {
         try {
             ContextManager.getCurrentContext().pushFBOTextureRenderer(this);
@@ -166,6 +171,7 @@ public abstract class AbstractFBOTextureRenderer implements TextureRenderer {
         }
     }
 
+    @Override
     public void render(final List<? extends Spatial> toDraw, final Texture tex, final int clear) {
         try {
             ContextManager.getCurrentContext().pushFBOTextureRenderer(this);
@@ -257,10 +263,12 @@ public abstract class AbstractFBOTextureRenderer implements TextureRenderer {
         toDraw.renderUnto(_parentRenderer);
     }
 
+    @Override
     public int getWidth() {
         return _width;
     }
 
+    @Override
     public int getHeight() {
         return _height;
     }
@@ -269,22 +277,27 @@ public abstract class AbstractFBOTextureRenderer implements TextureRenderer {
         return _parentRenderer;
     }
 
+    @Override
     public void setMultipleTargets(final boolean multi) {
-    // ignore. Does not matter to FBO.
+        // ignore. Does not matter to FBO.
     }
 
+    @Override
     public void enforceState(final RenderState state) {
         _enforcedStates.put(state.getType(), state);
     }
 
+    @Override
     public void enforceStates(final EnumMap<StateType, RenderState> states) {
         _enforcedStates.putAll(states);
     }
 
+    @Override
     public void clearEnforcedState(final StateType type) {
         _enforcedStates.remove(type);
     }
 
+    @Override
     public void clearEnforcedStates() {
         _enforcedStates.clear();
     }

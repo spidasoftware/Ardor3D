@@ -69,6 +69,7 @@ public class Line3 extends Line3Base implements ReadOnlyLine3, Poolable {
      * @throws NullPointerException
      *             if the point is null.
      */
+    @Override
     public double distanceSquared(final ReadOnlyVector3 point, final Vector3 store) {
         final Vector3 vectorA = Vector3.fetchTempInstance();
         vectorA.set(point).subtractLocal(_origin);

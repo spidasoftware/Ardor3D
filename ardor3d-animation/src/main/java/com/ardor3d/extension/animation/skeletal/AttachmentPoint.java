@@ -102,6 +102,7 @@ public class AttachmentPoint implements PoseListener {
      * Move our managed spatial to align with the referenced joint's position in the given pose, modified by our offset.
      * See class javadoc for more information.
      */
+    @Override
     public void poseUpdated(final SkeletonPose pose) {
         // only update if we have something attached.
         if (_attachment != null) {

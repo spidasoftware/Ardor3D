@@ -69,14 +69,17 @@ public abstract class ParticleInfluence implements Savable {
      */
     public abstract void apply(double dt, Particle particle, int index);
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_enabled, "enabled", true);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _enabled = capsule.readBoolean("enabled", true);
     }
 
+    @Override
     public Class<? extends ParticleInfluence> getClassTag() {
         return this.getClass();
     }

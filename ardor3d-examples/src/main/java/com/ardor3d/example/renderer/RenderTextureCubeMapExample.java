@@ -106,6 +106,7 @@ public class RenderTextureCubeMapExample extends ExampleBase {
         final Pyramid b = new Pyramid("box", 2, 3);
         b.setRotation(new Quaternion().fromAngleNormalAxis(MathUtils.PI, Vector3.UNIT_X));
         b.addController(new SpatialController<Spatial>() {
+            @Override
             public void update(final double time, final Spatial caller) {
                 b.setTranslation(-3, 6 * MathUtils.sin(_timer.getTimeInSeconds()), 0);
             };

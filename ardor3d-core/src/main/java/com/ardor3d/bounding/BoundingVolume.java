@@ -250,14 +250,17 @@ public abstract class BoundingVolume implements Serializable, Savable {
      */
     public abstract BoundingVolume asType(Type newType);
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_center, "center", new Vector3(Vector3.ZERO));
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _center.set((Vector3) capsule.readSavable("center", new Vector3(Vector3.ZERO)));
     }
 
+    @Override
     public Class<? extends BoundingVolume> getClassTag() {
         return this.getClass();
     }

@@ -238,6 +238,7 @@ public class Mesh extends Spatial implements Renderable, Pickable {
         return store;
     }
 
+    @Override
     public void render(final Renderer renderer) {
         if (isVisible()) {
             render(renderer, getMeshData());

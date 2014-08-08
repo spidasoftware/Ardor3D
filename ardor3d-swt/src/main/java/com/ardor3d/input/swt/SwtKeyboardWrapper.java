@@ -46,10 +46,12 @@ public class SwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         _control = checkNotNull(control, "control");
     }
 
+    @Override
     public void init() {
         _control.addKeyListener(this);
     }
 
+    @Override
     public synchronized PeekingIterator<KeyEvent> getEvents() {
         if (_currentIterator == null || !_currentIterator.hasNext()) {
             _currentIterator = new SwtKeyboardIterator();
@@ -58,6 +60,7 @@ public class SwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         return _currentIterator;
     }
 
+    @Override
     public synchronized void keyPressed(final org.eclipse.swt.events.KeyEvent event) {
         final Key key = fromKeyEventToKey(event);
         if (key == _lastKeyPressed) {
@@ -81,6 +84,7 @@ public class SwtKeyboardWrapper implements KeyboardWrapper, KeyListener {
         _upcomingEvents.add(new KeyEvent(key, KeyState.DOWN, keyChar));
     }
 
+    @Override
     public synchronized void keyReleased(final org.eclipse.swt.events.KeyEvent event) {
         _upcomingEvents.add(new KeyEvent(fromKeyEventToKey(event), KeyState.UP, event.character));
         _lastKeyPressed = null;

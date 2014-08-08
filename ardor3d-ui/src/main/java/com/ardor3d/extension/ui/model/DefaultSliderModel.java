@@ -40,14 +40,17 @@ public class DefaultSliderModel implements SliderModel {
         setMaxValue(maxValue);
     }
 
+    @Override
     public int getCurrentValue() {
         return _currentValue;
     }
 
+    @Override
     public void setCurrentValue(final int currentValue) {
         setCurrentValue(currentValue, null);
     }
 
+    @Override
     public void setCurrentValue(final int currentValue, final UISlider slider) {
         if (_currentValue == currentValue) {
             return;
@@ -58,18 +61,22 @@ public class DefaultSliderModel implements SliderModel {
         }
     }
 
+    @Override
     public int getMaxValue() {
         return _maxValue;
     }
 
+    @Override
     public void setMaxValue(final int maxValue) {
         _maxValue = maxValue;
     }
 
+    @Override
     public int getMinValue() {
         return _minValue;
     }
 
+    @Override
     public void setMinValue(final int minValue) {
         _minValue = minValue;
     }

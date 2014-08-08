@@ -51,16 +51,19 @@ public class AnimationEntry implements Savable {
         _rate = rate;
     }
 
+    @Override
     public Class<? extends AnimationEntry> getClassTag() {
         return getClass();
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _offset = capsule.readDouble("offsetMS", 0.05);
         _rate = capsule.readDouble("rate", 0.2);
         _frames = capsule.readIntArray("frames", null);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_offset, "offsetMS", 0.05);
         capsule.write(_rate, "rate", 0.2);

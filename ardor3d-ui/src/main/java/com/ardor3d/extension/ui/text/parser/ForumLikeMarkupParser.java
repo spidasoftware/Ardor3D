@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 public class ForumLikeMarkupParser implements StyleParser {
 
     Comparator<StyleSpan> endSorter = new Comparator<StyleSpan>() {
+        @Override
         public int compare(final StyleSpan o1, final StyleSpan o2) {
             return o1.getSpanStart() + o1.getSpanLength() - (o2.getSpanStart() + o2.getSpanLength());
         }

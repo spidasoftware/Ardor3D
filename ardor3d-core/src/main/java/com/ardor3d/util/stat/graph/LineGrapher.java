@@ -72,6 +72,7 @@ public class LineGrapher extends AbstractStatGrapher implements TableLinkable {
         _graphRoot.getSceneHints().setCullHint(CullHint.Never);
     }
 
+    @Override
     public void statsUpdated() {
         if (!isEnabled() || !Constants.updateGraphs) {
             return;
@@ -301,6 +302,7 @@ public class LineGrapher extends AbstractStatGrapher implements TableLinkable {
         }
     }
 
+    @Override
     public Line updateLineKey(final StatType type, Line lineKey) {
         if (lineKey == null) {
             lineKey = new Line("lk", BufferUtils.createVector3Buffer(2), null, null, null);

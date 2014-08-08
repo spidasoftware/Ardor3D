@@ -226,21 +226,25 @@ public class PointCubeExample extends ExampleBase {
         super.registerInputTriggers();
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ONE), new TriggerAction() {
+            @Override
             public void perform(final Canvas canvas, final TwoInputStates inputState, final double tpf) {
                 _rotationEnabled = !_rotationEnabled;
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.TWO), new TriggerAction() {
+            @Override
             public void perform(final Canvas canvas, final TwoInputStates inputState, final double tpf) {
                 _waveEnabled = !_waveEnabled;
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.THREE), new TriggerAction() {
+            @Override
             public void perform(final Canvas canvas, final TwoInputStates inputState, final double tpf) {
                 _blurEnabled = !_blurEnabled;
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FOUR), new TriggerAction() {
+            @Override
             public void perform(final Canvas canvas, final TwoInputStates inputState, final double tpf) {
                 _scaleEnabled = !_scaleEnabled;
             }

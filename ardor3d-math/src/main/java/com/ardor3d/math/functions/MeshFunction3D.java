@@ -38,6 +38,7 @@ public class MeshFunction3D implements Function3D {
     /**
      * Evaluate the function.
      */
+    @Override
     public double eval(final double x, final double y, final double z) {
         final double value = (Math.sin(x) + Math.sin(y) + Math.sin(z)) / _lineSize;
         return ((value * value) * 2.0) - 1.0;

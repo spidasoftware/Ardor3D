@@ -181,6 +181,7 @@ public class PrimitiveSkeletonExample extends ExampleBase {
         _root.getSceneHints().setCullHint(CullHint.Never);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.K), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showSkeleton = !showSkeleton;
                 if (showSkeleton) {
@@ -192,6 +193,7 @@ public class PrimitiveSkeletonExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.G), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 useGPU = !useGPU;
                 arm1.getGPUShader().setEnabled(useGPU);
@@ -207,6 +209,7 @@ public class PrimitiveSkeletonExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 runAnimation = !runAnimation;
                 if (runAnimation) {

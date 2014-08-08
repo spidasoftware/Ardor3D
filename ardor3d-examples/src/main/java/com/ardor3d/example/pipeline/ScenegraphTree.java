@@ -59,6 +59,7 @@ public class ScenegraphTree {
             this.textArea = textArea;
         }
 
+        @Override
         public void valueChanged(final TreeSelectionEvent e) {
             if (e.getNewLeadSelectionPath() == null || e.getNewLeadSelectionPath().getLastPathComponent() == null) {
                 return;
@@ -103,6 +104,7 @@ public class ScenegraphTree {
             rootNode = node;
         }
 
+        @Override
         public Object getChild(final Object parent, final int index) {
             if (parent instanceof Node) {
                 final Node parentNode = (Node) parent;
@@ -111,6 +113,7 @@ public class ScenegraphTree {
             return null;
         }
 
+        @Override
         public int getChildCount(final Object parent) {
             if (parent instanceof Node) {
                 final Node parentNode = (Node) parent;
@@ -119,6 +122,7 @@ public class ScenegraphTree {
             return 0;
         }
 
+        @Override
         public int getIndexOfChild(final Object parent, final Object child) {
             if (parent instanceof Node && child instanceof Spatial) {
                 final Node parentNode = (Node) parent;
@@ -127,18 +131,23 @@ public class ScenegraphTree {
             return 0;
         }
 
+        @Override
         public Object getRoot() {
             return rootNode;
         }
 
+        @Override
         public boolean isLeaf(final Object node) {
             return !(node instanceof Node);
         }
 
+        @Override
         public void addTreeModelListener(final TreeModelListener l) {}
 
+        @Override
         public void removeTreeModelListener(final TreeModelListener l) {}
 
+        @Override
         public void valueForPathChanged(final TreePath path, final Object newValue) {}
     }
 }

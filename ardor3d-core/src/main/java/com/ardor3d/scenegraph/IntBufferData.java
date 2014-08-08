@@ -49,6 +49,7 @@ public class IntBufferData extends IndexBufferData<IntBuffer> implements Savable
         _buffer = buffer;
     }
 
+    @Override
     public Class<? extends IntBufferData> getClassTag() {
         return getClass();
     }

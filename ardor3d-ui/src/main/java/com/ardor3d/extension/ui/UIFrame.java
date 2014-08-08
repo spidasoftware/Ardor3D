@@ -378,6 +378,7 @@ public class UIFrame extends UIContainer {
      */
     public static void resetTextureRenderer(final Object queueKey) {
         final Callable<Void> exe = new Callable<Void>() {
+            @Override
             public Void call() {
                 if (UIContainer._textureRenderer != null) {
                     UIContainer._textureRenderer.cleanup();

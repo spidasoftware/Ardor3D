@@ -41,6 +41,7 @@ public class LittleEndianDataInput implements DataInput {
         _stream = new BufferedInputStream(in);
     }
 
+    @Override
     public final int readUnsignedShort() throws IOException {
         return (_stream.read() & 0xff) | ((_stream.read() & 0xff) << 8);
     }
@@ -53,31 +54,38 @@ public class LittleEndianDataInput implements DataInput {
                 .read() & 0xff)) << 24));
     }
 
+    @Override
     public final boolean readBoolean() throws IOException {
         return (_stream.read() != 0);
     }
 
+    @Override
     public final byte readByte() throws IOException {
         return (byte) _stream.read();
     }
 
+    @Override
     public final int readUnsignedByte() throws IOException {
         return _stream.read();
     }
 
+    @Override
     public final short readShort() throws IOException {
         return (short) readUnsignedShort();
     }
 
+    @Override
     public final char readChar() throws IOException {
         return (char) readUnsignedShort();
     }
 
+    @Override
     public final int readInt() throws IOException {
         return ((_stream.read() & 0xff) | ((_stream.read() & 0xff) << 8) | ((_stream.read() & 0xff) << 16) | ((_stream
                 .read() & 0xff) << 24));
     }
 
+    @Override
     public final long readLong() throws IOException {
         return ((_stream.read() & 0xff) | ((long) (_stream.read() & 0xff) << 8)
                 | ((long) (_stream.read() & 0xff) << 16) | ((long) (_stream.read() & 0xff) << 24)
@@ -85,18 +93,22 @@ public class LittleEndianDataInput implements DataInput {
                 | ((long) (_stream.read() & 0xff) << 48) | ((long) (_stream.read() & 0xff) << 56));
     }
 
+    @Override
     public final float readFloat() throws IOException {
         return Float.intBitsToFloat(readInt());
     }
 
+    @Override
     public final double readDouble() throws IOException {
         return Double.longBitsToDouble(readLong());
     }
 
+    @Override
     public final void readFully(final byte b[]) throws IOException {
         readFully(b, 0, b.length);
     }
 
+    @Override
     public final void readFully(final byte b[], final int off, final int len) throws IOException {
         // this may look over-complicated, but the problem is that the InputStream.read() methods are
         // not guaranteed to fill up the buffer you pass to it. So we need to loop until we have filled
@@ -114,14 +126,17 @@ public class LittleEndianDataInput implements DataInput {
         }
     }
 
+    @Override
     public final int skipBytes(final int n) throws IOException {
         return (int) _stream.skip(n);
     }
 
+    @Override
     public final String readLine() throws IOException {
         throw new IOException("Unsupported operation");
     }
 
+    @Override
     public final String readUTF() throws IOException {
         throw new IOException("Unsupported operation");
     }

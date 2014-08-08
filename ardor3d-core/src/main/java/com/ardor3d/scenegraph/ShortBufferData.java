@@ -50,6 +50,7 @@ public class ShortBufferData extends IndexBufferData<ShortBuffer> implements Sav
         _buffer = buffer;
     }
 
+    @Override
     public Class<? extends ShortBufferData> getClassTag() {
         return getClass();
     }

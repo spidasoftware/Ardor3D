@@ -60,6 +60,7 @@ public class StringResourceSource implements ResourceSource {
     /**
      * Returns "string resource" as strings have no name.
      */
+    @Override
     public String getName() {
         return "string resource";
     }
@@ -67,6 +68,7 @@ public class StringResourceSource implements ResourceSource {
     /**
      * Returns null and logs a warning as this is not supported.
      */
+    @Override
     public ResourceSource getRelativeSource(final String name) {
         if (logger.isLoggable(Level.WARNING)) {
             logger.logp(Level.WARNING, getClass().getName(), "getRelativeSource(String)",
@@ -75,6 +77,7 @@ public class StringResourceSource implements ResourceSource {
         return null;
     }
 
+    @Override
     public String getType() {
         return _type;
     }
@@ -82,6 +85,7 @@ public class StringResourceSource implements ResourceSource {
     /**
      * Grabs our data as a UTF8 byte array and returns it in a ByteArrayInputStream.
      */
+    @Override
     public InputStream openStream() throws IOException {
         return new ByteArrayInputStream(_data.getBytes("UTF8"));
     }
@@ -90,15 +94,18 @@ public class StringResourceSource implements ResourceSource {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<?> getClassTag() {
         return StringResourceSource.class;
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _data = capsule.readString("data", null);
         _type = capsule.readString("type", null);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_data, "data", null);
         capsule.write(_type, "type", null);

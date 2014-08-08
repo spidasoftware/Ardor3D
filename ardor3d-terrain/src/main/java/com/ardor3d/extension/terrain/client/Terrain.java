@@ -445,6 +445,7 @@ public class Terrain extends Node implements Pickable {
             }
 
             _geometryClipmapShader.setShaderDataLogic(new GLSLShaderDataLogic() {
+                @Override
                 public void applyData(final GLSLShaderObjectsState shader, final Mesh mesh, final Renderer renderer) {
                     if (mesh instanceof ClipmapLevel) {
                         shader.setUniform("vertexDistance", (float) ((ClipmapLevel) mesh).getVertexDistance());

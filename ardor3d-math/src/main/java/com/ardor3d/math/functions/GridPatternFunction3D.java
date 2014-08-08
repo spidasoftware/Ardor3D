@@ -51,6 +51,7 @@ public class GridPatternFunction3D implements Function3D {
      * 
      * @return
      */
+    @Override
     public double eval(double x, double y, final double z) {
         x = Math.abs(x);
         y = Math.abs(y);

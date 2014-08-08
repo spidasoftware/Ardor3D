@@ -196,14 +196,17 @@ public abstract class RenderState implements Savable {
         return stack.peek();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_enabled, "enabled", true);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _enabled = capsule.readBoolean("enabled", true);
     }
 
+    @Override
     public Class<? extends RenderState> getClassTag() {
         return this.getClass();
     }

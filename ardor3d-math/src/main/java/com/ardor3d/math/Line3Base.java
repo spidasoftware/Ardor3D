@@ -84,15 +84,18 @@ public abstract class Line3Base implements Savable, Externalizable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends Line3Base> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_origin, "origin", new Vector3(Vector3.ZERO));
         capsule.write(_direction, "direction", new Vector3(Vector3.UNIT_Z));
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _origin.set((Vector3) capsule.readSavable("origin", new Vector3(Vector3.ZERO)));
         _direction.set((Vector3) capsule.readSavable("direction", new Vector3(Vector3.UNIT_Z)));
@@ -110,6 +113,7 @@ public abstract class Line3Base implements Savable, Externalizable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @Override
     public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         setOrigin((Vector3) in.readObject());
         setDirection((Vector3) in.readObject());
@@ -122,6 +126,7 @@ public abstract class Line3Base implements Savable, Externalizable {
      *            ObjectOutput
      * @throws IOException
      */
+    @Override
     public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeObject(_origin);
         out.writeObject(_direction);

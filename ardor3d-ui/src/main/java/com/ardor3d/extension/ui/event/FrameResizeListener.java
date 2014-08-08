@@ -28,6 +28,7 @@ public final class FrameResizeListener implements DragListener {
         _uiFrameStatusBar = uiFrameStatusBar;
     }
 
+    @Override
     public void startDrag(final int mouseX, final int mouseY) {
         final Vector3 vec = Vector3.fetchTempInstance();
         vec.set(mouseX, mouseY, 0);
@@ -44,10 +45,12 @@ public final class FrameResizeListener implements DragListener {
         _initFrameTransform.set(frame.getWorldTransform());
     }
 
+    @Override
     public void drag(final int mouseX, final int mouseY) {
         resizeFrameByPosition(mouseX, mouseY);
     }
 
+    @Override
     public void endDrag(final UIComponent component, final int mouseX, final int mouseY) {
         resizeFrameByPosition(mouseX, mouseY);
     }
@@ -104,6 +107,7 @@ public final class FrameResizeListener implements DragListener {
         frame.layout();
     }
 
+    @Override
     public boolean isDragHandle(final UIComponent component, final int mouseX, final int mouseY) {
         return component == _uiFrameStatusBar.getResizeButton();
     }

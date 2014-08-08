@@ -112,6 +112,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
                 public void componentResized(final ComponentEvent e) {
                     GameTaskQueueManager.getManager(_glCanvas.getCanvasRenderer().getRenderContext()).update(
                             new Callable<Void>() {
+                                @Override
                                 public Void call() throws Exception {
                                     final Camera cam = _glCanvas.getCanvasRenderer().getCamera();
                                     cam.resize(getWidth(), getHeight());
@@ -221,6 +222,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyReleasedCondition(Key.F), new TriggerAction() {
 
+            @Override
             public void perform(final com.ardor3d.framework.Canvas source, final TwoInputStates inputState,
                     final double tpf) {
 
@@ -243,6 +245,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyReleasedCondition(Key.V), new TriggerAction() {
+            @Override
             public void perform(final com.ardor3d.framework.Canvas source, final TwoInputStates inputState,
                     final double tpf) {
                 _glCanvas.setVSyncEnabled(true);
@@ -250,6 +253,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyReleasedCondition(Key.B), new TriggerAction() {
+            @Override
             public void perform(final com.ardor3d.framework.Canvas source, final TwoInputStates inputState,
                     final double tpf) {
                 _glCanvas.setVSyncEnabled(false);
@@ -258,6 +262,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonPressedCondition(MouseButton.LEFT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final com.ardor3d.framework.Canvas source, final TwoInputStates inputState,
                             final double tpf) {
                         if (_mouseManager.isSetGrabbedSupported()) {
@@ -268,6 +273,7 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseButtonReleasedCondition(MouseButton.LEFT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final com.ardor3d.framework.Canvas source, final TwoInputStates inputState,
                             final double tpf) {
                         if (_mouseManager.isSetGrabbedSupported()) {
@@ -297,11 +303,13 @@ public abstract class JoglBaseApplet extends Applet implements Scene {
         _root.setRenderState(buf);
     }
 
+    @Override
     public PickResults doPick(final Ray3 pickRay) {
         // ignore
         return null;
     }
 
+    @Override
     public boolean renderUnto(final Renderer renderer) {
         // Execute renderQueue item
         GameTaskQueueManager.getManager(_glCanvas.getCanvasRenderer().getRenderContext())

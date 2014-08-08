@@ -59,6 +59,7 @@ public class LittleEndianRandomAccessDataInput implements DataInput {
         _contents = contents;
     }
 
+    @Override
     public final int readUnsignedShort() throws IOException {
         return (readByte() & 0xff) | ((readByte() & 0xff) << 8);
     }
@@ -67,48 +68,59 @@ public class LittleEndianRandomAccessDataInput implements DataInput {
         return ((readByte() & 0xff) | ((readByte() & 0xff) << 8) | ((readByte() & 0xff) << 16) | (((long) (readByte() & 0xff)) << 24));
     }
 
+    @Override
     public final boolean readBoolean() throws IOException {
         return (readByte() != 0);
     }
 
+    @Override
     public final byte readByte() throws IOException {
         return _contents.get();
     }
 
+    @Override
     public final int readUnsignedByte() throws IOException {
         return readByte() & 0xff;
     }
 
+    @Override
     public final short readShort() throws IOException {
         return (short) readUnsignedShort();
     }
 
+    @Override
     public final char readChar() throws IOException {
         return (char) readUnsignedShort();
     }
 
+    @Override
     public final int readInt() throws IOException {
         return ((readByte() & 0xff) | ((readByte() & 0xff) << 8) | ((readByte() & 0xff) << 16) | ((readByte() & 0xff) << 24));
     }
 
+    @Override
     public final long readLong() throws IOException {
         return ((readByte() & 0xff) | ((long) (readByte() & 0xff) << 8) | ((long) (readByte() & 0xff) << 16)
                 | ((long) (readByte() & 0xff) << 24) | ((long) (readByte() & 0xff) << 32)
                 | ((long) (readByte() & 0xff) << 40) | ((long) (readByte() & 0xff) << 48) | ((long) (readByte() & 0xff) << 56));
     }
 
+    @Override
     public final float readFloat() throws IOException {
         return Float.intBitsToFloat(readInt());
     }
 
+    @Override
     public final double readDouble() throws IOException {
         return Double.longBitsToDouble(readLong());
     }
 
+    @Override
     public final void readFully(final byte b[]) throws IOException {
         readFully(b, 0, b.length);
     }
 
+    @Override
     public final void readFully(final byte b[], final int off, final int len) throws IOException {
         if (len - off + _contents.position() > _contents.capacity()) {
             throw new EOFException("EOF reached");
@@ -117,6 +129,7 @@ public class LittleEndianRandomAccessDataInput implements DataInput {
         }
     }
 
+    @Override
     public final int skipBytes(final int n) throws IOException {
         if (_contents.remaining() >= n) {
             _contents.position(_contents.position() + n);
@@ -155,6 +168,7 @@ public class LittleEndianRandomAccessDataInput implements DataInput {
      * @throws IOException
      *             if this method is called.
      */
+    @Override
     public final String readLine() throws IOException {
         throw new IOException("operation unsupported.");
     }
@@ -165,6 +179,7 @@ public class LittleEndianRandomAccessDataInput implements DataInput {
      * @throws IOException
      *             if this method is called.
      */
+    @Override
     public final String readUTF() throws IOException {
         throw new IOException("operation unsupported.");
     }

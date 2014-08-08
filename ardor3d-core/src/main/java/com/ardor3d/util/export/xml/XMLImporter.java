@@ -32,6 +32,7 @@ public class XMLImporter implements Ardor3dImporter {
 
     public XMLImporter() {}
 
+    @Override
     public Savable load(final InputStream is) throws IOException {
         try {
             final DOMInputCapsule _domIn = new DOMInputCapsule(DocumentBuilderFactory.newInstance()
@@ -48,14 +49,17 @@ public class XMLImporter implements Ardor3dImporter {
         }
     }
 
+    @Override
     public Savable load(final URL url) throws IOException {
         return load(url.openStream());
     }
 
+    @Override
     public Savable load(final File f) throws IOException {
         return load(new FileInputStream(f));
     }
 
+    @Override
     public Savable load(final byte[] data) throws IOException {
         return load(new ByteArrayInputStream(data));
     }

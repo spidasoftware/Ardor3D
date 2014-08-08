@@ -32,6 +32,7 @@ public abstract class LightUtil {
             _sp = sp;
         }
 
+        @Override
         public int compare(final Light l1, final Light l2) {
             final double v1 = getValueFor(l1, _sp.getWorldBound());
             final double v2 = getValueFor(l2, _sp.getWorldBound());

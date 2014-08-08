@@ -75,6 +75,7 @@ public class SceneCompiler {
             _renderer = renderer;
         }
 
+        @Override
         public void visit(final Spatial spatial) {
             if (spatial instanceof Mesh) {
                 final Mesh mesh = (Mesh) spatial;

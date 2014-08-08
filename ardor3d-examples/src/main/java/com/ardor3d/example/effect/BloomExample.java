@@ -92,6 +92,7 @@ public class BloomExample extends ExampleBase {
         _canvas.getCanvasRenderer().getCamera().lookAt(new Vector3(0, 0, 0), Vector3.UNIT_Y);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 updateText();
             }
@@ -147,72 +148,84 @@ public class BloomExample extends ExampleBase {
         _passManager.add(renderPass);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ONE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setEnabled(!bloomRenderPass.isEnabled());
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.TWO), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setBlurSize(bloomRenderPass.getBlurSize() - 0.001f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.THREE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setBlurSize(bloomRenderPass.getBlurSize() + 0.001f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FOUR), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setExposurePow(bloomRenderPass.getExposurePow() - 1.0f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FIVE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setExposurePow(bloomRenderPass.getExposurePow() + 1.0f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SIX), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setExposureCutoff(bloomRenderPass.getExposureCutoff() - 0.1f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SEVEN), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setExposureCutoff(bloomRenderPass.getExposureCutoff() + 0.1f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.EIGHT), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setBlurIntensityMultiplier(bloomRenderPass.getBlurIntensityMultiplier() - 0.1f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.NINE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setBlurIntensityMultiplier(bloomRenderPass.getBlurIntensityMultiplier() + 0.1f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ZERO), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.resetParameters();
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.J), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setUseCurrentScene(!bloomRenderPass.useCurrentScene());
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 bloomRenderPass.setUseSeparateConvolution(!bloomRenderPass.isUseSeparateConvolution());
                 updateText();
@@ -250,6 +263,7 @@ public class BloomExample extends ExampleBase {
             private double timer = 0;
             private final Matrix3 rotation = new Matrix3();
 
+            @Override
             public void update(final double time, final Torus caller) {
                 timer += time * 0.5;
                 caller.setTranslation(Math.sin(timer) * 40.0, Math.sin(timer) * 40.0, Math.cos(timer) * 40.0);

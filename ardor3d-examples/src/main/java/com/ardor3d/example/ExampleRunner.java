@@ -114,6 +114,7 @@ public class ExampleRunner extends JFrame {
                     "com/ardor3d/example/media/images/ardor3d_white_256.jpg") + "\"></p></body></html>";
     private static Comparator<Class<?>> classComparator = new Comparator<Class<?>>() {
 
+        @Override
         public int compare(final Class<?> o1, final Class<?> o2) {
             return o1.getCanonicalName().compareTo(o2.getCanonicalName());
         }
@@ -130,14 +131,17 @@ public class ExampleRunner extends JFrame {
         tfPattern = new ErasableTextField(10);
         tfPattern.getDocument().addDocumentListener(new DocumentListener() {
 
+            @Override
             public void removeUpdate(final DocumentEvent e) {
                 search();
             }
 
+            @Override
             public void insertUpdate(final DocumentEvent e) {
                 search();
             }
 
+            @Override
             public void changedUpdate(final DocumentEvent e) {
                 search();
             }
@@ -152,6 +156,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.SHORT_DESCRIPTION, "Expand all branches");
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 if (((JToggleButton) e.getSource()).isSelected()) {
                     for (int row = 0; row < tree.getRowCount(); row++) {
@@ -192,6 +197,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control R"));
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 runSelected();
             }
@@ -209,6 +215,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control B"));
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 browseSelected();
             }
@@ -224,6 +231,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control P"));
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 navigateInMatches(-1);
             }
@@ -239,6 +247,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control N"));
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 navigateInMatches(1);
             }
@@ -254,6 +263,7 @@ public class ExampleRunner extends JFrame {
                 putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke("control F"));
             }
 
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 tree.setSelectionRow(0);
                 navigateInMatches(1);
@@ -306,6 +316,7 @@ public class ExampleRunner extends JFrame {
 
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
 
+            @Override
             public void valueChanged(final TreeSelectionEvent e) {
                 updateDescription();
                 updateActionStatus();
@@ -507,10 +518,12 @@ public class ExampleRunner extends JFrame {
         private int size;
         private int matchCount = 0;
 
+        @Override
         public void addTreeModelListener(final TreeModelListener l) {
             listeners.add(TreeModelListener.class, l);
         }
 
+        @Override
         public Object getChild(final Object parent, final int index) {
             if (root.equals(parent)) {
                 final Vector<Package> vec = new Vector<Package>(classes.keySet());
@@ -520,6 +533,7 @@ public class ExampleRunner extends JFrame {
             return cl == null ? null : cl.get(index);
         }
 
+        @Override
         public int getChildCount(final Object parent) {
             if (root.equals(parent)) {
                 return classes.size();
@@ -528,6 +542,7 @@ public class ExampleRunner extends JFrame {
             return cl == null ? 0 : cl.size();
         }
 
+        @Override
         public int getIndexOfChild(final Object parent, final Object child) {
             if (root.equals(parent)) {
                 final Vector<Package> vec = new Vector<Package>(classes.keySet());
@@ -537,6 +552,7 @@ public class ExampleRunner extends JFrame {
             return cl == null ? 0 : cl.indexOf(child);
         }
 
+        @Override
         public Object getRoot() {
             return root;
         }
@@ -558,6 +574,7 @@ public class ExampleRunner extends JFrame {
             Collections.sort(cl, classComparator);
         }
 
+        @Override
         public int updateMatches(final String pattern) {
             int numberMatches = 0;
             final String lcPattern = pattern.toLowerCase();
@@ -610,6 +627,7 @@ public class ExampleRunner extends JFrame {
             return numberMatches;
         }
 
+        @Override
         public boolean matches(final Object value) {
             if (value instanceof Class<?>) {
                 return classMatches.get(value);
@@ -619,14 +637,17 @@ public class ExampleRunner extends JFrame {
             return res == null ? false : res;
         }
 
+        @Override
         public boolean isLeaf(final Object node) {
             return node instanceof Class<?>;
         }
 
+        @Override
         public void removeTreeModelListener(final TreeModelListener l) {
             listeners.remove(TreeModelListener.class, l);
         }
 
+        @Override
         public void valueForPathChanged(final TreePath path, final Object newValue) {
             fireTreeNodeChanged(path);
         }
@@ -641,6 +662,7 @@ public class ExampleRunner extends JFrame {
                     /**
                      * @see FileFilter
                      */
+                    @Override
                     public boolean accept(final File pathname) {
                         return (pathname.isDirectory() && (pathname.getName().length() == 0 || pathname.getName()
                                 .charAt(0) != '.'))
@@ -838,6 +860,7 @@ public class ExampleRunner extends JFrame {
             this.searchFilter = searchFilter;
         }
 
+        @Override
         public Component getTreeCellRendererComponent(final JTree tree, final Object value, final boolean selected,
                 final boolean expanded, final boolean leaf, final int row, final boolean hasFocus) {
             if (value == null) {
@@ -969,6 +992,7 @@ public class ExampleRunner extends JFrame {
                     putValue(Action.SMALL_ICON, getIcon("edit-clear-locationbar-rtl.png"));
                 }
 
+                @Override
                 public void actionPerformed(final ActionEvent e) {
                     textField.setText("");
                 }

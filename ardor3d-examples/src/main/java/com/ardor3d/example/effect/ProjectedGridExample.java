@@ -96,30 +96,35 @@ public class ProjectedGridExample extends ExampleBase {
         _root.attachChild(projectedGrid);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 projectedGrid.setFreezeUpdate(!projectedGrid.isFreezeUpdate());
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ONE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 projectedGrid.setNrUpdateThreads(projectedGrid.getNrUpdateThreads() - 1);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.TWO), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 projectedGrid.setNrUpdateThreads(projectedGrid.getNrUpdateThreads() + 1);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.THREE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 projectedGrid.setDrawDebug(!projectedGrid.isDrawDebug());
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FOUR), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 projectedGrid.setDrawDebug(true);
                 animateExternalCamera = !animateExternalCamera;

@@ -18,6 +18,7 @@ public abstract class SavableParticleEmitter implements Savable, ParticleEmitter
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends SavableParticleEmitter> getClassTag() {
         return this.getClass();
     }

@@ -25,6 +25,7 @@ public class Functions {
      */
     public static Function3D constant(final double constant) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return constant;
             }
@@ -39,6 +40,7 @@ public class Functions {
      */
     public static Function3D scaleBias(final Function3D source, final double scale, final double bias) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return source.eval(x, y, z) * scale + bias;
             }
@@ -51,6 +53,7 @@ public class Functions {
      */
     public static Function3D abs(final Function3D source) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return Math.abs(source.eval(x, y, z));
             }
@@ -65,6 +68,7 @@ public class Functions {
      */
     public static Function3D clamp(final Function3D source, final double min, final double max) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return MathUtils.clamp(source.eval(x, y, z), min, max);
             }
@@ -77,6 +81,7 @@ public class Functions {
      */
     public static Function3D invert(final Function3D source) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return -source.eval(x, y, z);
             }
@@ -90,6 +95,7 @@ public class Functions {
      */
     public static Function3D add(final Function3D sourceA, final Function3D sourceB) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return sourceA.eval(x, y, z) + sourceB.eval(x, y, z);
             }
@@ -103,6 +109,7 @@ public class Functions {
      */
     public static Function3D multiply(final Function3D sourceA, final Function3D sourceB) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return sourceA.eval(x, y, z) * sourceB.eval(x, y, z);
             }
@@ -116,6 +123,7 @@ public class Functions {
      */
     public static Function3D min(final Function3D sourceA, final Function3D sourceB) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return Math.min(sourceA.eval(x, y, z), sourceB.eval(x, y, z));
             }
@@ -129,6 +137,7 @@ public class Functions {
      */
     public static Function3D max(final Function3D sourceA, final Function3D sourceB) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return Math.max(sourceA.eval(x, y, z), sourceB.eval(x, y, z));
             }
@@ -145,6 +154,7 @@ public class Functions {
      */
     public static Function3D lerp(final Function3D sourceA, final Function3D sourceB, final double amount) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return MathUtils.lerp(amount, sourceA.eval(x, y, z), sourceB.eval(x, y, z));
             }
@@ -159,6 +169,7 @@ public class Functions {
      */
     public static Function3D rotateInput(final Function3D source, final ReadOnlyMatrix3 rotation) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 final Vector3 temp = Vector3.fetchTempInstance();
                 temp.set(x, y, z);
@@ -180,6 +191,7 @@ public class Functions {
     public static Function3D scaleInput(final Function3D source, final double scaleX, final double scaleY,
             final double scaleZ) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return source.eval(x * scaleX, y * scaleY, z * scaleZ);
             }
@@ -196,6 +208,7 @@ public class Functions {
     public static Function3D translateInput(final Function3D source, final double transX, final double transY,
             final double transZ) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return source.eval(x + transX, y + transY, z + transZ);
             }
@@ -213,6 +226,7 @@ public class Functions {
     public static Function3D remap(final Function3D source, final double oldLow, final double oldHigh,
             final double newLow, final double newHigh) {
         return new Function3D() {
+            @Override
             public double eval(final double x, final double y, final double z) {
                 double val = source.eval(x, y, z);
                 // Zero out old domain
@@ -233,6 +247,7 @@ public class Functions {
         return new Function3D() {
             SimplexNoise noiseGenerator = new SimplexNoise();
 
+            @Override
             public double eval(final double x, final double y, final double z) {
                 return noiseGenerator.noise(x, y, z);
             }

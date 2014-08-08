@@ -105,6 +105,7 @@ public class DegenerateTrianglesExample extends ExampleBase {
         degenerateStripMesh.getSceneHints().setCullHint(CullHint.Always);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showDegenerateMesh = !showDegenerateMesh;
                 if (showDegenerateMesh) {

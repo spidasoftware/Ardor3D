@@ -39,6 +39,7 @@ public abstract class AbstractBufferData<T extends Buffer> {
 
     static {
         ContextManager.addContextCleanListener(new ContextCleanListener() {
+            @Override
             public void cleanForContext(final RenderContext renderContext) {
                 AbstractBufferData.cleanAllVBOs(null, renderContext);
             }
@@ -301,6 +302,7 @@ public abstract class AbstractBufferData<T extends Buffer> {
             else {
                 GameTaskQueueManager.getManager(ContextManager.getContextForRef(glref)).render(
                         new RendererCallable<Void>() {
+                            @Override
                             public Void call() throws Exception {
                                 getRenderer().deleteVBOs(idMap.get(glref));
                                 return null;

@@ -120,6 +120,7 @@ public class ViewportExample extends ExampleBase {
         super.registerInputTriggers();
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.V), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
 
                 fullViewport = !fullViewport;

@@ -115,6 +115,7 @@ public class VBOSpeedExample extends ExampleBase {
         }
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 vboMode = (vboMode + 1) % 3;
                 if (vboMode == 0) {
@@ -123,6 +124,7 @@ public class VBOSpeedExample extends ExampleBase {
                     // run this in the opengl thread
                     GameTaskQueueManager.getManager(_canvas.getCanvasRenderer().getRenderContext()).render(
                             new Callable<Void>() {
+                                @Override
                                 public Void call() throws Exception {
                                     final DeleteVBOsVisitor viz = new DeleteVBOsVisitor(_canvas.getCanvasRenderer()
                                             .getRenderer());

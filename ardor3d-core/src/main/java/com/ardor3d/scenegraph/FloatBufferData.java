@@ -126,6 +126,7 @@ public class FloatBufferData extends AbstractBufferData<FloatBuffer> implements 
         return copy;
     }
 
+    @Override
     public Class<? extends FloatBufferData> getClassTag() {
         return getClass();
     }

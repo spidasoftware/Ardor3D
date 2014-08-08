@@ -77,6 +77,7 @@ public abstract class AbstractUITextEntryComponent extends StateBasedUIComponent
     /**
      * @return the text value of this text entry widget
      */
+    @Override
     public String getText() {
         return _uiText != null ? _uiText.getText() : "";
     }
@@ -87,6 +88,7 @@ public abstract class AbstractUITextEntryComponent extends StateBasedUIComponent
      * @param text
      *            the new text
      */
+    @Override
     public void setText(String text) {
         if (text != null && text.length() == 0) {
             text = null;
@@ -111,10 +113,12 @@ public abstract class AbstractUITextEntryComponent extends StateBasedUIComponent
         updateMinimumSizeFromContents();
     }
 
+    @Override
     public boolean isStyledText() {
         return _styled;
     }
 
+    @Override
     public void setStyledText(final boolean value) {
         _styled = value;
     }

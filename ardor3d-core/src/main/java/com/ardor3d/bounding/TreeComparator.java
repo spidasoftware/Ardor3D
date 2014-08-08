@@ -37,6 +37,7 @@ public class TreeComparator implements Comparator<PrimitiveKey> {
         _mesh = mesh;
     }
 
+    @Override
     public int compare(final PrimitiveKey o1, final PrimitiveKey o2) {
 
         if (o1.equals(o2)) {

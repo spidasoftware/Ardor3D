@@ -276,6 +276,7 @@ public class BubbleMarkExample implements Scene {
 
     // ------ Scene methods ------
 
+    @Override
     public boolean renderUnto(final Renderer renderer) {
         if (!canvas.isClosing()) {
 
@@ -287,6 +288,7 @@ public class BubbleMarkExample implements Scene {
         return false;
     }
 
+    @Override
     public PickResults doPick(final Ray3 pickRay) {
         // Ignore
         return null;

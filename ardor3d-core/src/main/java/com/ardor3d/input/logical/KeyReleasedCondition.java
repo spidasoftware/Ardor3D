@@ -38,6 +38,7 @@ public final class KeyReleasedCondition implements Predicate<TwoInputStates> {
         this.key = key;
     }
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         final InputState currentState = states.getCurrent();
         final InputState previousState = states.getPrevious();

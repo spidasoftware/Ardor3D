@@ -16,6 +16,7 @@ import com.ardor3d.framework.Canvas;
 
 public class BasicTriggersApplier implements LogicalTriggersApplier {
 
+    @Override
     public void checkAndPerformTriggers(final Set<InputTrigger> triggers, final Canvas source,
             final TwoInputStates states, final double tpf) {
         for (final InputTrigger trigger : triggers) {

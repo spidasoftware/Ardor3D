@@ -22,25 +22,31 @@ public class DummyMouseWrapper implements MouseWrapper {
 
     PeekingIterator<MouseState> empty = new PeekingIterator<MouseState>() {
 
+        @Override
         public boolean hasNext() {
             return false;
         }
 
+        @Override
         public void remove() {}
 
+        @Override
         public MouseState peek() {
             return null;
         }
 
+        @Override
         public MouseState next() {
             return null;
         }
     };
 
+    @Override
     public PeekingIterator<MouseState> getEvents() {
         return empty;
     }
 
+    @Override
     public void init() {
         ; // ignore, does nothing
     }

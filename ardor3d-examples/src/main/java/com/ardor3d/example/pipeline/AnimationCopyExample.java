@@ -166,6 +166,7 @@ public class AnimationCopyExample extends ExampleBase {
         runWalkButton.addActionListener(new ActionListener() {
             boolean walk = true;
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 if (!walk) {
                     if (manager.getBaseAnimationLayer().doTransition("walk")) {
@@ -186,6 +187,7 @@ public class AnimationCopyExample extends ExampleBase {
         punchButton
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, runWalkButton, Alignment.BOTTOM_LEFT, 0, -5));
         punchButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 manager.findAnimationLayer("punch").setCurrentState("punch_right", true);
                 punchButton.setEnabled(false);
@@ -198,6 +200,7 @@ public class AnimationCopyExample extends ExampleBase {
         headCheck.setSelected(true);
         headCheck.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 manager.getValuesStore().put("head_blend", headCheck.isSelected() ? 1.0 : 0.0);
             }
@@ -209,6 +212,7 @@ public class AnimationCopyExample extends ExampleBase {
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, headCheck, Alignment.BOTTOM_LEFT, 0, -5));
         gpuSkinningCheck.setSelected(false);
         gpuSkinningCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 _root.acceptVisitor(new Visitor() {
                     @Override
@@ -234,6 +238,7 @@ public class AnimationCopyExample extends ExampleBase {
         vboCheck.setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, gpuSkinningCheck, Alignment.BOTTOM_LEFT, 0, -5));
         vboCheck.setSelected(false);
         vboCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 skNode.getSceneHints().setDataMode(vboCheck.isSelected() ? DataMode.VBO : DataMode.Arrays);
                 gpuShader.setUseAttributeVBO(vboCheck.isSelected());
@@ -247,6 +252,7 @@ public class AnimationCopyExample extends ExampleBase {
         skeletonCheck.setSelected(showSkeleton);
         skeletonCheck.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showSkeleton = skeletonCheck.isSelected();
                 boneLabelCheck.setEnabled(showSkeleton);
@@ -260,6 +266,7 @@ public class AnimationCopyExample extends ExampleBase {
         boneLabelCheck.setEnabled(showSkeleton);
         boneLabelCheck.addActionListener(new ActionListener() {
 
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showJointLabels = boneLabelCheck.isSelected();
             }
@@ -373,6 +380,7 @@ public class AnimationCopyExample extends ExampleBase {
         // Add a call back to load clips.
         final InputStore input = new InputStore();
         input.getClips().setMissCallback(new MissingCallback<String, AnimationClip>() {
+            @Override
             public AnimationClip getValue(final String key) {
                 try {
                     final ColladaStorage storage1 = colladaImporter.load("collada/skeleton/" + key + ".dae");
@@ -404,6 +412,7 @@ public class AnimationCopyExample extends ExampleBase {
         _root.addController(new SpatialController<Node>() {
             private final Quaternion headRotation = new Quaternion();
 
+            @Override
             public void update(final double time, final Node caller) {
                 // update the head's position
                 if (headCheck != null && headCheck.isSelected()) {
@@ -425,6 +434,7 @@ public class AnimationCopyExample extends ExampleBase {
 
         // add callback for our UI
         manager.findClipInstance("skeleton.punch").addAnimationListener(new AnimationListener() {
+            @Override
             public void animationFinished(final AnimationClipInstance source) {
                 punchButton.setEnabled(true);
             }

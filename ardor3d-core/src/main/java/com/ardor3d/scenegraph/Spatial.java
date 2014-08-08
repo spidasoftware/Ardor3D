@@ -258,6 +258,7 @@ public abstract class Spatial implements Savable, Hintable {
     /**
      * @see Hintable#getParentHintable()
      */
+    @Override
     public Hintable getParentHintable() {
         return _parent;
     }
@@ -267,6 +268,7 @@ public abstract class Spatial implements Savable, Hintable {
      * 
      * @return the scene hints set on this Spatial
      */
+    @Override
     public SceneHints getSceneHints() {
         return _sceneHints;
     }
@@ -1349,6 +1351,7 @@ public abstract class Spatial implements Savable, Hintable {
     /**
      * @see Savable#getClassTag()
      */
+    @Override
     public Class<? extends Spatial> getClassTag() {
         return this.getClass();
     }
@@ -1360,6 +1363,7 @@ public abstract class Spatial implements Savable, Hintable {
      *             Signals that an I/O exception has occurred.
      * @see Savable#read(InputCapsule)
      */
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _name = capsule.readString("name", null);
 
@@ -1398,6 +1402,7 @@ public abstract class Spatial implements Savable, Hintable {
      *             Signals that an I/O exception has occurred.
      * @see Savable#write(OutputCapsule)
      */
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_name, "name", null);
 

@@ -19,6 +19,7 @@ import com.google.common.base.Predicate;
  */
 @Immutable
 public final class MouseWheelMovedCondition implements Predicate<TwoInputStates> {
+    @Override
     public boolean apply(final TwoInputStates states) {
         final InputState currentState = states.getCurrent();
         final InputState previousState = states.getPrevious();

@@ -81,6 +81,7 @@ public class ManyLightsExample extends ExampleBase {
             double timeZ = rand.nextDouble() * Math.PI * 8;
             double speed = MathUtils.nextRandomDouble();
 
+            @Override
             public void update(final double tpf, final Spatial caller) {
                 timeX += tpf * speed;
                 timeY += tpf * speed;

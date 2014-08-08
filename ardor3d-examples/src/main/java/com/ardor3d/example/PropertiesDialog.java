@@ -273,6 +273,7 @@ public final class PropertiesDialog extends JDialog {
         fullscreenBox = new JCheckBox("Fullscreen?");
         fullscreenBox.setSelected(source.isFullscreen());
         fullscreenBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 updateResolutionChoices();
             }
@@ -295,6 +296,7 @@ public final class PropertiesDialog extends JDialog {
         // Set the button action listeners. Cancel disposes without saving, OK
         // saves.
         ok.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 if (verifyAndSaveCurrentSelection()) {
                     dispose();
@@ -303,6 +305,7 @@ public final class PropertiesDialog extends JDialog {
         });
 
         cancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 cancelled = true;
                 dispose();
@@ -414,6 +417,7 @@ public final class PropertiesDialog extends JDialog {
 
         resolutionBox.setSelectedItem(source.getWidth() + " x " + source.getHeight());
         resolutionBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent e) {
                 updateDisplayChoices();
             }
@@ -540,6 +544,7 @@ public final class PropertiesDialog extends JDialog {
      */
     private static String[] getDepths(final String resolution, final DisplayMode[] modes) {
         final Set<String> depths = new TreeSet<String>(new Comparator<String>() {
+            @Override
             public int compare(final String o1, final String o2) {
                 // reverse order
                 return -o1.compareTo(o2);
@@ -590,6 +595,7 @@ public final class PropertiesDialog extends JDialog {
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
+        @Override
         public int compare(final DisplayMode a, final DisplayMode b) {
             // Width
             if (a.getWidth() != b.getWidth()) {
@@ -630,6 +636,7 @@ public final class PropertiesDialog extends JDialog {
             this.renderer = renderer;
         }
 
+        @Override
         public void run() {
             if (renderer.startsWith("JOGL")) {
                 // TODO: can we implement this?
@@ -655,6 +662,7 @@ public final class PropertiesDialog extends JDialog {
 
         ModesRetriever() {}
 
+        @Override
         public void run() {
             try {
                 modes = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayModes();

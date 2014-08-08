@@ -58,22 +58,27 @@ public abstract class AbstractRenderer implements Renderer {
         }
     }
 
+    @Override
     public boolean isInOrthoMode() {
         return _inOrthoMode;
     }
 
+    @Override
     public ReadOnlyColorRGBA getBackgroundColor() {
         return _backgroundColor;
     }
 
+    @Override
     public RenderQueue getQueue() {
         return _queue;
     }
 
+    @Override
     public boolean isProcessingQueue() {
         return _processingQueue;
     }
 
+    @Override
     public void applyState(final StateType type, final RenderState state) {
         if (Constants.stats) {
             StatCollector.startStat(StatType.STAT_STATES_TIMER);
@@ -165,12 +170,14 @@ public abstract class AbstractRenderer implements Renderer {
         _stencilClearValue = stencilClearValue;
     }
 
+    @Override
     public boolean isClipTestEnabled() {
         final RenderContext context = ContextManager.getCurrentContext();
         final RendererRecord record = context.getRendererRecord();
         return record.isClippingTestEnabled();
     }
 
+    @Override
     public RenderState getProperRenderState(final StateType type, final RenderState current) {
         final RenderContext context = ContextManager.getCurrentContext();
 
@@ -189,6 +196,7 @@ public abstract class AbstractRenderer implements Renderer {
         }
     }
 
+    @Override
     public void setRenderLogic(final RenderLogic renderLogic) {
         this.renderLogic = renderLogic;
     }

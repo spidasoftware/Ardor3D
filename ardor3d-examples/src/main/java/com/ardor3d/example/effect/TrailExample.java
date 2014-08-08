@@ -170,54 +170,63 @@ public class TrailExample extends ExampleBase {
         updateText();
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.ONE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setFacingMode(TrailMesh.FacingMode.Tangent);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.TWO), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setFacingMode(TrailMesh.FacingMode.Billboard);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.THREE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setUpdateMode(TrailMesh.UpdateMode.Step);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FOUR), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setUpdateMode(TrailMesh.UpdateMode.Interpolate);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.FIVE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setUpdateSpeed(trailMesh.getUpdateSpeed() * 2.0f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SIX), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.setUpdateSpeed(trailMesh.getUpdateSpeed() * 0.5f);
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.F), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 updateTrail = !updateTrail;
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.G), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 variableWidth = !variableWidth;
                 updateText();
             }
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.E), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 trailMesh.resetPosition(sphere.getWorldTranslation());
                 updateText();

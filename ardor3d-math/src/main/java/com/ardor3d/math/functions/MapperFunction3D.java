@@ -38,6 +38,7 @@ public class MapperFunction3D implements Function3D {
         _domainEnd = domainEnd;
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         // grab a value from our map function.
         final double mappingValue = MathUtils.clamp(_mapFunction.eval(x, y, z), _domainStart, _domainEnd);

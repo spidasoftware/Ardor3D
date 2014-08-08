@@ -19,25 +19,31 @@ public class DummyControllerWrapper implements ControllerWrapper {
     public static final DummyControllerWrapper INSTANCE = new DummyControllerWrapper();
 
     PeekingIterator<ControllerEvent> empty = new PeekingIterator<ControllerEvent>() {
+        @Override
         public boolean hasNext() {
             return false;
         }
 
+        @Override
         public void remove() {}
 
+        @Override
         public ControllerEvent peek() {
             return null;
         }
 
+        @Override
         public ControllerEvent next() {
             return null;
         }
     };
 
+    @Override
     public PeekingIterator<ControllerEvent> getEvents() {
         return empty;
     }
 
+    @Override
     public void init() {
         ; // ignore, does nothing
     }

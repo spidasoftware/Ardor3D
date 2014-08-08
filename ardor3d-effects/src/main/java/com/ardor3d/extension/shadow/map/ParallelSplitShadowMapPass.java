@@ -763,6 +763,7 @@ public class ParallelSplitShadowMapPass extends Pass {
         private Face cullFace;
         private boolean isVisible;
 
+        @Override
         public void apply(final Renderable renderable) {
             if (renderable instanceof Mesh) {
                 final Mesh mesh = (Mesh) renderable;
@@ -782,6 +783,7 @@ public class ParallelSplitShadowMapPass extends Pass {
             }
         }
 
+        @Override
         public void restore(final Renderable renderable) {
             if (renderable instanceof Mesh) {
                 final Mesh mesh = (Mesh) renderable;

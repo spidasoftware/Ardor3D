@@ -55,6 +55,7 @@ public class UIScrollBar extends UIPanel {
 
         layout();
         final ActionListener al = new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 int direction;
                 if (event.getSource() == btTopLeft) {
@@ -81,6 +82,7 @@ public class UIScrollBar extends UIPanel {
         btTopLeft.addActionListener(al);
         btBottomRight.addActionListener(al);
         slider.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 fireChangeEvent();
             }

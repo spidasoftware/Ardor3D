@@ -200,6 +200,7 @@ public abstract class AbstractTwoStateLerpTransition extends AbstractTransitionS
         return BinaryLERPSource.combineSourceData(sourceAData, sourceBData, getPercent(), _sourceData);
     }
 
+    @Override
     public void replaceState(final AbstractFiniteState currentState, final AbstractFiniteState newState) {
         if (newState != null) {
             if (getStateA() == currentState) {

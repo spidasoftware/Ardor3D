@@ -22,6 +22,7 @@ public class DeleteVBOsVisitor implements Visitor {
         _deleter = deleter;
     }
 
+    @Override
     public void visit(final Spatial spatial) {
         if (spatial instanceof Mesh) {
             final Mesh mesh = (Mesh) spatial;

@@ -209,6 +209,7 @@ public class AnimationDemoExample extends ExampleBase {
         // Add a call back to load clips.
         final InputStore input = new InputStore();
         input.getClips().setMissCallback(new MissingCallback<String, AnimationClip>() {
+            @Override
             public AnimationClip getValue(final String key) {
                 if (!animationStore.containsKey(key)) {
                     try {

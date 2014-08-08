@@ -34,6 +34,7 @@ public class UsageTreeController implements CollisionTreeController {
      * @param desiredSize
      *            the final size of the cache to attempt to reach.
      */
+    @Override
     public void clean(final Map<Mesh, CollisionTree> cache, final List<Mesh> protectedList, final int desiredSize) {
 
         // get the ordered keyset (this will be ordered with oldest to newest).

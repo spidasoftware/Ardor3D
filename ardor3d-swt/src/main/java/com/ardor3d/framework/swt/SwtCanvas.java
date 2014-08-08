@@ -75,11 +75,13 @@ public class SwtCanvas extends GLCanvas implements Canvas {
         _inited = true;
     }
 
+    @Override
     @MainThread
     public void init() {
         privateInit();
     }
 
+    @Override
     @MainThread
     public void draw(final CountDownLatch latch) {
         if (!_inited) {
@@ -98,6 +100,7 @@ public class SwtCanvas extends GLCanvas implements Canvas {
         latch.countDown();
     }
 
+    @Override
     public CanvasRenderer getCanvasRenderer() {
         return _canvasRenderer;
     }

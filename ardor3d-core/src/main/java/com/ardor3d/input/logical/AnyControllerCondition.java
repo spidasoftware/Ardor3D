@@ -15,6 +15,7 @@ import com.google.common.base.Predicate;
 
 public final class AnyControllerCondition implements Predicate<TwoInputStates> {
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         final ControllerState oldState = states.getPrevious().getControllerState();
         final ControllerState currentState = states.getCurrent().getControllerState();

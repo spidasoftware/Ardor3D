@@ -73,6 +73,7 @@ public class RenderEffectsExample extends ExampleBase {
             private final Matrix3 _rotate = new Matrix3();
             private double _angle = 0;
 
+            @Override
             public void update(final double time, final Spatial caller) {
                 // update our rotation
                 _angle = _angle + (_timer.getTimePerFrame() * 25);

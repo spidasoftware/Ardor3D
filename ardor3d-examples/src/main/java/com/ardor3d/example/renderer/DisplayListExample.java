@@ -164,6 +164,7 @@ public class DisplayListExample extends ExampleBase {
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
             private boolean useDL = true;
 
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 useDL = !useDL;
                 if (useDL) {

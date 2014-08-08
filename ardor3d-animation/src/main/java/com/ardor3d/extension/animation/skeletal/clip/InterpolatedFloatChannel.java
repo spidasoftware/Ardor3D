@@ -43,7 +43,7 @@ public class InterpolatedFloatChannel extends AbstractAnimationChannel {
         super(channelName, times);
         _values = values == null ? null : new float[values.length];
         if (_values != null) {
-            System.arraycopy(values, 0, _values, 0, values.length);
+            System.arraycopy(values, 0, _values, 0, _values.length);
         }
     }
 
@@ -133,6 +133,7 @@ public class InterpolatedFloatChannel extends AbstractAnimationChannel {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends InterpolatedFloatChannel> getClassTag() {
         return this.getClass();
     }

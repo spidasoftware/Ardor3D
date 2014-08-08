@@ -24,6 +24,7 @@ public final class ControllerComponentActiveCondition implements Predicate<TwoIn
         componentNames = components;
     }
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         final Map<String, Float> currentStates = states.getCurrent().getControllerState()
                 .getControllerComponentValues(controllerName);

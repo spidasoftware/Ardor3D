@@ -23,6 +23,7 @@ public class RGB8ToRGBFunction implements SourceCacheFunction {
         return INSTANCE;
     }
 
+    @Override
     public void doConversion(final ByteBuffer sourceData, final byte[] store, final int destX, final int destY,
             final int dataSize, final int tileSize) {
         try {

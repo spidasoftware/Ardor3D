@@ -52,6 +52,7 @@ public class MeshEmitter extends SavableParticleEmitter {
         return _onlyVertices;
     }
 
+    @Override
     public Vector3 randomEmissionPoint(final Vector3 store) {
         Vector3 rVal = store;
         if (rVal == null) {
@@ -70,11 +71,13 @@ public class MeshEmitter extends SavableParticleEmitter {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _source = (Mesh) capsule.readSavable("source", null);
         _onlyVertices = capsule.readBoolean("onlyVertices", false);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_source, "source", null);
         capsule.write(_onlyVertices, "onlyVertices", false);

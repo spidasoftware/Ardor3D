@@ -67,6 +67,7 @@ public class BillboardNodeExample extends ExampleBase {
         _root.attachChild(billboard);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 int ordinal = billboard.getAlignment().ordinal() + 1;
                 if (ordinal > BillboardAlignment.values().length - 1) {

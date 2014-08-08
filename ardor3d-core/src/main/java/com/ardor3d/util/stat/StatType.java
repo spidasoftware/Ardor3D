@@ -60,6 +60,7 @@ public class StatType implements Comparable<StatType> {
         return hash;
     }
 
+    @Override
     public int compareTo(final StatType obj) {
         final StatType other = obj;
         return _statName.compareTo(other._statName);

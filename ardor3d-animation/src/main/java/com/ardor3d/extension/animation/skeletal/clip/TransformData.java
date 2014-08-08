@@ -172,16 +172,19 @@ public class TransformData implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends TransformData> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_rotation, "rotation", new Quaternion(Quaternion.IDENTITY));
         capsule.write(_scale, "scale", new Vector3(Vector3.ONE));
         capsule.write(_translation, "translation", new Vector3(Vector3.ZERO));
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         setRotation((Quaternion) capsule.readSavable("rotation", new Quaternion(Quaternion.IDENTITY)));
         setScale((Vector3) capsule.readSavable("scale", new Vector3(Vector3.ONE)));

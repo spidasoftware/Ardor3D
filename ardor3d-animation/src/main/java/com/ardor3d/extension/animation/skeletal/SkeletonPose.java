@@ -234,15 +234,18 @@ public class SkeletonPose implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends SkeletonPose> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_skeleton, "skeleton", null);
         capsule.write(_localTransforms, "localTransforms", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final Skeleton skeleton = (Skeleton) capsule.readSavable("skeleton", null);
         final Transform[] localTransforms = CapsuleUtils.asArray(capsule.readSavableArray("localTransforms", null),

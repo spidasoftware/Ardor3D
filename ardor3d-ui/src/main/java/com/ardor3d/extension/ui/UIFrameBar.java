@@ -47,6 +47,7 @@ public class UIFrameBar extends UIPanel {
         if (buttons.contains(FrameButtons.HELP)) {
             _helpButton = createFrameButton("?");
             _helpButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent event) {
                 // TODO: Implement
                 }
@@ -59,6 +60,7 @@ public class UIFrameBar extends UIPanel {
         if (buttons.contains(FrameButtons.MINIMIZE)) {
             _minimizeButton = createFrameButton("_");
             _minimizeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent event) {
                 // TODO: Implement
                 }
@@ -71,6 +73,7 @@ public class UIFrameBar extends UIPanel {
         if (buttons.contains(FrameButtons.MAXIMIZE)) {
             _maximizeButton = createFrameButton("^");
             _maximizeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent event) {
                     // XXX: Should this also update the button img?
                     final UIFrame frame = (UIFrame) getParent();
@@ -89,6 +92,7 @@ public class UIFrameBar extends UIPanel {
         if (buttons.contains(FrameButtons.CLOSE)) {
             _closeButton = createFrameButton("x");
             _closeButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent event) {
                     ((UIFrame) getParent()).close();
                 }

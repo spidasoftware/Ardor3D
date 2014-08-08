@@ -27,22 +27,27 @@ public class Timer implements ReadOnlyTimer {
         _startTime = System.nanoTime();
     }
 
+    @Override
     public double getTimeInSeconds() {
         return getTime() * INVERSE_TIMER_RESOLUTION;
     }
 
+    @Override
     public long getTime() {
         return System.nanoTime() - _startTime;
     }
 
+    @Override
     public long getResolution() {
         return TIMER_RESOLUTION;
     }
 
+    @Override
     public double getFrameRate() {
         return _fps;
     }
 
+    @Override
     public double getTimePerFrame() {
         return _tpf;
     }

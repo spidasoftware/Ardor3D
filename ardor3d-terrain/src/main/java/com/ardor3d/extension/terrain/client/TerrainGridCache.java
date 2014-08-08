@@ -160,6 +160,7 @@ public class TerrainGridCache implements TerrainCache, Runnable {
         return updateTiles;
     }
 
+    @Override
     public void setCurrentPosition(final int x, final int y) {
         final int tileX = MathUtils.floor((float) x / tileSize);
         final int tileY = MathUtils.floor((float) y / tileSize);
@@ -623,6 +624,7 @@ public class TerrainGridCache implements TerrainCache, Runnable {
         }
     }
 
+    @Override
     public boolean isValid() {
         int nrValid = 0;
         for (final TileLoadingData data : currentTiles) {
@@ -633,10 +635,12 @@ public class TerrainGridCache implements TerrainCache, Runnable {
         return nrValid != 0;
     }
 
+    @Override
     public void setMailBox(final DoubleBufferedList<Region> mailBox) {
         this.mailBox = mailBox;
     }
 
+    @Override
     public void shutdown() {
         exit = true;
         started = false;

@@ -76,6 +76,7 @@ public class URLResourceSource implements ResourceSource {
         _type = type;
     }
 
+    @Override
     public ResourceSource getRelativeSource(final String name) {
         try {
             final URL srcURL = UrlUtils.resolveRelativeURL(_url, "./" + name);
@@ -106,10 +107,12 @@ public class URLResourceSource implements ResourceSource {
         return _url;
     }
 
+    @Override
     public String getName() {
         return _urlToString;
     }
 
+    @Override
     public String getType() {
         return _type;
     }
@@ -118,6 +121,7 @@ public class URLResourceSource implements ResourceSource {
         _type = type;
     }
 
+    @Override
     public InputStream openStream() throws IOException {
         return _url.openStream();
     }
@@ -168,10 +172,12 @@ public class URLResourceSource implements ResourceSource {
         return true;
     }
 
+    @Override
     public Class<?> getClassTag() {
         return URLResourceSource.class;
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final String protocol = capsule.readString("protocol", null);
         final String host = capsule.readString("host", null);
@@ -194,6 +200,7 @@ public class URLResourceSource implements ResourceSource {
         _type = capsule.readString("type", null);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_url.getProtocol(), "protocol", null);
         capsule.write(_url.getHost(), "host", null);

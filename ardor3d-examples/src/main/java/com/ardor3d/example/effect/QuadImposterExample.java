@@ -101,6 +101,7 @@ public class QuadImposterExample extends ExampleBase {
         imposter2.attachChild(scene3);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showImposter = !showImposter;
                 if (showImposter) {

@@ -18,10 +18,12 @@ import com.ardor3d.input.FocusWrapper;
 public class DummyFocusWrapper implements FocusWrapper {
     public static final DummyFocusWrapper INSTANCE = new DummyFocusWrapper();
 
+    @Override
     public void init() {
         ; // ignore, does nothing
     }
 
+    @Override
     public boolean getAndClearFocusLost() {
         return false;
     }

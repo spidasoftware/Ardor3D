@@ -17,6 +17,7 @@ import com.google.common.base.Predicate;
  * Applicable whenever 'any' key has been pressed.
  */
 public class AnyKeyCondition implements Predicate<TwoInputStates> {
+    @Override
     public boolean apply(final TwoInputStates twoInputStates) {
         final InputState currentState = twoInputStates.getCurrent();
         final InputState previousState = twoInputStates.getPrevious();

@@ -48,6 +48,7 @@ public class SwtMouseManager implements MouseManager {
         _control = control;
     }
 
+    @Override
     public void setCursor(final MouseCursor cursor) {
         if (cursor == MouseCursor.SYSTEM_DEFAULT) {
             _control.setCursor(null);
@@ -62,11 +63,13 @@ public class SwtMouseManager implements MouseManager {
         _control.setCursor(swtCursor);
     }
 
+    @Override
     public void setPosition(final int x, final int y) {
         final Point p = new Point(x, _control.getSize().y - y);
         _control.getDisplay().setCursorLocation(_control.toDisplay(p));
     }
 
+    @Override
     public void setGrabbed(final GrabbedState grabbedState) {
         if (!isSetGrabbedSupported()) {
             throw new UnsupportedOperationException();
@@ -105,14 +108,17 @@ public class SwtMouseManager implements MouseManager {
         return _transparentCursor;
     }
 
+    @Override
     public boolean isSetPositionSupported() {
         return true;
     }
 
+    @Override
     public boolean isSetGrabbedSupported() {
         return true;
     }
 
+    @Override
     public GrabbedState getGrabbed() {
         return _grabbedState;
     }

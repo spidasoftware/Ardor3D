@@ -448,10 +448,12 @@ public class SceneHints implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends SceneHints> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _orthoOrder = capsule.readInt("orthoOrder", 0);
         _cullHint = capsule.readEnum("cullMode", CullHint.class, CullHint.Inherit);
@@ -478,6 +480,7 @@ public class SceneHints implements Savable {
         }
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_orthoOrder, "orthoOrder", 0);
         capsule.write(_cullHint, "cullMode", CullHint.Inherit);

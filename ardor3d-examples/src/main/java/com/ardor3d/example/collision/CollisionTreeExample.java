@@ -81,6 +81,7 @@ public class CollisionTreeExample extends ExampleBase {
         torus.addController(new SpatialController<PQTorus>() {
             private double currentTime;
 
+            @Override
             public void update(final double time, final PQTorus caller) {
                 currentTime += time * 0.2;
                 final ReadOnlyVector3 t = caller.getTranslation();

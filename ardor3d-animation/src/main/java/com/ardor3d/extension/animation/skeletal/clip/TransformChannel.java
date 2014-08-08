@@ -269,6 +269,7 @@ public class TransformChannel extends AbstractAnimationChannel {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends TransformChannel> getClassTag() {
         return this.getClass();
     }

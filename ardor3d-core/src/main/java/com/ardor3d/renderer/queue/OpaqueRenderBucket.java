@@ -27,6 +27,7 @@ public class OpaqueRenderBucket extends AbstractRenderBucket {
     }
 
     private class OpaqueComparator implements Comparator<Spatial> {
+        @Override
         public int compare(final Spatial o1, final Spatial o2) {
             if (o1 instanceof Mesh && o2 instanceof Mesh) {
                 return compareByStates((Mesh) o1, (Mesh) o2);
@@ -50,12 +51,20 @@ public class OpaqueRenderBucket extends AbstractRenderBucket {
         private int compareByStates(final Mesh mesh1, final Mesh mesh2) {
             final TextureState ts1 = (TextureState) mesh1.getWorldRenderState(RenderState.StateType.Texture);
             final TextureState ts2 = (TextureState) mesh2.getWorldRenderState(RenderState.StateType.Texture);
-            if (ts1 == ts2) {
-                return 0;
-            } else if (ts1 == null && ts2 != null) {
-                return -1;
-            } else if (ts2 == null && ts1 != null) {
-                return 1;
+            if (ts1 == null) {
+                if (ts2 == null) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            } else {
+                if (ts2 == null) {
+                    return 1;
+                } else {
+                    if (ts1 == ts2) {
+                        return 0;
+                    }
+                }
             }
 
             for (int x = 0, maxIndex = Math.min(ts1.getMaxTextureIndexUsed(), ts2.getMaxTextureIndexUsed()); x <= maxIndex; x++) {

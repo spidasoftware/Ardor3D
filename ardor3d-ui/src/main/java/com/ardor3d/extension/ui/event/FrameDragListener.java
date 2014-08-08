@@ -26,11 +26,13 @@ public class FrameDragListener implements DragListener {
         this.uiFrame = uiFrame;
     }
 
+    @Override
     public void startDrag(final int mouseX, final int mouseY) {
         oldX = mouseX;
         oldY = mouseY;
     }
 
+    @Override
     public void drag(final int mouseX, final int mouseY) {
         if (!uiFrame.isDraggable()) {
             return;
@@ -63,11 +65,13 @@ public class FrameDragListener implements DragListener {
     /**
      * Do nothing.
      */
+    @Override
     public void endDrag(final UIComponent component, final int mouseX, final int mouseY) {}
 
     /**
      * Check if we are dragging's the frames title bar label.
      */
+    @Override
     public boolean isDragHandle(final UIComponent component, final int mouseX, final int mouseY) {
         return component == uiFrame.getTitleBar().getTitleLabel();
     }

@@ -32,6 +32,7 @@ public class CatmullRomSpline implements Spline {
     /**
      * @see #interpolate(ReadOnlyVector3, ReadOnlyVector3, ReadOnlyVector3, ReadOnlyVector3, double, Vector3)
      */
+    @Override
     public Vector3 interpolate(final ReadOnlyVector3 p0, final ReadOnlyVector3 p1, final ReadOnlyVector3 p2,
             final ReadOnlyVector3 p3, final double t) {
 
@@ -56,6 +57,7 @@ public class CatmullRomSpline implements Spline {
      *            The results from the interpolation will be stored in this vector.
      * @return The result vector as a convenience.
      */
+    @Override
     public Vector3 interpolate(final ReadOnlyVector3 p0, final ReadOnlyVector3 p1, final ReadOnlyVector3 p2,
             final ReadOnlyVector3 p3, final double t, final Vector3 result) {
 

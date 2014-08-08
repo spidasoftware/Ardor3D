@@ -57,6 +57,7 @@ public class ArchimedeanSpiralFunction3D implements Function3D {
      * 
      * @return A result which is generally, but not always, in the -1 to 1 range.
      */
+    @Override
     public double eval(final double x, final double y, final double z) {
         final double radius = Math.sqrt(x * x + y * y);
 

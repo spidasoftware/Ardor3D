@@ -20,6 +20,7 @@ public class PointEmitter extends SavableParticleEmitter {
 
     public PointEmitter() {}
 
+    @Override
     public Vector3 randomEmissionPoint(final Vector3 store) {
         Vector3 rVal = store;
         if (rVal == null) {
@@ -34,7 +35,9 @@ public class PointEmitter extends SavableParticleEmitter {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {}
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {}
 }

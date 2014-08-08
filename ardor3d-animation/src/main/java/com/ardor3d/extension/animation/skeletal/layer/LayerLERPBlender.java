@@ -32,10 +32,12 @@ public class LayerLERPBlender implements LayerBlender {
     /** Our second layer... generally the layer we were added to. */
     private AnimationLayer _layerB;
 
+    @Override
     public String getBlendKey() {
         return _blendKey;
     }
 
+    @Override
     public void setBlendKey(final String blendKey) {
         _blendKey = blendKey;
     }
@@ -44,6 +46,7 @@ public class LayerLERPBlender implements LayerBlender {
         return _layerA;
     }
 
+    @Override
     public void setLayerA(final AnimationLayer layer) {
         _layerA = layer;
     }
@@ -52,10 +55,12 @@ public class LayerLERPBlender implements LayerBlender {
         return _layerB;
     }
 
+    @Override
     public void setLayerB(final AnimationLayer layer) {
         _layerB = layer;
     }
 
+    @Override
     public Map<String, ? extends Object> getBlendedSourceData(final AnimationManager manager) {
         // grab our data maps from the two layers...
         // set A

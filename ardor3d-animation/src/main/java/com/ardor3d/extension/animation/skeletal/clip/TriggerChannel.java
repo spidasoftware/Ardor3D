@@ -43,7 +43,7 @@ public class TriggerChannel extends AbstractAnimationChannel {
         super(channelName, times);
         _keys = keys == null ? null : new String[keys.length];
         if (_keys != null) {
-            System.arraycopy(keys, 0, _keys, 0, keys.length);
+            System.arraycopy(keys, 0, _keys, 0, _keys.length);
         }
     }
 
@@ -132,6 +132,7 @@ public class TriggerChannel extends AbstractAnimationChannel {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends TriggerChannel> getClassTag() {
         return this.getClass();
     }

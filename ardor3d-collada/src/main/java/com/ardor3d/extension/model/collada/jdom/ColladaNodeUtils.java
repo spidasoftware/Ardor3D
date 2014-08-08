@@ -64,7 +64,6 @@ public class ColladaNodeUtils {
      *            The collada root element
      * @return Scene as an Node or null if not found
      */
-    @SuppressWarnings("unchecked")
     public Node getVisualScene(final Element colladaRoot) {
         if (colladaRoot.getChild("scene") == null) {
             logger.warning("No scene found in collada file!");
@@ -159,7 +158,6 @@ public class ColladaNodeUtils {
      * @param asset
      * @return
      */
-    @SuppressWarnings("unchecked")
     public AssetData parseAsset(final Element asset) {
         final AssetData assetData = new AssetData();
 
@@ -202,7 +200,6 @@ public class ColladaNodeUtils {
         return assetData;
     }
 
-    @SuppressWarnings("unchecked")
     private void parseContributor(final AssetData assetData, final Element contributor) {
         for (final Element child : contributor.getChildren()) {
             if ("author".equals(child.getName())) {
@@ -240,7 +237,6 @@ public class ColladaNodeUtils {
      * @param dNode
      * @return a new Ardor3D node, created from the given <node> element
      */
-    @SuppressWarnings("unchecked")
     private Node buildNode(final Element dNode, JointNode jointNode) {
         final NodeType nodeType = getNodeType(dNode);
         final JointNode jointChildNode;

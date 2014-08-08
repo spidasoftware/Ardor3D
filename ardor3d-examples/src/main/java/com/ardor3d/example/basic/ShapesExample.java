@@ -168,6 +168,7 @@ public class ShapesExample extends ExampleBase {
         // Add mouse-over to show labels
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseMovedCondition(), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 // Put together a pick ray
                 final Vector2 pos = Vector2.fetchTempInstance().set(inputStates.getCurrent().getMouseState().getX(),

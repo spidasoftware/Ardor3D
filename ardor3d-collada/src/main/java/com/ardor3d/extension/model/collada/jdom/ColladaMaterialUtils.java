@@ -359,7 +359,6 @@ public class ColladaMaterialUtils {
         if ("texture".equals(element.getName()) && _loadTextures) {
             populateTextureState(mesh, element, effect, loadedTextures, info, null);
         }
-        @SuppressWarnings("unchecked")
         final List<Element> children = element.getChildren();
         if (children != null) {
             for (final Element child : children) {
@@ -535,7 +534,6 @@ public class ColladaMaterialUtils {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void bindMaterials(final Element bindMaterial) {
         if (bindMaterial == null || bindMaterial.getChildren().isEmpty()) {
             return;
@@ -553,7 +551,6 @@ public class ColladaMaterialUtils {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void unbindMaterials(final Element bindMaterial) {
         if (bindMaterial == null || bindMaterial.getChildren().isEmpty()) {
             return;

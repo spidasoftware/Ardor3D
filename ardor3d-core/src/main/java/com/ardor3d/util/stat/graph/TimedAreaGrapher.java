@@ -72,6 +72,7 @@ public class TimedAreaGrapher extends AbstractStatGrapher implements TableLinkab
         _graphRoot.getSceneHints().setCullHint(CullHint.Never);
     }
 
+    @Override
     public void statsUpdated() {
         if (!isEnabled() || !Constants.updateGraphs) {
             return;
@@ -282,6 +283,7 @@ public class TimedAreaGrapher extends AbstractStatGrapher implements TableLinkab
         }
     }
 
+    @Override
     public Line updateLineKey(final StatType type, Line lineKey) {
         if (lineKey == null) {
             lineKey = new Line("lk", BufferUtils.createVector3Buffer(2), null, null, null);

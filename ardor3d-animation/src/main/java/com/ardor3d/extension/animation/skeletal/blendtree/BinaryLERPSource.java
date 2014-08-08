@@ -47,6 +47,7 @@ public class BinaryLERPSource extends AbstractTwoPartSource {
         setSourceB(sourceB);
     }
 
+    @Override
     public Map<String, ? extends Object> getSourceData(final AnimationManager manager) {
         // grab our data maps from the two sources
         final Map<String, ? extends Object> sourceAData = getSourceA() != null ? getSourceA().getSourceData(manager)
@@ -58,6 +59,7 @@ public class BinaryLERPSource extends AbstractTwoPartSource {
                 .combineSourceData(sourceAData, sourceBData, manager.getValuesStore().get(getBlendKey()));
     }
 
+    @Override
     public boolean setTime(final double globalTime, final AnimationManager manager) {
         // set our time on the two sub sources
         boolean foundActive = false;
@@ -70,6 +72,7 @@ public class BinaryLERPSource extends AbstractTwoPartSource {
         return foundActive;
     }
 
+    @Override
     public void resetClips(final AnimationManager manager, final double globalStartTime) {
         // reset our two sub sources
         if (getSourceA() != null) {

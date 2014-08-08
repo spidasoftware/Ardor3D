@@ -349,8 +349,8 @@ public class OrbitCamControl {
 
     public void setupMouseTriggers(final LogicalLayer layer, final boolean dragOnly) {
         // Mouse look
-        final Predicate<TwoInputStates> someMouseDown = Predicates.or(TriggerConditions.leftButtonDown(), Predicates
-                .or(TriggerConditions.rightButtonDown(), TriggerConditions.middleButtonDown()));
+        final Predicate<TwoInputStates> someMouseDown = Predicates.or(TriggerConditions.leftButtonDown(),
+                Predicates.or(TriggerConditions.rightButtonDown(), TriggerConditions.middleButtonDown()));
         final Predicate<TwoInputStates> scrollWheelMoved = new MouseWheelMovedCondition();
         final Predicate<TwoInputStates> dragged = Predicates.and(TriggerConditions.mouseMoved(), someMouseDown);
         final TriggerAction mouseAction = new TriggerAction() {
@@ -358,6 +358,7 @@ public class OrbitCamControl {
             // Test boolean to allow us to ignore first mouse event. First event can wildly vary based on platform.
             private boolean firstPing = true;
 
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final MouseState mouse = inputStates.getCurrent().getMouseState();
                 if (mouse.getDx() != 0 || mouse.getDy() != 0) {

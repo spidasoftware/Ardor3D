@@ -42,7 +42,7 @@ public abstract class AbstractAnimationChannel implements Savable {
         _channelName = channelName;
         _times = times == null ? null : new float[times.length];
         if (_times != null) {
-            System.arraycopy(times, 0, _times, 0, times.length);
+            System.arraycopy(times, 0, _times, 0, _times.length);
         }
     }
 
@@ -190,11 +190,13 @@ public abstract class AbstractAnimationChannel implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_channelName, "channelName", null);
         capsule.write(_times, "times", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final String channelName = capsule.readString("channelName", null);
         final float[] times = capsule.readFloatArray("times", null);

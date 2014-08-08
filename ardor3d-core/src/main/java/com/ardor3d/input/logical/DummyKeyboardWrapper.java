@@ -22,25 +22,31 @@ public class DummyKeyboardWrapper implements KeyboardWrapper {
 
     PeekingIterator<KeyEvent> empty = new PeekingIterator<KeyEvent>() {
 
+        @Override
         public boolean hasNext() {
             return false;
         }
 
+        @Override
         public void remove() {}
 
+        @Override
         public KeyEvent peek() {
             return null;
         }
 
+        @Override
         public KeyEvent next() {
             return null;
         }
     };
 
+    @Override
     public PeekingIterator<KeyEvent> getEvents() {
         return empty;
     }
 
+    @Override
     public void init() {
         ; // ignore, does nothing.
     }

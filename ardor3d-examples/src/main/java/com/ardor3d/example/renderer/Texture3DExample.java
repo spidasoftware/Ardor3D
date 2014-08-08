@@ -59,6 +59,7 @@ public class Texture3DExample extends ExampleBase {
         _root.attachChild(sp);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.SPACE), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final Texture tex = createTexture();
                 tex.setEnvironmentalMapMode(EnvironmentalMapMode.ObjectLinear);

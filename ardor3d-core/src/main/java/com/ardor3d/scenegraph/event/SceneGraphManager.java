@@ -47,6 +47,7 @@ public class SceneGraphManager implements DirtyEventListener {
         _listeners.remove(listener);
     }
 
+    @Override
     public boolean spatialDirty(final Spatial spatial, final DirtyType dirtyType) {
         for (final DirtyEventListener listener : _listeners) {
             listener.spatialDirty(spatial, dirtyType);
@@ -54,6 +55,7 @@ public class SceneGraphManager implements DirtyEventListener {
         return false;
     }
 
+    @Override
     public boolean spatialClean(final Spatial spatial, final DirtyType dirtyType) {
         for (final DirtyEventListener listener : _listeners) {
             listener.spatialClean(spatial, dirtyType);

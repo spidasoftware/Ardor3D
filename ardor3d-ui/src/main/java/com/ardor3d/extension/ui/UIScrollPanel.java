@@ -50,6 +50,7 @@ public class UIScrollPanel extends UIPanel {
         add(verticalScrollBar);
         setDoClip(true);
         horizontalScrollBar.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 offsetX = horizontalScrollBar.getValue();
                 fireComponentDirty();
@@ -57,6 +58,7 @@ public class UIScrollPanel extends UIPanel {
             }
         });
         verticalScrollBar.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 offsetY = verticalScrollBar.getValue();
                 fireComponentDirty();

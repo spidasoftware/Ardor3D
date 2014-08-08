@@ -21,6 +21,7 @@ public class SetModelBoundVisitor implements Visitor {
         _bound = bound;
     }
 
+    @Override
     public void visit(final Spatial spatial) {
         if (spatial instanceof Mesh) {
             ((Mesh) spatial).setModelBound(_bound.clone(null));

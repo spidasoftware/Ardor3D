@@ -71,6 +71,7 @@ public class SimpleResourceLocator implements ResourceLocator {
         return _baseDir;
     }
 
+    @Override
     public ResourceSource locateResource(final String resourceName) {
         return doRecursiveLocate(cleanup(resourceName));
     }

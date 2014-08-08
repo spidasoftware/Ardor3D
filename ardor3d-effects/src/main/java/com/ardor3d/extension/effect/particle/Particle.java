@@ -460,6 +460,7 @@ public class Particle implements Savable {
     // Savable interface methods
     // /////
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(startIndex, "startIndex", 0);
         capsule.write(_position, "position", new Vector3(Vector3.ZERO));
@@ -471,6 +472,7 @@ public class Particle implements Savable {
         capsule.write(type, "type", ParticleSystem.ParticleType.Quad);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         startIndex = capsule.readInt("startIndex", 0);
         _position.set((Vector3) capsule.readSavable("position", new Vector3(Vector3.ZERO)));
@@ -482,6 +484,7 @@ public class Particle implements Savable {
         type = capsule.readEnum("type", ParticleSystem.ParticleType.class, ParticleSystem.ParticleType.Quad);
     }
 
+    @Override
     public Class<? extends Particle> getClassTag() {
         return this.getClass();
     }

@@ -44,6 +44,7 @@ public class RidgeFunction3D implements Function3D {
         updateWeights();
     }
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         double value = 0, signal = 0, weight = 1;
         double dx = x * _frequency, dy = y * _frequency, dz = z * _frequency;

@@ -1498,6 +1498,7 @@ public class Camera implements Savable, Externalizable {
         renderer.setModelViewMatrix(_matrixBuffer);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_location, "location", new Vector3(Vector3.ZERO));
         capsule.write(_left, "left", new Vector3(Vector3.UNIT_X));
@@ -1524,6 +1525,7 @@ public class Camera implements Savable, Externalizable {
         capsule.write(_depthRangeFar, "depthRangeFar", 1.0);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _location.set((Vector3) capsule.readSavable("location", new Vector3(Vector3.ZERO)));
         _left.set((Vector3) capsule.readSavable("left", new Vector3(Vector3.UNIT_X)));
@@ -1550,6 +1552,7 @@ public class Camera implements Savable, Externalizable {
         _depthRangeFar = capsule.readDouble("depthRangeFar", 1.0);
     }
 
+    @Override
     public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         _location.set((Vector3) in.readObject());
         _left.set((Vector3) in.readObject());
@@ -1576,6 +1579,7 @@ public class Camera implements Savable, Externalizable {
         _depthRangeFar = in.readDouble();
     }
 
+    @Override
     public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeObject(_location);
         out.writeObject(_left);
@@ -1609,6 +1613,7 @@ public class Camera implements Savable, Externalizable {
                 + " left - " + Arrays.toString(getLeft().toArray(null));
     }
 
+    @Override
     public Class<? extends Camera> getClassTag() {
         return getClass();
     }

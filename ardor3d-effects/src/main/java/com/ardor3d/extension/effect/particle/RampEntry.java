@@ -113,10 +113,12 @@ public class RampEntry implements Savable {
         _offset = offset;
     }
 
+    @Override
     public Class<? extends RampEntry> getClassTag() {
         return getClass();
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _offset = capsule.readDouble("offsetMS", DEFAULT_OFFSET);
         _size = capsule.readDouble("size", DEFAULT_SIZE);
@@ -125,6 +127,7 @@ public class RampEntry implements Savable {
         _color = (ColorRGBA) capsule.readSavable("color", DEFAULT_COLOR);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_offset, "offsetMS", DEFAULT_OFFSET);
         capsule.write(_size, "size", DEFAULT_SIZE);

@@ -14,6 +14,7 @@ import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.Spatial;
 
 public class UpdateModelBoundVisitor implements Visitor {
+    @Override
     public void visit(final Spatial spatial) {
         if (spatial instanceof Mesh) {
             ((Mesh) spatial).updateModelBound();

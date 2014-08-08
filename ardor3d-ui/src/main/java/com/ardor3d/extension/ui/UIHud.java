@@ -532,11 +532,13 @@ public class UIHud extends Node {
      */
     private void setupLogicalLayer() {
         _logicalLayer.registerTrigger(new InputTrigger(new Predicate<TwoInputStates>() {
+            @Override
             public boolean apply(final TwoInputStates arg0) {
                 // always trigger this.
                 return true;
             }
         }, new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 _mouseInputConsumed = offerMouseInputToUI(inputStates);
                 _keyInputConsumed = offerKeyInputToUI(inputStates);

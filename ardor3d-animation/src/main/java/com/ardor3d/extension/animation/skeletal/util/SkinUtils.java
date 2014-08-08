@@ -29,6 +29,7 @@ public class SkinUtils {
      */
     public static void setAutoUpdateBounds(final Spatial root, final boolean doUpdate) {
         root.acceptVisitor(new Visitor() {
+            @Override
             public void visit(final Spatial spatial) {
                 // we only care about SkinnedMesh
                 if (spatial instanceof SkinnedMesh) {

@@ -39,6 +39,7 @@ public final class MouseButtonPressedCondition implements Predicate<TwoInputStat
         _button = button;
     }
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         final InputState currentState = states.getCurrent();
         final InputState previousState = states.getPrevious();

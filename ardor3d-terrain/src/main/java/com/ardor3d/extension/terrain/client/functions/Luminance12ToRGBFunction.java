@@ -24,6 +24,7 @@ public class Luminance12ToRGBFunction implements SourceCacheFunction {
         return INSTANCE;
     }
 
+    @Override
     public void doConversion(final ByteBuffer sourceData, final byte[] store, final int destX, final int destY,
             final int dataSize, final int tileSize) {
         final int offset = (destY * tileSize * dataSize + destX * tileSize) * 3;

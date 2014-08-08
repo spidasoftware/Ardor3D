@@ -131,6 +131,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         final BasicText t6 = createTextLabel("Text5", "[Y] Enable Light Motion.", 5);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.F), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 useDiffuseMap = !useDiffuseMap;
                 gpuShader.setUniform("flags", useNormalMap, useDiffuseMap, useSpecularMap, false);
@@ -143,6 +144,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.NUMPADADD), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 if (quantizationFactor > 1) {
                     quantizationFactor /= 2f;
@@ -153,6 +155,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.NUMPADSUBTRACT),
                 new TriggerAction() {
+                    @Override
                     public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                         if (quantizationFactor < 512) {
                             quantizationFactor *= 2f;
@@ -163,6 +166,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
                 }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.Y), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 updateLight = !updateLight;
                 if (updateLight) {
@@ -174,6 +178,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.P), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 useSpecularMap = !useSpecularMap;
                 gpuShader.setUniform("flags", useNormalMap, useDiffuseMap, useSpecularMap, false);
@@ -186,6 +191,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.U), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 useNormalMap = !useNormalMap;
                 gpuShader.setUniform("flags", useNormalMap, useDiffuseMap, useSpecularMap, false);
@@ -198,6 +204,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.K), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showSkeleton = !showSkeleton;
                 if (showSkeleton) {
@@ -209,6 +216,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
         }));
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.M), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 showMesh = !showMesh;
                 colladaNode.getSceneHints().setCullHint(showMesh ? CullHint.Dynamic : CullHint.Always);
@@ -285,6 +293,7 @@ public class AnimationBlinnPhongExample extends ExampleBase {
             gpuShader.setUniform("specularMap", 2);
 
             colladaNode.acceptVisitor(new Visitor() {
+                @Override
                 public void visit(final Spatial spatial) {
                     if (spatial instanceof SkinnedMesh) {
                         final SkinnedMesh skinnedMesh = (SkinnedMesh) spatial;

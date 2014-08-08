@@ -66,6 +66,7 @@ public class TransformedSubTex extends SubTex implements Comparable<TransformedS
         return _priority;
     }
 
+    @Override
     public int compareTo(final TransformedSubTex other) {
         return _priority - other._priority;
     }

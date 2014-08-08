@@ -315,6 +315,7 @@ public class ProjectedGrid extends Mesh {
                 final int from = sizeY * i / (nrUpdateThreads);
                 final int to = sizeY * (i + 1) / (nrUpdateThreads);
                 final Future<?> future = executorService.submit(new Runnable() {
+                    @Override
                     public void run() {
                         updateGrid(from, to);
                     }
@@ -631,6 +632,7 @@ public class ProjectedGrid extends Mesh {
             namePrefix = "ProjectedGrid Pool-" + poolNumber.getAndIncrement() + "-thread-";
         }
 
+        @Override
         public Thread newThread(final Runnable r) {
             final Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement(), 0);
             if (!t.isDaemon()) {

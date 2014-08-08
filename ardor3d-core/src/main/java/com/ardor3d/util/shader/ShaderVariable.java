@@ -57,16 +57,19 @@ public class ShaderVariable implements Savable {
         }
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(name, "name", "");
         capsule.write(variableID, "variableID", -1);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         name = capsule.readString("name", "");
         variableID = capsule.readInt("variableID", -1);
     }
 
+    @Override
     public Class<? extends ShaderVariable> getClassTag() {
         return this.getClass();
     }

@@ -483,6 +483,7 @@ public class SkinnedMesh extends Mesh implements PoseListener {
     /**
      * Calls to apply our pose on pose update.
      */
+    @Override
     public void poseUpdated(final SkeletonPose pose) {
         // custom behavior?
         if (_customApplier != null) {

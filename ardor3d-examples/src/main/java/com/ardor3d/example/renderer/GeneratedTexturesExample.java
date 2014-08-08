@@ -254,6 +254,7 @@ public class GeneratedTexturesExample extends ExampleBase {
             float ratio = zoom ? 0 : 1;
             float zSpeed = 1;
 
+            @Override
             public void update(final double time, final UIPanel caller) {
                 // update ratio
                 ratio += (zoom ? 1 : -1) * zSpeed * time;
@@ -287,6 +288,7 @@ public class GeneratedTexturesExample extends ExampleBase {
         super.registerInputTriggers();
 
         _logicalLayer.registerTrigger(new InputTrigger(TriggerConditions.mouseMoved(), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 if (!allowClicks || !zoom) {
                     return;

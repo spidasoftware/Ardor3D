@@ -139,39 +139,48 @@ public abstract class AbstractPbufferTextureRenderer implements TextureRenderer 
      * 
      * @return the camera this renderer is using.
      */
+    @Override
     public Camera getCamera() {
         return _camera;
     }
 
+    @Override
     public void setBackgroundColor(final ReadOnlyColorRGBA c) {
         _backgroundColor.set(c);
         _bgColorDirty = true;
     }
 
+    @Override
     public ReadOnlyColorRGBA getBackgroundColor() {
         return _backgroundColor;
     }
 
+    @Override
     public int getWidth() {
         return _width;
     }
 
+    @Override
     public int getHeight() {
         return _height;
     }
 
+    @Override
     public void enforceState(final RenderState state) {
         _enforcedStates.put(state.getType(), state);
     }
 
+    @Override
     public void enforceStates(final EnumMap<StateType, RenderState> states) {
         _enforcedStates.putAll(states);
     }
 
+    @Override
     public void clearEnforcedState(final StateType type) {
         _enforcedStates.remove(type);
     }
 
+    @Override
     public void clearEnforcedStates() {
         _enforcedStates.clear();
     }

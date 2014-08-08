@@ -37,6 +37,7 @@ public final class KeyHeldCondition implements Predicate<TwoInputStates> {
         this.key = key;
     }
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         return states.getCurrent().getKeyboardState().isDown(key);
     }

@@ -17,6 +17,7 @@ import com.ardor3d.math.MathUtils;
  */
 public class CheckerFunction3D implements Function3D {
 
+    @Override
     public double eval(final double x, final double y, final double z) {
         if ((MathUtils.floor(x) + MathUtils.floor(y) + MathUtils.floor(z)) % 2 == 0) {
             return -1;

@@ -31,6 +31,7 @@ public class FrozenTreeSource implements BlendTreeSource {
         _time = frozenTime;
     }
 
+    @Override
     public Map<String, ? extends Object> getSourceData(final AnimationManager manager) {
         return _source.getSourceData(manager);
     }
@@ -38,6 +39,7 @@ public class FrozenTreeSource implements BlendTreeSource {
     /**
      * Ignores the command to reset our subtree.
      */
+    @Override
     public void resetClips(final AnimationManager manager, final double globalStartTime) {
         _source.resetClips(manager, 0);
     }
@@ -45,6 +47,7 @@ public class FrozenTreeSource implements BlendTreeSource {
     /**
      * Ignores the command to set time on our subtree
      */
+    @Override
     public boolean setTime(final double globalTime, final AnimationManager manager) {
         _source.setTime(_time, manager);
         return true;

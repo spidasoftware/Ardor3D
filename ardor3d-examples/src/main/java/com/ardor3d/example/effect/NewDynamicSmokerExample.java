@@ -127,6 +127,7 @@ public class NewDynamicSmokerExample extends ExampleBase {
         FirstPersonControl.removeTriggers(_logicalLayer, _controlHandle);
 
         _logicalLayer.registerTrigger(new InputTrigger(new MouseMovedCondition(), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final MouseState mouse = inputStates.getCurrent().getMouseState();
                 mouseLoc.set(mouse.getX(), mouse.getY());

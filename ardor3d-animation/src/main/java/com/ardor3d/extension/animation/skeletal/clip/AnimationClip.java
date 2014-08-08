@@ -157,15 +157,18 @@ public class AnimationClip implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends AnimationClip> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_name, "name", null);
         capsule.writeSavableList(_channels, "channels", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final String name = capsule.readString("name", null);
         try {

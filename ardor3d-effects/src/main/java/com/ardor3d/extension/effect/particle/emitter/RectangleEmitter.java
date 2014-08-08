@@ -41,6 +41,7 @@ public class RectangleEmitter extends SavableParticleEmitter {
         return _source;
     }
 
+    @Override
     public Vector3 randomEmissionPoint(final Vector3 store) {
         Vector3 rVal = store;
         if (rVal == null) {
@@ -55,10 +56,12 @@ public class RectangleEmitter extends SavableParticleEmitter {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _source = (Rectangle3) capsule.readSavable("source", null);
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_source, "source", null);
     }

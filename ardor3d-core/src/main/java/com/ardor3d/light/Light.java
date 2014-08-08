@@ -202,7 +202,7 @@ public abstract class Light implements Serializable, Savable {
      *            the specular color value of the light.
      */
     public void setSpecular(final ReadOnlyColorRGBA specular) {
-        this._specular.set(specular);
+        _specular.set(specular);
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class Light implements Serializable, Savable {
      *            the diffuse color value for this light.
      */
     public void setDiffuse(final ReadOnlyColorRGBA diffuse) {
-        this._diffuse.set(diffuse);
+        _diffuse.set(diffuse);
     }
 
     /**
@@ -240,7 +240,7 @@ public abstract class Light implements Serializable, Savable {
      *            the ambient color value for this light.
      */
     public void setAmbient(final ReadOnlyColorRGBA ambient) {
-        this._ambient.set(ambient);
+        _ambient.set(ambient);
     }
 
     /**
@@ -316,9 +316,10 @@ public abstract class Light implements Serializable, Savable {
     }
 
     public void setName(final String name) {
-        this._name = name;
+        _name = name;
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_ambient, "ambient", new ColorRGBA(DEFAULT_AMBIENT));
         capsule.write(_diffuse, "diffuse", new ColorRGBA(DEFAULT_DIFFUSE));
@@ -334,6 +335,7 @@ public abstract class Light implements Serializable, Savable {
         capsule.write(_name, "name", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         _ambient.set((ColorRGBA) capsule.readSavable("ambient", new ColorRGBA(DEFAULT_AMBIENT)));
         _diffuse.set((ColorRGBA) capsule.readSavable("diffuse", new ColorRGBA(DEFAULT_DIFFUSE)));
@@ -349,6 +351,7 @@ public abstract class Light implements Serializable, Savable {
         _name = capsule.readString("name", null);
     }
 
+    @Override
     public Class<? extends Light> getClassTag() {
         return this.getClass();
     }

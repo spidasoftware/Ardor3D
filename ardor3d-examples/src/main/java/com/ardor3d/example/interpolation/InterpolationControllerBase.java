@@ -77,6 +77,7 @@ public abstract class InterpolationControllerBase<C extends InterpolationControl
 
         // Add a trigger to change the repeat type on the controller
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.R), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 switch (controller.getRepeatType()) {
                     case CLAMP:
@@ -95,6 +96,7 @@ public abstract class InterpolationControllerBase<C extends InterpolationControl
 
         // Add a slow down command
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.LBRACKET), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 controller.setSpeed(getNewSpeed(false, controller));
                 speedText.setText(getSpeedText(controller));
@@ -103,6 +105,7 @@ public abstract class InterpolationControllerBase<C extends InterpolationControl
 
         // Add a speed up command
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.RBRACKET), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputState, final double tpf) {
                 controller.setSpeed(getNewSpeed(true, controller));
                 speedText.setText(getSpeedText(controller));

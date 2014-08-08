@@ -227,6 +227,7 @@ public class FirstPersonControl {
             // Test boolean to allow us to ignore first mouse event. First event can wildly vary based on platform.
             private boolean firstPing = true;
 
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 final MouseState mouse = inputStates.getCurrent().getMouseState();
                 if (mouse.getDx() != 0 || mouse.getDy() != 0) {
@@ -249,6 +250,7 @@ public class FirstPersonControl {
         final Predicate<TwoInputStates> keysHeld = new Predicate<TwoInputStates>() {
             Key[] keys = new Key[] { Key.W, Key.A, Key.S, Key.D, Key.LEFT, Key.RIGHT, Key.UP, Key.DOWN };
 
+            @Override
             public boolean apply(final TwoInputStates states) {
                 for (final Key k : keys) {
                     if (states.getCurrent() != null && states.getCurrent().getKeyboardState().isDown(k)) {
@@ -260,6 +262,7 @@ public class FirstPersonControl {
         };
 
         final TriggerAction moveAction = new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 FirstPersonControl.this.move(source.getCanvasRenderer().getCamera(), inputStates.getCurrent()
                         .getKeyboardState(), tpf);

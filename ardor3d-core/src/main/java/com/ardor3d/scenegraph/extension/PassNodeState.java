@@ -99,16 +99,19 @@ public class PassNodeState implements Savable, Serializable {
         _enabled = enabled;
     }
 
+    @Override
     public Class<? extends PassNodeState> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         final OutputCapsule oc = capsule;
         oc.write(_enabled, "enabled", true);
         oc.write(_passStates.values().toArray(new RenderState[0]), "passStates", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final InputCapsule ic = capsule;
         _enabled = ic.readBoolean("enabled", true);

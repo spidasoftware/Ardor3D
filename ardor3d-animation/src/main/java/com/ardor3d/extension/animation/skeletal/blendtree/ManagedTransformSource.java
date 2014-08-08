@@ -113,6 +113,7 @@ public class ManagedTransformSource implements BlendTreeSource {
     /**
      * Returns an immutable COPY of our local source data.
      */
+    @Override
     public Map<String, JointData> getSourceData(final AnimationManager manager) {
         return ImmutableMap.copyOf(data);
     }
@@ -120,6 +121,7 @@ public class ManagedTransformSource implements BlendTreeSource {
     /**
      * Does nothing.
      */
+    @Override
     public boolean setTime(final double globalTime, final AnimationManager manager) {
         return true;
     }
@@ -127,6 +129,7 @@ public class ManagedTransformSource implements BlendTreeSource {
     /**
      * Does nothing.
      */
+    @Override
     public void resetClips(final AnimationManager manager, final double globalStartTime) {
         ; // ignore
     }

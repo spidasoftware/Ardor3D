@@ -115,6 +115,7 @@ public class StereoExample extends ExampleBase {
         _root.setTranslation(0, -1, 0);
     }
 
+    @SuppressWarnings("unused")
     @Override
     protected void renderExample(final Renderer renderer) {
 
@@ -168,6 +169,6 @@ public class StereoExample extends ExampleBase {
 
     @Override
     protected void renderDebug(final Renderer renderer) {
-    // ignore. We'll call super on the individual left/right renderings.
+        // ignore. We'll call super on the individual left/right renderings.
     }
 }

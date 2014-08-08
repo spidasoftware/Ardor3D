@@ -16,10 +16,10 @@ import com.ardor3d.renderer.ContextManager;
 import com.ardor3d.renderer.RenderContext;
 import com.ardor3d.renderer.Renderer;
 import com.ardor3d.renderer.state.CullState;
-import com.ardor3d.renderer.state.RenderState;
-import com.ardor3d.renderer.state.ZBufferState;
 import com.ardor3d.renderer.state.CullState.Face;
+import com.ardor3d.renderer.state.RenderState;
 import com.ardor3d.renderer.state.RenderState.StateType;
+import com.ardor3d.renderer.state.ZBufferState;
 import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.scenegraph.hint.TransparencyType;
@@ -120,6 +120,7 @@ public class TransparentRenderBucket extends AbstractRenderBucket {
     }
 
     private class TransparentComparator implements Comparator<Spatial> {
+        @Override
         public int compare(final Spatial o1, final Spatial o2) {
             final double d1 = distanceToCam(o1);
             final double d2 = distanceToCam(o2);

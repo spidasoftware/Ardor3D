@@ -151,6 +151,7 @@ public class ColladaExample extends ExampleBase {
         final UIButton loadSceneButton = new UIButton("Load next scene");
         loadSceneButton.setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, basePanel, Alignment.TOP_LEFT, 5, -5));
         loadSceneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 final File file = daeFiles.get(fileIndex);
                 try {
@@ -169,6 +170,7 @@ public class ColladaExample extends ExampleBase {
                 .setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, loadSceneButton, Alignment.BOTTOM_LEFT, 0, -5));
         skinCheck.setSelected(true);
         skinCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 colladaNode.getSceneHints().setCullHint(skinCheck.isSelected() ? CullHint.Dynamic : CullHint.Always);
             }
@@ -180,6 +182,7 @@ public class ColladaExample extends ExampleBase {
         skeletonCheck.setLayoutData(new AnchorLayoutData(Alignment.TOP_LEFT, skinCheck, Alignment.BOTTOM_LEFT, 0, -5));
         skeletonCheck.setSelected(showSkeleton);
         skeletonCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showSkeleton = skeletonCheck.isSelected();
                 boneLabelCheck.setEnabled(showSkeleton);
@@ -192,6 +195,7 @@ public class ColladaExample extends ExampleBase {
         boneLabelCheck.setSelected(false);
         boneLabelCheck.setEnabled(showSkeleton);
         boneLabelCheck.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 showJointLabels = boneLabelCheck.isSelected();
             }

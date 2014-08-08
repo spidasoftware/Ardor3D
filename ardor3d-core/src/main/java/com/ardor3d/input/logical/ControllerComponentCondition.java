@@ -33,6 +33,7 @@ public final class ControllerComponentCondition implements Predicate<TwoInputSta
         componentName = component;
     }
 
+    @Override
     public boolean apply(final TwoInputStates states) {
         boolean apply = false;
         final ControllerState currentState = states.getCurrent().getControllerState();

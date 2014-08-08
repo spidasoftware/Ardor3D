@@ -77,6 +77,7 @@ public abstract class AbstractLabelUIComponent extends StateBasedUIComponent imp
     /**
      * @return the currently set text value of this label.
      */
+    @Override
     public String getText() {
         return _uiText != null ? _uiText.getText() : null;
     }
@@ -87,6 +88,7 @@ public abstract class AbstractLabelUIComponent extends StateBasedUIComponent imp
      * @param text
      *            the new text
      */
+    @Override
     public void setText(String text) {
         if (text != null && text.length() == 0) {
             text = null;
@@ -101,10 +103,12 @@ public abstract class AbstractLabelUIComponent extends StateBasedUIComponent imp
         updateMinimumSizeFromContents();
     }
 
+    @Override
     public boolean isStyledText() {
         return _styled;
     }
 
+    @Override
     public void setStyledText(final boolean value) {
         _styled = value;
         fireStyleChanged();

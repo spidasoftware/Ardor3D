@@ -50,6 +50,7 @@ public class ByteBufferData extends IndexBufferData<ByteBuffer> implements Savab
         _buffer = buffer;
     }
 
+    @Override
     public Class<? extends ByteBufferData> getClassTag() {
         return getClass();
     }

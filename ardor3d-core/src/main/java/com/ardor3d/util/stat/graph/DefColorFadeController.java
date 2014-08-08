@@ -61,6 +61,7 @@ public class DefColorFadeController implements SpatialController<Spatial> {
         _rate = rate;
     }
 
+    @Override
     public void update(final double time, final Spatial caller) {
         if (_target == null) {
             return;

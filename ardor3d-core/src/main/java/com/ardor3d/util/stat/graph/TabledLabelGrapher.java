@@ -69,6 +69,7 @@ public class TabledLabelGrapher extends AbstractStatGrapher {
         _graphRoot.getSceneHints().setCullHint(CullHint.Never);
     }
 
+    @Override
     public void statsUpdated() {
         if (!isEnabled() || !Constants.updateGraphs) {
             return;

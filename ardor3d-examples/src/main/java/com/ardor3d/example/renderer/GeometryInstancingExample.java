@@ -138,6 +138,7 @@ public class GeometryInstancingExample extends ExampleBase {
         generateSpheres(unInstancedBase, false, nrOfObjects);
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.V), new TriggerAction() {
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 vboMode = (vboMode + 1) % 3;
                 if (vboMode == 0) {
@@ -146,6 +147,7 @@ public class GeometryInstancingExample extends ExampleBase {
                     // run this in the opengl thread
                     GameTaskQueueManager.getManager(_canvas.getCanvasRenderer().getRenderContext()).render(
                             new Callable<Void>() {
+                                @Override
                                 public Void call() throws Exception {
                                     final DeleteVBOsVisitor viz = new DeleteVBOsVisitor(_canvas.getCanvasRenderer()
                                             .getRenderer());
@@ -165,6 +167,7 @@ public class GeometryInstancingExample extends ExampleBase {
 
         _logicalLayer.registerTrigger(new InputTrigger(new KeyPressedCondition(Key.I), new TriggerAction() {
 
+            @Override
             public void perform(final Canvas source, final TwoInputStates inputStates, final double tpf) {
                 instancingEnabled = !instancingEnabled;
                 if (instancingEnabled) {

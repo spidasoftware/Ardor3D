@@ -34,6 +34,7 @@ public class DisplayListDelegate implements RenderDelegate {
 
     static {
         ContextManager.addContextCleanListener(new ContextCleanListener() {
+            @Override
             public void cleanForContext(final RenderContext renderContext) {
             // TODO: Need a way to call back to the creator of the display list?
             }
@@ -47,6 +48,7 @@ public class DisplayListDelegate implements RenderDelegate {
         _identityCache.put(this, STATIC_REF);
     }
 
+    @Override
     public void render(final Spatial spatial, final Renderer renderer) {
         // do transforms
         final boolean transformed = renderer.doTransforms(spatial.getWorldTransform());
@@ -118,6 +120,7 @@ public class DisplayListDelegate implements RenderDelegate {
             else {
                 GameTaskQueueManager.getManager(ContextManager.getContextForRef(glref)).render(
                         new RendererCallable<Void>() {
+                            @Override
                             public Void call() throws Exception {
                                 getRenderer().deleteDisplayLists(idMap.get(glref));
                                 return null;

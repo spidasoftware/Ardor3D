@@ -27,6 +27,7 @@ public class UIMenuItem extends UIButton {
 
         // Close menus when a menu item is clicked
         addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent event) {
                 final UIHud hud = getHud();
                 if (hud != null) {

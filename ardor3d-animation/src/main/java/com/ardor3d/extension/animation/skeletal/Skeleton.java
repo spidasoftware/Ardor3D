@@ -80,15 +80,18 @@ public class Skeleton implements Savable {
     // Methods for Savable
     // /////////////////
 
+    @Override
     public Class<? extends Skeleton> getClassTag() {
         return this.getClass();
     }
 
+    @Override
     public void write(final OutputCapsule capsule) throws IOException {
         capsule.write(_name, "name", null);
         capsule.write(_joints, "joints", null);
     }
 
+    @Override
     public void read(final InputCapsule capsule) throws IOException {
         final String name = capsule.readString("name", null);
         final Joint[] joints = CapsuleUtils.asArray(capsule.readSavableArray("joints", null), Joint.class);
