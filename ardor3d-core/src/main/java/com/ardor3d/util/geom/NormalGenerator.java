@@ -670,7 +670,7 @@ public class NormalGenerator {
 
         public Vector3 normal = new Vector3(0, 0, 0);
 
-        public Triangle() {}
+        // public Triangle() {}
 
         /**
          * Creates the triangle.
@@ -762,7 +762,7 @@ public class NormalGenerator {
         // A Triangle this Edge is connected to, or null, if it is not connected
         public Triangle connected;
 
-        public Edge() {}
+        // public Edge() {}
 
         /**
          * Creates this edge.
