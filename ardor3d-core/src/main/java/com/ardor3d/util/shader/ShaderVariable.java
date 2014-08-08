@@ -40,20 +40,41 @@ public class ShaderVariable implements Savable {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + variableID;
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof ShaderVariable)) {
+        if (obj == null) {
             return false;
         }
-        final ShaderVariable comp = (ShaderVariable) o;
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ShaderVariable other = (ShaderVariable) obj;
         if (variableID != -1) {
-            return comp.variableID == variableID;
-        } else if (comp.variableID != -1) {
-            return comp.variableID == variableID;
+            return other.variableID == variableID;
+        } else if (other.variableID != -1) {
+            return other.variableID == variableID;
         } else {
-            return (name.equals(comp.name));
+            return (equals(name, other.name));
+        }
+    }
+
+    // TODO replace it by java.util.Objects.equals(Object, Object)
+    private boolean equals(final Object a, final Object b) {
+        if (a == b) {
+            return true;
+        } else {
+            return a != null && a.equals(b);
         }
     }
 

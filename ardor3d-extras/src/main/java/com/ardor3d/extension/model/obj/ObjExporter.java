@@ -350,7 +350,8 @@ public class ObjExporter {
         }
     }
 
-    public boolean equals(final Object a, final Object b) {
+    // TODO replace it by java.util.Objects.equals(Object, Object)
+    private boolean equals(final Object a, final Object b) {
         if (a == b) {
             return true;
         } else {
