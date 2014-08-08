@@ -11,7 +11,6 @@
 package com.ardor3d.extension.terrain.client;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +48,7 @@ import com.ardor3d.scenegraph.event.DirtyType;
 import com.ardor3d.scenegraph.hint.DataMode;
 import com.ardor3d.util.resource.ResourceLocatorTool;
 import com.google.common.collect.Lists;
-import com.google.common.io.InputSupplier;
+import com.google.common.io.ByteSource;
 
 /**
  * An implementation of geometry clipmapping
@@ -85,8 +84,8 @@ public class Terrain extends Node implements Pickable {
 
     private final DoubleBufferedList<Region> mailBox = new DoubleBufferedList<Region>();
 
-    private InputSupplier<? extends InputStream> vertexShader;
-    private InputSupplier<? extends InputStream> pixelShader;
+    private ByteSource vertexShader;
+    private ByteSource pixelShader;
 
     /** Timers for mailbox updates */
     private long oldTime = 0;
@@ -421,8 +420,8 @@ public class Terrain extends Node implements Pickable {
         if (caps.isGLSLSupported()) {
             _geometryClipmapShader = new GLSLShaderObjectsState();
             try {
-                _geometryClipmapShader.setVertexShader(vertexShader.getInput());
-                _geometryClipmapShader.setFragmentShader(pixelShader.getInput());
+                _geometryClipmapShader.setVertexShader(vertexShader.openStream());
+                _geometryClipmapShader.setFragmentShader(pixelShader.openStream());
             } catch (final IOException ex) {
                 Terrain.logger
                         .logp(Level.SEVERE, getClass().getName(), "init(Renderer)", "Could not load shaders.", ex);
@@ -621,11 +620,11 @@ public class Terrain extends Node implements Pickable {
         return _clips;
     }
 
-    public void setVertexShader(final InputSupplier<? extends InputStream> vertexShader) {
+    public void setVertexShader(final ByteSource vertexShader) {
         this.vertexShader = vertexShader;
     }
 
-    public void setPixelShader(final InputSupplier<? extends InputStream> pixelShader) {
+    public void setPixelShader(final ByteSource pixelShader) {
         this.pixelShader = pixelShader;
     }
 

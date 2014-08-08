@@ -1,20 +1,21 @@
-package com.ardor3d.extension.terrain.client;
 
-import com.google.common.io.InputSupplier;
+package com.ardor3d.extension.terrain.client;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-public class UrlInputSupplier implements InputSupplier<InputStream> {
-	private final URL url;
+import com.google.common.io.ByteSource;
 
-	public UrlInputSupplier(URL url) {
-		this.url = url;
-	}
+public class UrlInputSupplier extends ByteSource {
+    private final URL url;
 
-	@Override
-	public InputStream getInput() throws IOException {
-		return url.openStream();
-	}
+    public UrlInputSupplier(final URL url) {
+        this.url = url;
+    }
+
+    @Override
+    public InputStream openStream() throws IOException {
+        return url.openStream();
+    }
 }
