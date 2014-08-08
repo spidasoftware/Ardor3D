@@ -299,7 +299,6 @@ public class ColladaDOMUtil {
     public void stripNamespace(final Element rootElement) {
         rootElement.setNamespace(null);
 
-        @SuppressWarnings("unchecked")
         final List<Element> children = rootElement.getChildren();
         final Iterator<Element> i = children.iterator();
         while (i.hasNext()) {
@@ -362,7 +361,6 @@ public class ColladaDOMUtil {
      * @param v
      * @return
      */
-    @SuppressWarnings("unchecked")
     public Element getPositionSource(final Element v) {
         for (final Element input : v.getChildren("input")) {
             if ("POSITION".equals(input.getAttributeValue("semantic"))) {

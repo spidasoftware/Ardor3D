@@ -181,7 +181,6 @@ public class ColladaAnimUtils {
      * @param skin
      *            our <skin> element.
      */
-    @SuppressWarnings("unchecked")
     private void buildSkinMeshes(final Node ardorParentNode, final Element instanceController,
             final Element controller, final Element skin) {
         final String skinSource = skin.getAttributeValue("source");
@@ -646,7 +645,6 @@ public class ColladaAnimUtils {
      * 
      * @param entry
      */
-    @SuppressWarnings("unchecked")
     private void buildAnimations(final Element parentElement, final Collection<TargetChannel> targetList) {
 
         final List<Element> elementTransforms = new ArrayList<Element>();
@@ -767,42 +765,45 @@ public class ColladaAnimUtils {
             finalTransformList.add(transform);
         }
 
-        final float[] time = new float[finalTimeList.size()];
-        for (int i = 0; i < finalTimeList.size(); i++) {
-            time[i] = finalTimeList.get(i);
-        }
-        final Transform[] transforms = finalTransformList.toArray(new Transform[finalTransformList.size()]);
+        if (animationItemRoot != null) {
 
-        AnimationClip animationClip = animationItemRoot.getAnimationClip();
-        if (animationClip == null) {
-            animationClip = new AnimationClip(animationItemRoot.getName());
-            animationItemRoot.setAnimationClip(animationClip);
-        }
-
-        // Make an animation channel - first find if we have a matching joint
-        Joint joint = _dataCache.getElementJointMapping().get(parentElement);
-        if (joint == null) {
-            String nodeName = parentElement.getAttributeValue("name", (String) null);
-            if (nodeName == null) { // use id if name doesn't exist
-                nodeName = parentElement.getAttributeValue("id", parentElement.getName());
+            final float[] time = new float[finalTimeList.size()];
+            for (int i = 0; i < finalTimeList.size(); i++) {
+                time[i] = finalTimeList.get(i);
             }
-            if (nodeName != null) {
-                joint = _dataCache.getExternalJointMapping().get(nodeName);
+            final Transform[] transforms = finalTransformList.toArray(new Transform[finalTransformList.size()]);
+
+            AnimationClip animationClip = animationItemRoot.getAnimationClip();
+            if (animationClip == null) {
+                animationClip = new AnimationClip(animationItemRoot.getName());
+                animationItemRoot.setAnimationClip(animationClip);
             }
 
+            // Make an animation channel - first find if we have a matching joint
+            Joint joint = _dataCache.getElementJointMapping().get(parentElement);
             if (joint == null) {
-                // no joint still, so make a transform channel.
-                final TransformChannel transformChannel = new TransformChannel(nodeName, time, transforms);
-                animationClip.addChannel(transformChannel);
-                _colladaStorage.getAnimationChannels().add(transformChannel);
-                return;
-            }
-        }
+                String nodeName = parentElement.getAttributeValue("name", (String) null);
+                if (nodeName == null) { // use id if name doesn't exist
+                    nodeName = parentElement.getAttributeValue("id", parentElement.getName());
+                }
+                if (nodeName != null) {
+                    joint = _dataCache.getExternalJointMapping().get(nodeName);
+                }
 
-        // create joint channel
-        final JointChannel jointChannel = new JointChannel(joint, time, transforms);
-        animationClip.addChannel(jointChannel);
-        _colladaStorage.getAnimationChannels().add(jointChannel);
+                if (joint == null) {
+                    // no joint still, so make a transform channel.
+                    final TransformChannel transformChannel = new TransformChannel(nodeName, time, transforms);
+                    animationClip.addChannel(transformChannel);
+                    _colladaStorage.getAnimationChannels().add(transformChannel);
+                    return;
+                }
+            }
+
+            // create joint channel
+            final JointChannel jointChannel = new JointChannel(joint, time, transforms);
+            animationClip.addChannel(jointChannel);
+            _colladaStorage.getAnimationChannels().add(jointChannel);
+        }
     }
 
     /**
@@ -836,7 +837,6 @@ public class ColladaAnimUtils {
      * @param animationRoot
      * @param animationItemRoot
      */
-    @SuppressWarnings("unchecked")
     private void parseAnimations(final Multimap<Element, TargetChannel> channelMap, final Element animationRoot,
             final AnimationItem animationItemRoot) {
         if (animationRoot.getChild("animation") != null) {
@@ -1116,7 +1116,6 @@ public class ColladaAnimUtils {
         return str.toString();
     }
 
-    @SuppressWarnings("unchecked")
     private static void getElementString(final Element e, final StringBuilder str, final int depth, final int maxDepth,
             final boolean showDots) {
         addSpacing(str, depth);
@@ -1138,7 +1137,7 @@ public class ColladaAnimUtils {
             str.append('>');
             if (depth < maxDepth) {
                 str.append('\n');
-                for (final Element child : (List<Element>) e.getChildren()) {
+                for (final Element child : e.getChildren()) {
                     getElementString(child, str, depth + 1, maxDepth, showDots);
                 }
                 if (!"".equals(e.getText())) {

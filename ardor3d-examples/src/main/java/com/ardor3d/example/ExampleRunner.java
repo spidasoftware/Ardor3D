@@ -867,10 +867,10 @@ public class ExampleRunner extends JFrame {
                 classNameLabel.setText("Null"); // Throw an exception?
                 classNameLabel.setFont(defaultFont);
             } else {
-                if ((value != null) && (value instanceof Class<?>)) {
+                if (value instanceof Class<?>) {
                     final Class<?> clazz = (Class<?>) value;
                     classNameLabel.setText(clazz.getSimpleName());
-                } else if ((value != null) && value instanceof Package) {
+                } else if (value instanceof Package) {
                     String name = ((Package) value).getName();
                     if (name.startsWith(tree.getModel().getRoot().toString())) {
                         name = name.substring(tree.getModel().getRoot().toString().length() + 1);

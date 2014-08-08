@@ -15,7 +15,6 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.ardor3d.extension.atlas.AtlasNode;
 import com.ardor3d.extension.atlas.AtlasPacker;
 
 /**
@@ -30,7 +29,7 @@ public class TestAtlasPacker {
 
         final Random rand = new Random();
         for (int i = 0; i < 2000; i++) {
-            final AtlasNode node = packer.insert(rand.nextInt(100) + 10, rand.nextInt(100) + 10);
+            /* final AtlasNode node = */packer.insert(rand.nextInt(100) + 10, rand.nextInt(100) + 10);
         }
 
         final JFrame frame = new JFrame("Pack");

@@ -70,15 +70,15 @@ public final class PropertiesDialog extends JDialog {
     // UI components
     private JCheckBox fullscreenBox = null;
 
-    private JComboBox displayResCombo = null;
+    private JComboBox<String> displayResCombo = null;
 
-    private JComboBox samplesCombo = null;
+    private JComboBox<String> samplesCombo = null;
 
-    private JComboBox colorDepthCombo = null;
+    private JComboBox<String> colorDepthCombo = null;
 
-    private JComboBox displayFreqCombo = null;
+    private JComboBox<String> displayFreqCombo = null;
 
-    private JComboBox rendererCombo = null;
+    private JComboBox<String> rendererCombo = null;
 
     private JLabel icon = null;
 
@@ -266,9 +266,9 @@ public final class PropertiesDialog extends JDialog {
         displayResCombo.addKeyListener(aListener);
         samplesCombo = setUpSamplesChooser();
         samplesCombo.addKeyListener(aListener);
-        colorDepthCombo = new JComboBox();
+        colorDepthCombo = new JComboBox<String>();
         colorDepthCombo.addKeyListener(aListener);
-        displayFreqCombo = new JComboBox();
+        displayFreqCombo = new JComboBox<String>();
         displayFreqCombo.addKeyListener(aListener);
         fullscreenBox = new JCheckBox("Fullscreen?");
         fullscreenBox.setSelected(source.isFullscreen());
@@ -411,9 +411,9 @@ public final class PropertiesDialog extends JDialog {
      * 
      * @return the combo box of display modes.
      */
-    private JComboBox setUpResolutionChooser() {
+    private JComboBox<String> setUpResolutionChooser() {
         final String[] res = getResolutions(modes);
-        final JComboBox resolutionBox = new JComboBox(res);
+        final JComboBox<String> resolutionBox = new JComboBox<String>(res);
 
         resolutionBox.setSelectedItem(source.getWidth() + " x " + source.getHeight());
         resolutionBox.addActionListener(new ActionListener() {
@@ -432,9 +432,9 @@ public final class PropertiesDialog extends JDialog {
      * 
      * @return the list of renderers.
      */
-    private JComboBox setUpRendererChooser() {
-        final JComboBox nameBox = new JComboBox(new String[] { "JOGL 2" });
-        final String old = source.getRenderer();
+    private JComboBox<String> setUpRendererChooser() {
+        final JComboBox<String> nameBox = new JComboBox<String>(new String[] { "JOGL 2" });
+        // final String old = source.getRenderer();
         /*
          * if (old != null) { if (old.startsWith("JOGL")) {
          */
@@ -445,8 +445,8 @@ public final class PropertiesDialog extends JDialog {
         return nameBox;
     }
 
-    private JComboBox setUpSamplesChooser() {
-        final JComboBox nameBox = new JComboBox(samples);
+    private JComboBox<String> setUpSamplesChooser() {
+        final JComboBox<String> nameBox = new JComboBox<String>(samples);
         nameBox.setSelectedItem(source.getRenderer());
         return nameBox;
     }
@@ -472,11 +472,11 @@ public final class PropertiesDialog extends JDialog {
 
         // grab available depths
         final String[] depths = getDepths(resolution, modes);
-        colorDepthCombo.setModel(new DefaultComboBoxModel(depths));
+        colorDepthCombo.setModel(new DefaultComboBoxModel<String>(depths));
         colorDepthCombo.setSelectedItem(colorDepth);
         // grab available frequencies
         final String[] freqs = getFrequencies(resolution, modes);
-        displayFreqCombo.setModel(new DefaultComboBoxModel(freqs));
+        displayFreqCombo.setModel(new DefaultComboBoxModel<String>(freqs));
         // Try to reset freq
         displayFreqCombo.setSelectedItem(displayFreq);
     }
@@ -488,12 +488,12 @@ public final class PropertiesDialog extends JDialog {
      */
     private void updateResolutionChoices() {
         if (!fullscreenBox.isSelected()) {
-            displayResCombo.setModel(new DefaultComboBoxModel(windowedResolutions));
-            colorDepthCombo.setModel(new DefaultComboBoxModel(new String[] { "24 bpp", "16 bpp" }));
-            displayFreqCombo.setModel(new DefaultComboBoxModel(new String[] { "n/a" }));
+            displayResCombo.setModel(new DefaultComboBoxModel<String>(windowedResolutions));
+            colorDepthCombo.setModel(new DefaultComboBoxModel<String>(new String[] { "24 bpp", "16 bpp" }));
+            displayFreqCombo.setModel(new DefaultComboBoxModel<String>(new String[] { "n/a" }));
             displayFreqCombo.setEnabled(false);
         } else {
-            displayResCombo.setModel(new DefaultComboBoxModel(getResolutions(modes)));
+            displayResCombo.setModel(new DefaultComboBoxModel<String>(getResolutions(modes)));
             displayFreqCombo.setEnabled(true);
             updateDisplayChoices();
         }
