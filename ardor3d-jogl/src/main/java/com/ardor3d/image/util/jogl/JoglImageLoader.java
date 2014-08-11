@@ -41,6 +41,11 @@ public class JoglImageLoader implements ImageLoader {
 
     protected final CapsUtil _capsUtil;
 
+    /**
+     * Flag indicating whether the mipmaps are produced by JOGL (retrieved from the file or generated)
+     */
+    private boolean _mipmapsProductionEnabled;
+
     private enum TYPE {
         BYTE(ByteBuffer.class), SHORT(ShortBuffer.class), CHAR(CharBuffer.class), INT(IntBuffer.class), FLOAT(
                 FloatBuffer.class), LONG(LongBuffer.class), DOUBLE(DoubleBuffer.class);
@@ -90,14 +95,13 @@ public class JoglImageLoader implements ImageLoader {
 
     public Image makeArdor3dImage(final TextureData textureData, final boolean verticalFlipNeeded) {
         final Buffer textureDataBuffer = textureData.getBuffer();
-        // FIXME manage the mipmaps, call textureData.getMipmapData()
         final Image ardorImage = new Image();
-        final TYPE bufferDataType = getBufferDataType(textureDataBuffer);
+        TYPE bufferDataType = getBufferDataType(textureDataBuffer);
         if (bufferDataType == null) {
             throw new UnsupportedOperationException("Unknown buffer type " + textureDataBuffer.getClass().getName());
         } else {
-            final int dataSizeInBytes = textureDataBuffer.capacity() * Buffers.sizeOfBufferElem(textureDataBuffer);
-            final ByteBuffer scratch = createOnHeap ? BufferUtils.createByteBufferOnHeap(dataSizeInBytes) : Buffers
+            int dataSizeInBytes = textureDataBuffer.capacity() * Buffers.sizeOfBufferElem(textureDataBuffer);
+            ByteBuffer scratch = createOnHeap ? BufferUtils.createByteBufferOnHeap(dataSizeInBytes) : Buffers
                     .newDirectByteBuffer(dataSizeInBytes);
             if (verticalFlipNeeded) {
                 flipImageData(textureDataBuffer, scratch, dataSizeInBytes, bufferDataType, textureData.getWidth(),
@@ -111,6 +115,21 @@ public class JoglImageLoader implements ImageLoader {
             ardorImage.setDataFormat(JoglTextureUtil.getImageDataFormat(textureData.getPixelFormat()));
             ardorImage.setDataType(JoglTextureUtil.getPixelDataType(textureData.getPixelType()));
             ardorImage.setDataType(PixelDataType.UnsignedByte);
+            if (textureData.getMipmapData() != null) {
+                for (final Buffer mipmapData : textureData.getMipmapData()) {
+                    dataSizeInBytes = mipmapData.capacity() * Buffers.sizeOfBufferElem(mipmapData);
+                    scratch = createOnHeap ? BufferUtils.createByteBufferOnHeap(dataSizeInBytes) : Buffers
+                            .newDirectByteBuffer(dataSizeInBytes);
+                    bufferDataType = getBufferDataType(mipmapData);
+                    if (verticalFlipNeeded) {
+                        flipImageData(mipmapData, scratch, dataSizeInBytes, bufferDataType, textureData.getWidth(),
+                                textureData.getHeight());
+                    } else {
+                        copyImageData(mipmapData, scratch, bufferDataType);
+                    }
+                    ardorImage.addData(scratch);
+                }
+            }
             return ardorImage;
         }
     }
@@ -118,8 +137,8 @@ public class JoglImageLoader implements ImageLoader {
     @Override
     public Image load(final InputStream is, final boolean verticalFlipNeeded) throws IOException {
         final String fileSuffix = getFileSuffix(is);
-        // FIXME enable the creation of the mipmaps
-        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, false, fileSuffix);
+        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, _mipmapsProductionEnabled,
+                fileSuffix);
         if (textureData == null) {
             return null;
         }
@@ -610,5 +629,13 @@ public class JoglImageLoader implements ImageLoader {
         }
         src.position(srcPos);
         dest.position(destPos);
+    }
+
+    public boolean isMipmapsProductionEnabled() {
+        return _mipmapsProductionEnabled;
+    }
+
+    public void setMipmapsProductionEnabled(final boolean mipmapsProductionEnabled) {
+        _mipmapsProductionEnabled = mipmapsProductionEnabled;
     }
 }
