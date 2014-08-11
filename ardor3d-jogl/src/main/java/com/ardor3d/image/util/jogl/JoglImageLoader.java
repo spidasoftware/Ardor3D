@@ -88,8 +88,9 @@ public class JoglImageLoader implements ImageLoader {
         _capsUtil = capsUtil;
     }
 
-    public Image makeArdor3dImage(final TextureData textureData, final boolean flipped) {
+    public Image makeArdor3dImage(final TextureData textureData, final boolean verticalFlipNeeded) {
         final Buffer textureDataBuffer = textureData.getBuffer();
+        // FIXME manage the mipmaps, call textureData.getMipmapData()
         final Image ardorImage = new Image();
         final TYPE bufferDataType = getBufferDataType(textureDataBuffer);
         if (bufferDataType == null) {
@@ -98,7 +99,7 @@ public class JoglImageLoader implements ImageLoader {
             final int dataSizeInBytes = textureDataBuffer.capacity() * Buffers.sizeOfBufferElem(textureDataBuffer);
             final ByteBuffer scratch = createOnHeap ? BufferUtils.createByteBufferOnHeap(dataSizeInBytes) : Buffers
                     .newDirectByteBuffer(dataSizeInBytes);
-            if (flipped) {
+            if (verticalFlipNeeded) {
                 flipImageData(textureDataBuffer, scratch, dataSizeInBytes, bufferDataType, textureData.getWidth(),
                         textureData.getHeight());
             } else {
@@ -108,33 +109,21 @@ public class JoglImageLoader implements ImageLoader {
             ardorImage.setHeight(textureData.getHeight());
             ardorImage.setData(scratch);
             ardorImage.setDataFormat(JoglTextureUtil.getImageDataFormat(textureData.getPixelFormat()));
-            // ardorImage.setDataType(JoglTextureUtil.getPixelDataType(textureData.getPixelType()));
+            ardorImage.setDataType(JoglTextureUtil.getPixelDataType(textureData.getPixelType()));
             ardorImage.setDataType(PixelDataType.UnsignedByte);
             return ardorImage;
         }
     }
 
     @Override
-    public Image load(final InputStream is, final boolean flipped) throws IOException {
+    public Image load(final InputStream is, final boolean verticalFlipNeeded) throws IOException {
         final String fileSuffix = getFileSuffix(is);
-        final boolean flipRevertEnabled;
-        // the GIF format is supported by the AWT SPI, there is no need to flip it once more
-        if (fileSuffix == null || fileSuffix.equals(TextureIO.GIF)) {
-            flipRevertEnabled = false;
-        } else {
-            /**
-             * those formats are internally supported by JOGL build-in image loaders which seem to load all images with
-             * a different vertical orientation than AWT
-             */
-            flipRevertEnabled = fileSuffix.equals(TextureIO.DDS) || fileSuffix.equals(TextureIO.JPG)
-                    || fileSuffix.equals(TextureIO.PNG) || fileSuffix.equals(TextureIO.SGI)
-                    || fileSuffix.equals(TextureIO.SGI_RGB) || fileSuffix.equals(TextureIO.TGA);
-        }
-        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, true, fileSuffix);
+        // FIXME enable the creation of the mipmaps
+        final TextureData textureData = TextureIO.newTextureData(_capsUtil.getProfile(), is, false, fileSuffix);
         if (textureData == null) {
             return null;
         }
-        return makeArdor3dImage(textureData, flipRevertEnabled ? !flipped : flipped);
+        return makeArdor3dImage(textureData, textureData.getMustFlipVertically() == verticalFlipNeeded);
     }
 
     /**
