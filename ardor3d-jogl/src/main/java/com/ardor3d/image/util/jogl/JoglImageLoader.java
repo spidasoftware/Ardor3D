@@ -113,7 +113,10 @@ public class JoglImageLoader implements ImageLoader {
             ardorImage.setHeight(textureData.getHeight());
             ardorImage.setData(scratch);
             ardorImage.setDataFormat(JoglTextureUtil.getImageDataFormat(textureData.getPixelFormat()));
-            ardorImage.setDataType(JoglTextureUtil.getPixelDataType(textureData.getPixelType()));
+            /**
+             * A ByteBuffer is always used to store the image data, otherwise we should call
+             * JoglTextureUtil.getPixelDataType(textureData.getPixelType())
+             */
             ardorImage.setDataType(PixelDataType.UnsignedByte);
             if (textureData.getMipmapData() != null) {
                 for (final Buffer mipmapData : textureData.getMipmapData()) {
@@ -129,6 +132,13 @@ public class JoglImageLoader implements ImageLoader {
                     }
                     ardorImage.addData(scratch);
                 }
+                final int[] mipMapSizes = new int[ardorImage.getDataSize()];
+                int imageDataIndex = 0;
+                for (final Buffer imageData : ardorImage.getData()) {
+                    mipMapSizes[imageDataIndex] = imageData.capacity();
+                    imageDataIndex++;
+                }
+                ardorImage.setMipMapByteSizes(mipMapSizes);
             }
             return ardorImage;
         }
