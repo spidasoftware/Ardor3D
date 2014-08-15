@@ -118,9 +118,13 @@ public abstract class JoglFogStateUtil {
         if (caps.isFogCoordinatesSupported()) {
             if (!record.isValid() || !source.equals(record.source)) {
                 if (source == CoordinateSource.Depth) {
-                    gl.getGL2().glFogi(GL2.GL_FOG_COORDINATE_SOURCE, GL2.GL_FRAGMENT_DEPTH);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glFogi(GL2.GL_FOG_COORDINATE_SOURCE, GL2.GL_FRAGMENT_DEPTH);
+                    }
                 } else {
-                    gl.getGL2().glFogi(GL2.GL_FOG_COORDINATE_SOURCE, GL2.GL_FOG_COORDINATE);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glFogi(GL2.GL_FOG_COORDINATE_SOURCE, GL2.GL_FOG_COORDINATE);
+                    }
                 }
             }
         }
@@ -143,7 +147,9 @@ public abstract class JoglFogStateUtil {
         }
 
         if (!record.isValid() || record.fogMode != glMode) {
-            gl.getGL2().glFogi(GL2ES1.GL_FOG_MODE, glMode);
+            if (gl.isGL2()) {
+                gl.getGL2().glFogi(GL2ES1.GL_FOG_MODE, glMode);
+            }
             record.fogMode = glMode;
         }
     }
