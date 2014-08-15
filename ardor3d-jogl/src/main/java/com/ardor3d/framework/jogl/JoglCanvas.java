@@ -38,7 +38,7 @@ import com.ardor3d.image.Image;
 import com.ardor3d.renderer.jogl.JoglPbufferTextureRenderer;
 
 /**
- * A canvas implementation for use with native JOGL windows.
+ * A canvas implementation for use with AWT JOGL windows.
  */
 public class JoglCanvas extends Frame implements NativeCanvas {
 

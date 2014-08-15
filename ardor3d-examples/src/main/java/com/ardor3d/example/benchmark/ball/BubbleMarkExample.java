@@ -18,8 +18,8 @@ import com.ardor3d.framework.CanvasRenderer;
 import com.ardor3d.framework.DisplaySettings;
 import com.ardor3d.framework.NativeCanvas;
 import com.ardor3d.framework.Scene;
-import com.ardor3d.framework.jogl.JoglCanvas;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
+import com.ardor3d.framework.jogl.JoglNewtWindow;
 import com.ardor3d.image.Texture;
 import com.ardor3d.image.TextureStoreFormat;
 import com.ardor3d.image.util.awt.AWTImageLoader;
@@ -135,11 +135,9 @@ public class BubbleMarkExample implements Scene {
      * @return the canvas.
      */
     private NativeCanvas initCanvas() {
-        // if ("true".equalsIgnoreCase(System.getProperty("jogl"))) {
         final JoglCanvasRenderer canvasRenderer = new JoglCanvasRenderer(this);
         final DisplaySettings settings = new DisplaySettings(width, height, 24, 0, 0, 8, 0, 0, false, false);
-        return new JoglCanvas(canvasRenderer, settings);
-        // }
+        return new JoglNewtWindow(canvasRenderer, settings);
     }
 
     /**
