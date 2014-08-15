@@ -36,7 +36,9 @@ public abstract class JoglShadingStateUtil {
         final int toApply = state.isEnabled() ? getGLShade(state.getShadingMode()) : GLLightingFunc.GL_SMOOTH;
         // only apply if we're different. Update record to reflect any changes.
         if (!record.isValid() || toApply != record.lastShade) {
-            gl.getGL2().glShadeModel(toApply);
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glShadeModel(toApply);
+            }
             record.lastShade = toApply;
         }
 
