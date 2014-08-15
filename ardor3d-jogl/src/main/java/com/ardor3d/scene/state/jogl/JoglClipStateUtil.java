@@ -73,7 +73,9 @@ public abstract class JoglClipStateUtil {
                 } else {
                     ((DoubleBuffer) record.buf).put(state.getPlaneEquations(planeIndex));
                     record.buf.flip();
-                    gl.getGL2().glClipPlane(GL2ES1.GL_CLIP_PLANE0 + planeIndex, (DoubleBuffer) record.buf);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glClipPlane(GL2ES1.GL_CLIP_PLANE0 + planeIndex, (DoubleBuffer) record.buf);
+                    }
                 }
             } else {
                 // TODO use this suggestion but take into account the good reference frame:

@@ -1163,13 +1163,17 @@ public class JoglTextureStateUtil {
             record.tmp_matrixBuffer.rewind();
             texture.getTextureMatrix().toDoubleBuffer(record.tmp_matrixBuffer, true);
             record.tmp_matrixBuffer.rewind();
-            gl.getGL2().glLoadMatrixd(record.tmp_matrixBuffer);
-
+            if (gl.isGL2()) {
+                gl.getGL2().glLoadMatrixd(record.tmp_matrixBuffer);
+            }
+            // FIXME use JoglRendererRecord.getMaxtrixBackend() with float buffers, stop using doubles
             record.units[unit].identityMatrix = false;
         } else if (needsReset) {
             checkAndSetUnit(unit, record, caps);
             JoglRendererUtil.switchMode(matRecord, GL.GL_TEXTURE);
-            gl.getGL2().glLoadIdentity();
+            if (gl.isGL2()) {
+                gl.getGL2().glLoadIdentity();
+            }
             record.units[unit].identityMatrix = true;
         }
         // Switch back to the modelview matrix for further operations
@@ -1190,10 +1194,10 @@ public class JoglTextureStateUtil {
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2.GL_SPHERE_MAP) {
                     checkAndSetUnit(unit, record, caps);
 
-                    gl.getGL2().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
                     unitRecord.textureGenSMode = GL2.GL_SPHERE_MAP;
 
-                    gl.getGL2().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
                     unitRecord.textureGenTMode = GL2.GL_SPHERE_MAP;
                 }
 
@@ -1203,13 +1207,13 @@ public class JoglTextureStateUtil {
                 // generate normals based texture coordinates
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2ES1.GL_NORMAL_MAP) {
                     checkAndSetUnit(unit, record, caps);
-                    gl.getGL2().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
                     unitRecord.textureGenSMode = GL2ES1.GL_NORMAL_MAP;
 
-                    gl.getGL2().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
                     unitRecord.textureGenTMode = GL2ES1.GL_NORMAL_MAP;
 
-                    gl.getGL2().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
                     unitRecord.textureGenRMode = GL2ES1.GL_NORMAL_MAP;
                 }
 
