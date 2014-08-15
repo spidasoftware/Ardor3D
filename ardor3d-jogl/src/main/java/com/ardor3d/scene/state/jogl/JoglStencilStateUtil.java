@@ -38,7 +38,9 @@ public abstract class JoglStencilStateUtil {
         setEnabled(state.isEnabled(), caps.isTwoSidedStencilSupported() ? state.isUseTwoSided() : false, record, caps);
         if (state.isEnabled()) {
             if (state.isUseTwoSided() && caps.isTwoSidedStencilSupported()) {
-                gl.getGL2().glActiveStencilFaceEXT(GL.GL_BACK);
+                if (gl.isGL2()) {
+                    gl.getGL2().glActiveStencilFaceEXT(GL.GL_BACK);
+                }
                 applyMask(state.getStencilWriteMaskBack(), record, 2);
                 applyFunc(getGLStencilFunction(state.getStencilFunctionBack()), state.getStencilReferenceBack(),
                         state.getStencilFuncMaskBack(), record, 2);
@@ -46,7 +48,9 @@ public abstract class JoglStencilStateUtil {
                         getGLStencilOp(state.getStencilOpZFailBack(), caps),
                         getGLStencilOp(state.getStencilOpZPassBack(), caps), record, 2);
 
-                gl.getGL2().glActiveStencilFaceEXT(GL.GL_FRONT);
+                if (gl.isGL2()) {
+                    gl.getGL2().glActiveStencilFaceEXT(GL.GL_FRONT);
+                }
                 applyMask(state.getStencilWriteMaskFront(), record, 1);
                 applyFunc(getGLStencilFunction(state.getStencilFunctionFront()), state.getStencilReferenceFront(),
                         state.getStencilFuncMaskFront(), record, 1);
