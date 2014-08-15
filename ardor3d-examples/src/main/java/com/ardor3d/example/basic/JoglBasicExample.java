@@ -16,8 +16,8 @@ import com.ardor3d.bounding.BoundingBox;
 import com.ardor3d.example.Purpose;
 import com.ardor3d.framework.DisplaySettings;
 import com.ardor3d.framework.Scene;
-import com.ardor3d.framework.jogl.JoglCanvas;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
+import com.ardor3d.framework.jogl.JoglNewtWindow;
 import com.ardor3d.image.Texture;
 import com.ardor3d.image.util.awt.AWTImageLoader;
 import com.ardor3d.intersection.PickResults;
@@ -54,7 +54,7 @@ maxHeapMemory = 64)
 public class JoglBasicExample implements Scene {
 
     // Our native window, not the gl surface itself.
-    private final JoglCanvas _canvas;
+    private final JoglNewtWindow _canvas;
 
     // Our timer.
     private final Timer _timer = new Timer();
@@ -103,10 +103,10 @@ public class JoglBasicExample implements Scene {
      * 
      * @return the canvas.
      */
-    private JoglCanvas initJogl() {
+    private JoglNewtWindow initJogl() {
         final JoglCanvasRenderer canvasRenderer = new JoglCanvasRenderer(this);
         final DisplaySettings settings = new DisplaySettings(800, 600, 24, 0, 0, 8, 0, 0, false, false);
-        return new JoglCanvas(canvasRenderer, settings);
+        return new JoglNewtWindow(canvasRenderer, settings);
     }
 
     /**
