@@ -1740,18 +1740,24 @@ public class JoglRenderer extends AbstractRenderer {
 
         if (stipplePattern != (short) 0xFFFF) {
             if (!lineRecord.isValid() || !lineRecord.stippled) {
-                gl.glEnable(GL2.GL_LINE_STIPPLE);
+                if (gl.isGL2()) {
+                    gl.glEnable(GL2.GL_LINE_STIPPLE);
+                }
                 lineRecord.stippled = true;
             }
 
             if (!lineRecord.isValid() || stippleFactor != lineRecord.stippleFactor
                     || stipplePattern != lineRecord.stipplePattern) {
-                gl.getGL2().glLineStipple(stippleFactor, stipplePattern);
+                if (gl.isGL2()) {
+                    gl.getGL2().glLineStipple(stippleFactor, stipplePattern);
+                }
                 lineRecord.stippleFactor = stippleFactor;
                 lineRecord.stipplePattern = stipplePattern;
             }
         } else if (!lineRecord.isValid() || lineRecord.stippled) {
-            gl.glDisable(GL2.GL_LINE_STIPPLE);
+            if (gl.isGL2()) {
+                gl.glDisable(GL2.GL_LINE_STIPPLE);
+            }
             lineRecord.stippled = false;
         }
 

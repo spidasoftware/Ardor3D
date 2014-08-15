@@ -74,7 +74,10 @@ public abstract class JoglMaterialStateUtil {
                     record.tempColorBuff.put(frontColor.getRed()).put(frontColor.getGreen()).put(frontColor.getBlue())
                             .put(frontColor.getAlpha());
                     record.tempColorBuff.flip();
-                    gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.FrontAndBack), glMat, record.tempColorBuff);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.FrontAndBack), glMat,
+                                record.tempColorBuff);
+                    }
                     record.setColor(MaterialFace.FrontAndBack, glMatColor, frontColor);
                 }
             }
@@ -85,7 +88,9 @@ public abstract class JoglMaterialStateUtil {
                     record.tempColorBuff.put(frontColor.getRed()).put(frontColor.getGreen()).put(frontColor.getBlue())
                             .put(frontColor.getAlpha());
                     record.tempColorBuff.flip();
-                    gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.Front), glMat, record.tempColorBuff);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.Front), glMat, record.tempColorBuff);
+                    }
                     record.setColor(MaterialFace.Front, glMatColor, frontColor);
                 }
             }
@@ -96,7 +101,9 @@ public abstract class JoglMaterialStateUtil {
                     record.tempColorBuff.put(backColor.getRed()).put(backColor.getGreen()).put(backColor.getBlue())
                             .put(backColor.getAlpha());
                     record.tempColorBuff.flip();
-                    gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.Back), glMat, record.tempColorBuff);
+                    if (gl.isGL2()) {
+                        gl.getGL2().glMaterialfv(getGLMaterialFace(MaterialFace.Back), glMat, record.tempColorBuff);
+                    }
                     record.setColor(MaterialFace.Back, glMatColor, backColor);
                 }
             }
@@ -139,8 +146,9 @@ public abstract class JoglMaterialStateUtil {
             } else {
                 final int glMat = getGLColorMaterial(colorMaterial);
                 final int glFace = getGLMaterialFace(face);
-
-                gl.getGL2().glColorMaterial(glFace, glMat);
+                if (gl.isGL2()) {
+                    gl.getGL2().glColorMaterial(glFace, glMat);
+                }
                 gl.glEnable(GLLightingFunc.GL_COLOR_MATERIAL);
                 record.resetColorsForCM(face, colorMaterial);
             }
@@ -156,20 +164,26 @@ public abstract class JoglMaterialStateUtil {
         if (frontShininess == backShininess) {
             // consolidate to one call
             if (!record.isValid() || frontShininess != record.frontShininess || record.backShininess != backShininess) {
-                gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.FrontAndBack), GLLightingFunc.GL_SHININESS,
-                        frontShininess);
+                if (gl.isGL2()) {
+                    gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.FrontAndBack), GLLightingFunc.GL_SHININESS,
+                            frontShininess);
+                }
                 record.backShininess = record.frontShininess = frontShininess;
             }
         } else {
             if (!record.isValid() || frontShininess != record.frontShininess) {
-                gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.Front), GLLightingFunc.GL_SHININESS,
-                        frontShininess);
+                if (gl.isGL2()) {
+                    gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.Front), GLLightingFunc.GL_SHININESS,
+                            frontShininess);
+                }
                 record.frontShininess = frontShininess;
             }
 
             if (!record.isValid() || backShininess != record.backShininess) {
-                gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.Back), GLLightingFunc.GL_SHININESS,
-                        backShininess);
+                if (gl.isGL2()) {
+                    gl.getGL2().glMaterialf(getGLMaterialFace(MaterialFace.Back), GLLightingFunc.GL_SHININESS,
+                            backShininess);
+                }
                 record.backShininess = backShininess;
             }
         }
