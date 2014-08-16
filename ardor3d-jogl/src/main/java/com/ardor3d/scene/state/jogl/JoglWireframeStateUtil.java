@@ -58,26 +58,36 @@ public abstract class JoglWireframeStateUtil {
 
         if (record.isValid()) {
             if (frontMode == backMode && (record.frontMode != frontMode || record.backMode != backMode)) {
-                gl.getGL2GL3().glPolygonMode(GL.GL_FRONT_AND_BACK, frontMode);
+                if (gl.isGL2GL3()) {
+                    gl.getGL2GL3().glPolygonMode(GL.GL_FRONT_AND_BACK, frontMode);
+                }
                 record.frontMode = frontMode;
                 record.backMode = backMode;
             } else if (frontMode != backMode) {
                 if (record.frontMode != frontMode) {
-                    gl.getGL2GL3().glPolygonMode(GL.GL_FRONT, frontMode);
+                    if (gl.isGL2GL3()) {
+                        gl.getGL2GL3().glPolygonMode(GL.GL_FRONT, frontMode);
+                    }
                     record.frontMode = frontMode;
                 }
                 if (record.backMode != backMode) {
-                    gl.getGL2GL3().glPolygonMode(GL.GL_BACK, backMode);
+                    if (gl.isGL2GL3()) {
+                        gl.getGL2GL3().glPolygonMode(GL.GL_BACK, backMode);
+                    }
                     record.backMode = backMode;
                 }
             }
 
         } else {
             if (frontMode == backMode) {
-                gl.getGL2GL3().glPolygonMode(GL.GL_FRONT_AND_BACK, frontMode);
+                if (gl.isGL2GL3()) {
+                    gl.getGL2GL3().glPolygonMode(GL.GL_FRONT_AND_BACK, frontMode);
+                }
             } else if (frontMode != backMode) {
-                gl.getGL2GL3().glPolygonMode(GL.GL_FRONT, frontMode);
-                gl.getGL2GL3().glPolygonMode(GL.GL_BACK, backMode);
+                if (gl.isGL2GL3()) {
+                    gl.getGL2GL3().glPolygonMode(GL.GL_FRONT, frontMode);
+                    gl.getGL2GL3().glPolygonMode(GL.GL_BACK, backMode);
+                }
             }
             record.frontMode = frontMode;
             record.backMode = backMode;

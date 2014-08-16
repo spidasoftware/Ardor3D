@@ -59,10 +59,12 @@ public abstract class JoglOffsetStateUtil {
 
         final int glType = getGLType(type);
         if (!record.isValid() || typeEnabled != record.enabledOffsets.contains(type)) {
-            if (typeEnabled) {
-                gl.glEnable(glType);
-            } else {
-                gl.glDisable(glType);
+            if (!gl.isGLES()) {
+                if (typeEnabled) {
+                    gl.glEnable(glType);
+                } else {
+                    gl.glDisable(glType);
+                }
             }
         }
     }

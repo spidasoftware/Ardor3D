@@ -67,8 +67,10 @@ public class JoglContextCapabilities extends ContextCapabilities {
             _maxTextureLodBias = 0f;
         }
 
-        gl.glGetIntegerv(GL2ES1.GL_MAX_CLIP_PLANES, buf);
-        _maxUserClipPlanes = buf.get(0);
+        if (gl.isGL2ES1()) {
+            gl.glGetIntegerv(GL2ES1.GL_MAX_CLIP_PLANES, buf);
+            _maxUserClipPlanes = buf.get(0);
+        }
 
         _glslSupported = gl.isExtensionAvailable("GL_ARB_shader_objects")
                 && gl.isExtensionAvailable("GL_ARB_fragment_shader") && gl.isExtensionAvailable("GL_ARB_vertex_shader")
@@ -82,8 +84,12 @@ public class JoglContextCapabilities extends ContextCapabilities {
         _tessellationShadersSupported = gl.isExtensionAvailable("GL_ARB_tessellation_shader") && _glslSupported;
 
         if (_glslSupported) {
-            gl.glGetIntegerv(GL2.GL_MAX_VERTEX_ATTRIBS_ARB, buf);
-            _maxGLSLVertexAttribs = buf.get(0);
+            if (gl.isGL2()) {
+                gl.glGetIntegerv(GL2.GL_MAX_VERTEX_ATTRIBS_ARB, buf);
+                _maxGLSLVertexAttribs = buf.get(0);
+            } else {
+                // FIXME use a reasonable value
+            }
         }
 
         // Pbuffer
@@ -96,7 +102,7 @@ public class JoglContextCapabilities extends ContextCapabilities {
             _supportsFBOMultisample = gl.isExtensionAvailable("GL_EXT_framebuffer_multisample");
             _supportsFBOBlit = gl.isExtensionAvailable("GL_EXT_framebuffer_blit");
 
-            if (gl.isExtensionAvailable("GL_ARB_draw_buffers")) {
+            if (gl.isExtensionAvailable("GL_ARB_draw_buffers") && gl.isGL2ES2()) {
                 gl.glGetIntegerv(GL2ES2.GL_MAX_COLOR_ATTACHMENTS, buf);
                 _maxFBOColorAttachments = buf.get(0);
             } else {
@@ -105,7 +111,7 @@ public class JoglContextCapabilities extends ContextCapabilities {
 
             // Max multisample samples.
             if (gl.isExtensionAvailable("GL_EXT_framebuffer_multisample")
-                    && gl.isExtensionAvailable("GL_EXT_framebuffer_blit")) {
+                    && gl.isExtensionAvailable("GL_EXT_framebuffer_blit") && gl.isGL2ES3()) {
                 gl.glGetIntegerv(GL2ES3.GL_MAX_SAMPLES, buf);
                 _maxFBOSamples = buf.get(0);
             } else {
@@ -119,8 +125,10 @@ public class JoglContextCapabilities extends ContextCapabilities {
         _stencilWrapSupport = gl.isExtensionAvailable("GL_EXT_stencil_wrap");
 
         // number of available auxiliary draw buffers
-        gl.glGetIntegerv(GL2.GL_AUX_BUFFERS, buf);
-        _numAuxDrawBuffers = buf.get(0);
+        if (gl.isGL2()) {
+            gl.glGetIntegerv(GL2.GL_AUX_BUFFERS, buf);
+            _numAuxDrawBuffers = buf.get(0);
+        }
 
         // max texture size.
         gl.glGetIntegerv(GL.GL_MAX_TEXTURE_SIZE, buf);
@@ -148,9 +156,10 @@ public class JoglContextCapabilities extends ContextCapabilities {
 
         // If we do support multitexturing, find out how many textures we
         // can handle.
-        if (_supportsMultiTexture) {
+        if (_supportsMultiTexture && gl.isGL2ES1()) {
             gl.glGetIntegerv(GL2ES1.GL_MAX_TEXTURE_UNITS, buf);
             _numFixedTexUnits = buf.get(0);
+            // FIXME use a reasonable value when ES2 & 3 are detected
         } else {
             _numFixedTexUnits = 1;
         }
@@ -241,14 +250,18 @@ public class JoglContextCapabilities extends ContextCapabilities {
             _displayVersion = "Unable to retrieve API version.";
         }
 
-        if (_glslSupported) {
-            try {
-                _shadingLanguageVersion = gl.glGetString(GL2ES2.GL_SHADING_LANGUAGE_VERSION);
-            } catch (final Exception e) {
-                _shadingLanguageVersion = "Unable to retrieve shading language version.";
-            }
-        } else {
+        if (gl.isGLES1()) {
             _shadingLanguageVersion = "Not supported.";
+        } else {
+            if (_glslSupported) {
+                try {
+                    _shadingLanguageVersion = gl.glGetString(GL2ES2.GL_SHADING_LANGUAGE_VERSION);
+                } catch (final Exception e) {
+                    _shadingLanguageVersion = "Unable to retrieve shading language version.";
+                }
+            } else {
+                _shadingLanguageVersion = "Not supported.";
+            }
         }
     }
 }

@@ -94,17 +94,25 @@ public abstract class JoglFogStateUtil {
 
         if (record.isValid()) {
             if (enable && !record.enabled) {
-                gl.glEnable(GL2ES1.GL_FOG);
+                if (gl.isGL2ES1()) {
+                    gl.glEnable(GL2ES1.GL_FOG);
+                }
                 record.enabled = true;
             } else if (!enable && record.enabled) {
-                gl.glDisable(GL2ES1.GL_FOG);
+                if (gl.isGL2ES1()) {
+                    gl.glDisable(GL2ES1.GL_FOG);
+                }
                 record.enabled = false;
             }
         } else {
             if (enable) {
-                gl.glEnable(GL2ES1.GL_FOG);
+                if (gl.isGL2ES1()) {
+                    gl.glEnable(GL2ES1.GL_FOG);
+                }
             } else {
-                gl.glDisable(GL2ES1.GL_FOG);
+                if (gl.isGL2ES1()) {
+                    gl.glDisable(GL2ES1.GL_FOG);
+                }
             }
             record.enabled = enable;
         }
@@ -182,7 +190,9 @@ public abstract class JoglFogStateUtil {
         }
 
         if (!record.isValid() || record.fogHint != glHint) {
-            gl.glHint(GL2ES1.GL_FOG_HINT, glHint);
+            if (gl.isGL2ES1()) {
+                gl.glHint(GL2ES1.GL_FOG_HINT, glHint);
+            }
             record.fogHint = glHint;
         }
     }

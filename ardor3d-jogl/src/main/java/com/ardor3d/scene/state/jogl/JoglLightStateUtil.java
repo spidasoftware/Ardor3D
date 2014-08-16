@@ -167,9 +167,13 @@ public abstract class JoglLightStateUtil {
 
         if (!record.isValid() || lr.isEnabled() != enable) {
             if (enable) {
-                gl.glEnable(GLLightingFunc.GL_LIGHT0 + index);
+                if (gl.isGL2ES1()) {
+                    gl.glEnable(GLLightingFunc.GL_LIGHT0 + index);
+                }
             } else {
-                gl.glDisable(GLLightingFunc.GL_LIGHT0 + index);
+                if (gl.isGL2ES1()) {
+                    gl.glDisable(GLLightingFunc.GL_LIGHT0 + index);
+                }
             }
 
             lr.setEnabled(enable);
@@ -181,9 +185,13 @@ public abstract class JoglLightStateUtil {
 
         if (!record.isValid() || record.isEnabled() != enable) {
             if (enable) {
-                gl.glEnable(GLLightingFunc.GL_LIGHTING);
+                if (gl.isGL2ES1()) {
+                    gl.glEnable(GLLightingFunc.GL_LIGHTING);
+                }
             } else {
-                gl.glDisable(GLLightingFunc.GL_LIGHTING);
+                if (gl.isGL2ES1()) {
+                    gl.glDisable(GLLightingFunc.GL_LIGHTING);
+                }
             }
             record.setEnabled(enable);
         }

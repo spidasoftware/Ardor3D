@@ -106,7 +106,10 @@ public class JoglTextureRenderer extends AbstractFBOTextureRenderer {
 
         // Initialize mipmapping for this texture, if requested
         if (tex.getMinificationFilter().usesMipMapLevels()) {
-            gl.glGenerateMipmap(JoglTextureStateUtil.getGLType(tex.getType()));
+            final int glType = JoglTextureStateUtil.getGLType(tex.getType());
+            if (glType != GL.GL_INVALID_ENUM) {
+                gl.glGenerateMipmap(glType);
+            }
         }
 
         // Setup filtering and wrap
@@ -252,7 +255,10 @@ public class JoglTextureRenderer extends AbstractFBOTextureRenderer {
                 final Texture tex = texs.get(x);
                 if (tex.getMinificationFilter().usesMipMapLevels()) {
                     JoglTextureStateUtil.doTextureBind(tex, 0, true);
-                    gl.glGenerateMipmap(JoglTextureStateUtil.getGLType(tex.getType()));
+                    final int glType = JoglTextureStateUtil.getGLType(tex.getType());
+                    if (glType != GL.GL_INVALID_ENUM) {
+                        gl.glGenerateMipmap(glType);
+                    }
                 }
             }
         } finally {
@@ -351,7 +357,10 @@ public class JoglTextureRenderer extends AbstractFBOTextureRenderer {
         // automatically generate mipmaps for our texture.
         if (tex.getMinificationFilter().usesMipMapLevels()) {
             JoglTextureStateUtil.doTextureBind(tex, 0, true);
-            gl.glGenerateMipmap(JoglTextureStateUtil.getGLType(tex.getType()));
+            final int glType = JoglTextureStateUtil.getGLType(tex.getType());
+            if (glType != GL.GL_INVALID_ENUM) {
+                gl.glGenerateMipmap(JoglTextureStateUtil.getGLType(tex.getType()));
+            }
         }
     }
 

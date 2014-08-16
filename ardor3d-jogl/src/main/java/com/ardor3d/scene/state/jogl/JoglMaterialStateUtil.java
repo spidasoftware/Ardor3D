@@ -142,14 +142,18 @@ public abstract class JoglMaterialStateUtil {
             final GL gl = GLContext.getCurrentGL();
 
             if (colorMaterial == ColorMaterial.None) {
-                gl.glDisable(GLLightingFunc.GL_COLOR_MATERIAL);
+                if (gl.isGL2()) {
+                    gl.glDisable(GLLightingFunc.GL_COLOR_MATERIAL);
+                }
             } else {
                 final int glMat = getGLColorMaterial(colorMaterial);
                 final int glFace = getGLMaterialFace(face);
                 if (gl.isGL2()) {
                     gl.getGL2().glColorMaterial(glFace, glMat);
                 }
-                gl.glEnable(GLLightingFunc.GL_COLOR_MATERIAL);
+                if (gl.isGL2()) {
+                    gl.glEnable(GLLightingFunc.GL_COLOR_MATERIAL);
+                }
                 record.resetColorsForCM(face, colorMaterial);
             }
             record.colorMaterial = colorMaterial;

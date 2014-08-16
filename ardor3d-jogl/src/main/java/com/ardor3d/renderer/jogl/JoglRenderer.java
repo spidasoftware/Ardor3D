@@ -628,12 +628,16 @@ public class JoglRenderer extends AbstractRenderer {
                             GL.GL_UNSIGNED_BYTE, source);
                     break;
                 case OneDimensional:
-                    gl.getGL2GL3().glTexSubImage1D(GL2GL3.GL_TEXTURE_1D, 0, dstOffsetX, dstWidth, pixelFormat,
-                            GL.GL_UNSIGNED_BYTE, source);
+                    if (gl.isGL2GL3()) {
+                        gl.getGL2GL3().glTexSubImage1D(GL2GL3.GL_TEXTURE_1D, 0, dstOffsetX, dstWidth, pixelFormat,
+                                GL.GL_UNSIGNED_BYTE, source);
+                    }
                     break;
                 case ThreeDimensional:
-                    gl.getGL2ES2().glTexSubImage3D(GL2ES2.GL_TEXTURE_3D, 0, dstOffsetX, dstOffsetY, dstOffsetZ,
-                            dstWidth, dstHeight, dstDepth, pixelFormat, GL.GL_UNSIGNED_BYTE, source);
+                    if (gl.isGL2ES2()) {
+                        gl.getGL2ES2().glTexSubImage3D(GL2ES2.GL_TEXTURE_3D, 0, dstOffsetX, dstOffsetY, dstOffsetZ,
+                                dstWidth, dstHeight, dstDepth, pixelFormat, GL.GL_UNSIGNED_BYTE, source);
+                    }
                     break;
                 case CubeMap:
                     gl.glTexSubImage2D(JoglTextureStateUtil.getGLCubeMapFace(dstFace), 0, dstOffsetX, dstOffsetY,

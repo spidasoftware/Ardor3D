@@ -230,10 +230,13 @@ public class JoglTextureStateUtil {
                         // ensure the buffer is ready for reading
                         image.getData(0).rewind();
                         // send top level to card
-                        gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, 0,
-                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()), image.getWidth(),
-                                hasBorder ? 1 : 0, JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                        if (gl.isGL2GL3()) {
+                            gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, 0,
+                                    JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                    image.getWidth(), hasBorder ? 1 : 0,
+                                    JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                    JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                        }
                         break;
                     case ThreeDimensional:
                         if (caps.isTexture3DSupported()) {
@@ -303,7 +306,12 @@ public class JoglTextureStateUtil {
 
                 if (caps.isAutomaticMipmapsSupported()) {
                     // Flag the card to generate mipmaps
-                    gl.glTexParameteri(getGLType(type), GL2ES1.GL_GENERATE_MIPMAP, GL.GL_TRUE);
+                    if (gl.isGL2ES1()) {
+                        final int glType = getGLType(texture.getType());
+                        if (glType != GL.GL_INVALID_ENUM) {
+                            gl.glTexParameteri(glType, GL2ES1.GL_GENERATE_MIPMAP, GL.GL_TRUE);
+                        }
+                    }
                 }
 
                 switch (type) {
@@ -319,17 +327,11 @@ public class JoglTextureStateUtil {
                                     JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
                         } else {
                             // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
-                            if (gl.isGL2() || gl.isGL2ES1()) {
+                            if (gl.isGL2() /* || gl.isGL2ES1() */) {
                                 // send to card
                                 glu.gluBuild2DMipmaps(GL.GL_TEXTURE_2D,
                                         JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
                                         image.getWidth(), image.getHeight(),
-                                        JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                        JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
-                            } else {
-                                gl.glTexImage2D(GL.GL_TEXTURE_2D, 0,
-                                        JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                        image.getWidth(), image.getHeight(), hasBorder ? 1 : 0,
                                         JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
                                         JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
                             }
@@ -340,11 +342,13 @@ public class JoglTextureStateUtil {
                         image.getData(0).rewind();
                         if (caps.isAutomaticMipmapsSupported()) {
                             // send top level to card
-                            gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, 0,
-                                    JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                    image.getWidth(), hasBorder ? 1 : 0,
-                                    JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                    JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                            if (gl.isGL2GL3()) {
+                                gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, 0,
+                                        JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                        image.getWidth(), hasBorder ? 1 : 0,
+                                        JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                        JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                            }
                         } else {
                             // Note: JOGL's GLU class does not support
                             // gluBuild1DMipmaps.
@@ -413,7 +417,7 @@ public class JoglTextureStateUtil {
                                 }
                             } else {
                                 // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
-                                if (gl.isGL2() || gl.isGL2ES1()) {
+                                if (gl.isGL2() /* || gl.isGL2ES1() */) {
                                     for (final TextureCubeMap.Face face : TextureCubeMap.Face.values()) {
                                         // ensure the buffer is ready for reading
                                         image.getData(face.ordinal()).rewind();
@@ -421,18 +425,6 @@ public class JoglTextureStateUtil {
                                         glu.gluBuild2DMipmaps(getGLCubeMapFace(face),
                                                 JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
                                                 image.getWidth(), image.getWidth(),
-                                                JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                                JoglTextureUtil.getGLPixelDataType(image.getDataType()),
-                                                image.getData(face.ordinal()));
-                                    }
-                                } else {
-                                    for (final TextureCubeMap.Face face : TextureCubeMap.Face.values()) {
-                                        // ensure the buffer is ready for reading
-                                        image.getData(face.ordinal()).rewind();
-                                        // send top level to card
-                                        gl.glTexImage2D(getGLCubeMapFace(face), 0,
-                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                                image.getWidth(), image.getWidth(), hasBorder ? 1 : 0,
                                                 JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
                                                 JoglTextureUtil.getGLPixelDataType(image.getDataType()),
                                                 image.getData(face.ordinal()));
@@ -519,10 +511,14 @@ public class JoglTextureStateUtil {
                             gl.glTexParameteri(GL.GL_TEXTURE_2D, GL2ES3.GL_TEXTURE_MAX_LEVEL, max - 1);
                             break;
                         case ThreeDimensional:
-                            gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL2ES3.GL_TEXTURE_MAX_LEVEL, max - 1);
+                            if (gl.isGL2ES2()) {
+                                gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL2ES3.GL_TEXTURE_MAX_LEVEL, max - 1);
+                            }
                             break;
                         case OneDimensional:
-                            gl.glTexParameteri(GL2GL3.GL_TEXTURE_1D, GL2ES3.GL_TEXTURE_MAX_LEVEL, max - 1);
+                            if (gl.isGL2GL3()) {
+                                gl.glTexParameteri(GL2GL3.GL_TEXTURE_1D, GL2ES3.GL_TEXTURE_MAX_LEVEL, max - 1);
+                            }
                             break;
                         case CubeMap:
                             break;
@@ -584,30 +580,38 @@ public class JoglTextureStateUtil {
                                 break;
                             case OneDimensional:
                                 if (texture.getTextureStoreFormat().isCompressed()) {
-                                    gl.getGL2GL3().glCompressedTexImage1D(GL2GL3.GL_TEXTURE_1D, m,
-                                            JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                            width, hasBorder ? 1 : 0, mipSizes[m], data);
+                                    if (gl.isGL2GL3()) {
+                                        gl.getGL2GL3().glCompressedTexImage1D(GL2GL3.GL_TEXTURE_1D, m,
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                width, hasBorder ? 1 : 0, mipSizes[m], data);
+                                    }
                                 } else {
-                                    gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, m,
-                                            JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                            width, hasBorder ? 1 : 0,
-                                            JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                            JoglTextureUtil.getGLPixelDataType(image.getDataType()), data);
+                                    if (gl.isGL2GL3()) {
+                                        gl.getGL2GL3().glTexImage1D(GL2GL3.GL_TEXTURE_1D, m,
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                width, hasBorder ? 1 : 0,
+                                                JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                                JoglTextureUtil.getGLPixelDataType(image.getDataType()), data);
+                                    }
                                 }
                                 break;
                             case ThreeDimensional:
                                 final int depth = Math.max(1, image.getDepth() >> m);
                                 // already checked for support above...
                                 if (texture.getTextureStoreFormat().isCompressed()) {
-                                    gl.getGL2ES2().glCompressedTexImage3D(GL2ES2.GL_TEXTURE_3D, m,
-                                            JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                            width, height, depth, hasBorder ? 1 : 0, mipSizes[m], data);
+                                    if (gl.isGL2ES2()) {
+                                        gl.getGL2ES2().glCompressedTexImage3D(GL2ES2.GL_TEXTURE_3D, m,
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                width, height, depth, hasBorder ? 1 : 0, mipSizes[m], data);
+                                    }
                                 } else {
-                                    gl.getGL2ES2().glTexImage3D(GL2ES2.GL_TEXTURE_3D, m,
-                                            JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                            width, height, depth, hasBorder ? 1 : 0,
-                                            JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                            JoglTextureUtil.getGLPixelDataType(image.getDataType()), data);
+                                    if (gl.isGL2ES2()) {
+                                        gl.getGL2ES2().glTexImage3D(GL2ES2.GL_TEXTURE_3D, m,
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                width, height, depth, hasBorder ? 1 : 0,
+                                                JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                                JoglTextureUtil.getGLPixelDataType(image.getDataType()), data);
+                                    }
                                 }
                                 break;
                             case CubeMap:
@@ -647,7 +651,9 @@ public class JoglTextureStateUtil {
             final int glHint = JoglTextureUtil.getPerspHint(state.getCorrectionType());
             if (!record.isValid() || record.hint != glHint) {
                 // set up correction mode
-                gl.glHint(GL2ES1.GL_PERSPECTIVE_CORRECTION_HINT, glHint);
+                if (gl.isGL2ES1()) {
+                    gl.glHint(GL2ES1.GL_PERSPECTIVE_CORRECTION_HINT, glHint);
+                }
                 record.hint = glHint;
             }
 
@@ -714,7 +720,10 @@ public class JoglTextureStateUtil {
                     // texture already exists in OpenGL, just bind it if needed
                     if (!unitRecord.isValid() || unitRecord.boundTexture != textureId || fbo) {
                         checkAndSetUnit(i, record, caps);
-                        gl.glBindTexture(getGLType(type), textureId);
+                        final int glType = getGLType(type);
+                        if (glType != GL.GL_INVALID_ENUM) {
+                            gl.glBindTexture(glType, textureId);
+                        }
                         if (Constants.stats) {
                             StatCollector.addStat(StatType.STAT_TEXTURE_BINDS, 1);
                         }
@@ -741,7 +750,12 @@ public class JoglTextureStateUtil {
                     // Enable 2D texturing on this unit if not enabled.
                     if (!unitRecord.isValid() || !unitRecord.enabled[type.ordinal()]) {
                         checkAndSetUnit(i, record, caps);
-                        gl.glEnable(getGLType(type));
+                        final int glType = getGLType(type);
+                        if (glType != GL.GL_INVALID_ENUM) {
+                            if (!gl.isGLES2()) {
+                                gl.glEnable(glType);
+                            }
+                        }
                         unitRecord.enabled[type.ordinal()] = true;
                     }
 
@@ -834,7 +848,9 @@ public class JoglTextureStateUtil {
             if (!unitRecord.isValid() || unitRecord.enabled[Type.OneDimensional.ordinal()]) {
                 // Check we are in the right unit
                 checkAndSetUnit(unit, record, caps);
-                gl.glDisable(GL2GL3.GL_TEXTURE_1D);
+                if (gl.isGL2GL3()) {
+                    gl.glDisable(GL2GL3.GL_TEXTURE_1D);
+                }
                 unitRecord.enabled[Type.OneDimensional.ordinal()] = false;
             }
         }
@@ -873,7 +889,9 @@ public class JoglTextureStateUtil {
         if (!unitRecord.isValid() || unitRecord.enabled[Type.OneDimensional.ordinal()]) {
             // Check we are in the right unit
             checkAndSetUnit(unit, record, caps);
-            gl.glDisable(GL2GL3.GL_TEXTURE_1D);
+            if (gl.isGL2GL3()) {
+                gl.glDisable(GL2GL3.GL_TEXTURE_1D);
+            }
             unitRecord.enabled[Type.OneDimensional.ordinal()] = false;
         }
 
@@ -938,8 +956,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvf(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_ALPHA_SCALE,
-                    texture.getCombineScaleAlpha().floatValue());
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvf(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_ALPHA_SCALE,
+                        texture.getCombineScaleAlpha().floatValue());
+            }
             unitRecord.envAlphaScale = texture.getCombineScaleAlpha();
         }
 
@@ -950,8 +970,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_COMBINE_RGB,
-                    JoglTextureUtil.getGLCombineFuncRGB(rgbCombineFunc));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_COMBINE_RGB,
+                        JoglTextureUtil.getGLCombineFuncRGB(rgbCombineFunc));
+            }
             unitRecord.rgbCombineFunc = rgbCombineFunc;
         }
 
@@ -961,8 +983,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE0_RGB,
-                    JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE0_RGB,
+                        JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+            }
             unitRecord.combSrcRGB0 = combSrcRGB;
         }
 
@@ -972,8 +996,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND0_RGB,
-                    JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND0_RGB,
+                        JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+            }
             unitRecord.combOpRGB0 = combOpRGB;
         }
 
@@ -986,8 +1012,10 @@ public class JoglTextureStateUtil {
                     checkAndSetUnit(unit, record, caps);
                     checked = true;
                 }
-                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE1_RGB,
-                        JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE1_RGB,
+                            JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+                }
                 unitRecord.combSrcRGB1 = combSrcRGB;
             }
 
@@ -997,8 +1025,10 @@ public class JoglTextureStateUtil {
                     checkAndSetUnit(unit, record, caps);
                     checked = true;
                 }
-                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND1_RGB,
-                        JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND1_RGB,
+                            JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+                }
                 unitRecord.combOpRGB1 = combOpRGB;
             }
 
@@ -1011,8 +1041,10 @@ public class JoglTextureStateUtil {
                         checkAndSetUnit(unit, record, caps);
                         checked = true;
                     }
-                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE2_RGB,
-                            JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE2_RGB,
+                                JoglTextureUtil.getGLCombineSrc(combSrcRGB));
+                    }
                     unitRecord.combSrcRGB2 = combSrcRGB;
                 }
 
@@ -1022,8 +1054,10 @@ public class JoglTextureStateUtil {
                         checkAndSetUnit(unit, record, caps);
                         checked = true;
                     }
-                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND2_RGB,
-                            JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND2_RGB,
+                                JoglTextureUtil.getGLCombineOpRGB(combOpRGB));
+                    }
                     unitRecord.combOpRGB2 = combOpRGB;
                 }
 
@@ -1037,8 +1071,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_COMBINE_ALPHA,
-                    JoglTextureUtil.getGLCombineFuncAlpha(alphaCombineFunc));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_COMBINE_ALPHA,
+                        JoglTextureUtil.getGLCombineFuncAlpha(alphaCombineFunc));
+            }
             unitRecord.alphaCombineFunc = alphaCombineFunc;
         }
 
@@ -1048,8 +1084,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE0_ALPHA,
-                    JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE0_ALPHA,
+                        JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+            }
             unitRecord.combSrcAlpha0 = combSrcAlpha;
         }
 
@@ -1059,8 +1097,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND0_ALPHA,
-                    JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND0_ALPHA,
+                        JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+            }
             unitRecord.combOpAlpha0 = combOpAlpha;
         }
 
@@ -1073,8 +1113,10 @@ public class JoglTextureStateUtil {
                     checkAndSetUnit(unit, record, caps);
                     checked = true;
                 }
-                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE1_ALPHA,
-                        JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE1_ALPHA,
+                            JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+                }
                 unitRecord.combSrcAlpha1 = combSrcAlpha;
             }
 
@@ -1084,8 +1126,10 @@ public class JoglTextureStateUtil {
                     checkAndSetUnit(unit, record, caps);
                     checked = true;
                 }
-                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND1_ALPHA,
-                        JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND1_ALPHA,
+                            JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+                }
                 unitRecord.combOpAlpha1 = combOpAlpha;
             }
 
@@ -1098,8 +1142,10 @@ public class JoglTextureStateUtil {
                         checkAndSetUnit(unit, record, caps);
                         checked = true;
                     }
-                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE2_ALPHA,
-                            JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2.GL_SOURCE2_ALPHA,
+                                JoglTextureUtil.getGLCombineSrc(combSrcAlpha));
+                    }
                     unitRecord.combSrcAlpha2 = combSrcAlpha;
                 }
 
@@ -1109,8 +1155,10 @@ public class JoglTextureStateUtil {
                         checkAndSetUnit(unit, record, caps);
                         checked = true;
                     }
-                    gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND2_ALPHA,
-                            JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_OPERAND2_ALPHA,
+                                JoglTextureUtil.getGLCombineOpAlpha(combOpAlpha));
+                    }
                     unitRecord.combOpAlpha2 = combOpAlpha;
                 }
             }
@@ -1177,7 +1225,12 @@ public class JoglTextureStateUtil {
             TextureRecord.colorBuffer.put(texBorder.getRed()).put(texBorder.getGreen()).put(texBorder.getBlue())
                     .put(texBorder.getAlpha());
             TextureRecord.colorBuffer.rewind();
-            gl.glTexParameterfv(getGLType(texture.getType()), GL2GL3.GL_TEXTURE_BORDER_COLOR, TextureRecord.colorBuffer);
+            if (gl.isGL2GL3()) {
+                final int glType = getGLType(texture.getType());
+                if (glType != GL.GL_INVALID_ENUM) {
+                    gl.glTexParameterfv(glType, GL2GL3.GL_TEXTURE_BORDER_COLOR, TextureRecord.colorBuffer);
+                }
+            }
             texRecord.borderColor.set(texBorder);
         }
     }
@@ -1392,58 +1445,89 @@ public class JoglTextureStateUtil {
 
         if (!unitRecord.isValid()) {
             checkAndSetUnit(unit, record, caps);
-
             if (genS) {
-                gl.glEnable(GL2.GL_TEXTURE_GEN_S);
+                if (gl.isGL2()) {
+                    gl.glEnable(GL2.GL_TEXTURE_GEN_S);
+                }
             } else {
-                gl.glDisable(GL2.GL_TEXTURE_GEN_S);
+                if (gl.isGL2()) {
+                    gl.glDisable(GL2.GL_TEXTURE_GEN_S);
+                }
             }
             if (genT) {
-                gl.glEnable(GL2.GL_TEXTURE_GEN_T);
+                if (gl.isGL2()) {
+                    gl.glEnable(GL2.GL_TEXTURE_GEN_T);
+                }
             } else {
-                gl.glDisable(GL2.GL_TEXTURE_GEN_T);
+                if (gl.isGL2()) {
+                    gl.glDisable(GL2.GL_TEXTURE_GEN_T);
+                }
             }
             if (genR) {
-                gl.glEnable(GL2.GL_TEXTURE_GEN_R);
+                if (gl.isGL2()) {
+                    gl.glEnable(GL2.GL_TEXTURE_GEN_R);
+                }
             } else {
-                gl.glDisable(GL2.GL_TEXTURE_GEN_R);
+                if (gl.isGL2()) {
+                    gl.glDisable(GL2.GL_TEXTURE_GEN_R);
+                }
             }
             if (genQ) {
-                gl.glEnable(GL2.GL_TEXTURE_GEN_Q);
+                if (gl.isGL2()) {
+                    gl.glEnable(GL2.GL_TEXTURE_GEN_Q);
+                }
             } else {
-                gl.glDisable(GL2.GL_TEXTURE_GEN_Q);
+                if (gl.isGL2()) {
+                    gl.glDisable(GL2.GL_TEXTURE_GEN_Q);
+                }
             }
         } else {
             if (genS != unitRecord.textureGenS) {
                 checkAndSetUnit(unit, record, caps);
                 if (genS) {
-                    gl.glEnable(GL2.GL_TEXTURE_GEN_S);
+                    if (gl.isGL2()) {
+                        gl.glEnable(GL2.GL_TEXTURE_GEN_S);
+                    }
                 } else {
-                    gl.glDisable(GL2.GL_TEXTURE_GEN_S);
+                    if (gl.isGL2()) {
+                        gl.glDisable(GL2.GL_TEXTURE_GEN_S);
+                    }
                 }
             }
             if (genT != unitRecord.textureGenT) {
                 checkAndSetUnit(unit, record, caps);
                 if (genT) {
-                    gl.glEnable(GL2.GL_TEXTURE_GEN_T);
+                    if (gl.isGL2()) {
+                        gl.glEnable(GL2.GL_TEXTURE_GEN_T);
+                    }
                 } else {
-                    gl.glDisable(GL2.GL_TEXTURE_GEN_T);
+                    if (gl.isGL2()) {
+                        gl.glDisable(GL2.GL_TEXTURE_GEN_T);
+                    }
                 }
             }
             if (genR != unitRecord.textureGenR) {
                 checkAndSetUnit(unit, record, caps);
                 if (genR) {
-                    gl.glEnable(GL2.GL_TEXTURE_GEN_R);
+                    if (gl.isGL2()) {
+                        gl.glEnable(GL2.GL_TEXTURE_GEN_R);
+                    }
                 } else {
-                    gl.glDisable(GL2.GL_TEXTURE_GEN_R);
+                    if (gl.isGL2()) {
+                        gl.glDisable(GL2.GL_TEXTURE_GEN_R);
+                    }
                 }
             }
             if (genQ != unitRecord.textureGenQ) {
                 checkAndSetUnit(unit, record, caps);
                 if (genQ) {
-                    gl.glEnable(GL2.GL_TEXTURE_GEN_Q);
+                    if (gl.isGL2()) {
+                        gl.glEnable(GL2.GL_TEXTURE_GEN_Q);
+                    }
                 } else {
-                    gl.glDisable(GL2.GL_TEXTURE_GEN_Q);
+                    if (gl.isGL2()) {
+                        gl.glDisable(GL2.GL_TEXTURE_GEN_Q);
+                    }
                 }
             }
         }
@@ -1490,7 +1574,12 @@ public class JoglTextureStateUtil {
             // set up magnification filter
             if (!texRecord.isValid() || texRecord.depthTextureMode != depthMode) {
                 checkAndSetUnit(unit, record, caps);
-                gl.glTexParameteri(getGLType(type), GL2.GL_DEPTH_TEXTURE_MODE, depthMode);
+                if (gl.isGL2()) {
+                    final int glType = getGLType(texture.getType());
+                    if (glType != GL.GL_INVALID_ENUM) {
+                        gl.glTexParameteri(glType, GL2.GL_DEPTH_TEXTURE_MODE, depthMode);
+                    }
+                }
                 texRecord.depthTextureMode = depthMode;
             }
         }
@@ -1533,7 +1622,10 @@ public class JoglTextureStateUtil {
         // set up magnification filter
         if (!texRecord.isValid() || texRecord.magFilter != magFilter) {
             checkAndSetUnit(unit, record, caps);
-            gl.glTexParameteri(getGLType(type), GL.GL_TEXTURE_MAG_FILTER, magFilter);
+            final int glType = getGLType(texture.getType());
+            if (glType != GL.GL_INVALID_ENUM) {
+                gl.glTexParameteri(glType, GL.GL_TEXTURE_MAG_FILTER, magFilter);
+            }
             texRecord.magFilter = magFilter;
         }
 
@@ -1580,17 +1672,23 @@ public class JoglTextureStateUtil {
 
         if (!texRecord.isValid() || texRecord.wrapS != wrapS) {
             checkAndSetUnit(unit, record, caps);
-            gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL.GL_TEXTURE_WRAP_S, wrapS);
+            if (gl.isGL2ES2()) {
+                gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL.GL_TEXTURE_WRAP_S, wrapS);
+            }
             texRecord.wrapS = wrapS;
         }
         if (!texRecord.isValid() || texRecord.wrapT != wrapT) {
             checkAndSetUnit(unit, record, caps);
-            gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL.GL_TEXTURE_WRAP_T, wrapT);
+            if (gl.isGL2ES2()) {
+                gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL.GL_TEXTURE_WRAP_T, wrapT);
+            }
             texRecord.wrapT = wrapT;
         }
         if (!texRecord.isValid() || texRecord.wrapR != wrapR) {
             checkAndSetUnit(unit, record, caps);
-            gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL2ES2.GL_TEXTURE_WRAP_R, wrapR);
+            if (gl.isGL2ES2()) {
+                gl.glTexParameteri(GL2ES2.GL_TEXTURE_3D, GL2ES2.GL_TEXTURE_WRAP_R, wrapR);
+            }
             texRecord.wrapR = wrapR;
         }
 
@@ -1613,7 +1711,9 @@ public class JoglTextureStateUtil {
 
         if (!texRecord.isValid() || texRecord.wrapS != wrapS) {
             checkAndSetUnit(unit, record, caps);
-            gl.glTexParameteri(GL2GL3.GL_TEXTURE_1D, GL.GL_TEXTURE_WRAP_S, wrapS);
+            if (gl.isGL2GL3()) {
+                gl.glTexParameteri(GL2GL3.GL_TEXTURE_1D, GL.GL_TEXTURE_WRAP_S, wrapS);
+            }
             texRecord.wrapS = wrapS;
         }
     }
@@ -1775,7 +1875,10 @@ public class JoglTextureStateUtil {
         checkAndSetUnit(unit, record, caps);
 
         final int id = texture.getTextureIdForContext(context.getGlContextRep());
-        gl.glBindTexture(getGLType(texture.getType()), id);
+        final int glType = getGLType(texture.getType());
+        if (glType != GL.GL_INVALID_ENUM) {
+            gl.glBindTexture(glType, id);
+        }
         if (Constants.stats) {
             StatCollector.addStat(StatType.STAT_TEXTURE_BINDS, 1);
         }
@@ -1785,13 +1888,22 @@ public class JoglTextureStateUtil {
     }
 
     public static int getGLType(final Type type) {
+        final GL gl = GLContext.getCurrentGL();
         switch (type) {
             case TwoDimensional:
                 return GL.GL_TEXTURE_2D;
             case OneDimensional:
-                return GL2GL3.GL_TEXTURE_1D;
+                if (gl.isGL2GL3()) {
+                    return GL2GL3.GL_TEXTURE_1D;
+                } else {
+                    return GL.GL_INVALID_ENUM;
+                }
             case ThreeDimensional:
-                return GL2ES2.GL_TEXTURE_3D;
+                if (gl.isGL2ES2()) {
+                    return GL2ES2.GL_TEXTURE_3D;
+                } else {
+                    return GL.GL_INVALID_ENUM;
+                }
             case CubeMap:
                 return GL.GL_TEXTURE_CUBE_MAP;
             case Rectangle:
