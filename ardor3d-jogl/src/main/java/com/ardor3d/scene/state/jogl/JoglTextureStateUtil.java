@@ -927,8 +927,10 @@ public class JoglTextureStateUtil {
                 checkAndSetUnit(unit, record, caps);
                 checked = true;
             }
-            gl.getGL2ES1().glTexEnvf(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_RGB_SCALE,
-                    texture.getCombineScaleRGB().floatValue());
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvf(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_RGB_SCALE,
+                        texture.getCombineScaleRGB().floatValue());
+            }
             unitRecord.envRGBScale = texture.getCombineScaleRGB();
         } // Then Alpha Combine scale
         if (!unitRecord.isValid() || unitRecord.envAlphaScale != texture.getCombineScaleAlpha()) {
@@ -1121,8 +1123,10 @@ public class JoglTextureStateUtil {
 
         if (!unitRecord.isValid() || unitRecord.envMode != mode) {
             checkAndSetUnit(unit, record, caps);
-            gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_TEXTURE_ENV_MODE,
-                    JoglTextureUtil.getGLEnvMode(mode));
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glTexEnvi(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_TEXTURE_ENV_MODE,
+                        JoglTextureUtil.getGLEnvMode(mode));
+            }
             unitRecord.envMode = mode;
         }
     }
@@ -1138,7 +1142,10 @@ public class JoglTextureStateUtil {
             TextureRecord.colorBuffer.put(texBlend.getRed()).put(texBlend.getGreen()).put(texBlend.getBlue())
                     .put(texBlend.getAlpha());
             TextureRecord.colorBuffer.rewind();
-            gl.getGL2ES1().glTexEnvfv(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_TEXTURE_ENV_COLOR, TextureRecord.colorBuffer);
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1()
+                        .glTexEnvfv(GL2ES1.GL_TEXTURE_ENV, GL2ES1.GL_TEXTURE_ENV_COLOR, TextureRecord.colorBuffer);
+            }
             unitRecord.blendColor.set(texBlend);
         }
     }
@@ -1152,7 +1159,9 @@ public class JoglTextureStateUtil {
                     .getMaxLodBias();
             if (!unitRecord.isValid() || unitRecord.lodBias != bias) {
                 checkAndSetUnit(unit, record, caps);
-                gl.getGL2ES1().glTexEnvf(GL2.GL_TEXTURE_FILTER_CONTROL, GL2GL3.GL_TEXTURE_LOD_BIAS, bias);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexEnvf(GL2.GL_TEXTURE_FILTER_CONTROL, GL2GL3.GL_TEXTURE_LOD_BIAS, bias);
+                }
                 unitRecord.lodBias = bias;
             }
         }
@@ -1223,10 +1232,14 @@ public class JoglTextureStateUtil {
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2.GL_SPHERE_MAP) {
                     checkAndSetUnit(unit, record, caps);
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    }
                     unitRecord.textureGenSMode = GL2.GL_SPHERE_MAP;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);
+                    }
                     unitRecord.textureGenTMode = GL2.GL_SPHERE_MAP;
                 }
 
@@ -1236,13 +1249,19 @@ public class JoglTextureStateUtil {
                 // generate normals based texture coordinates
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2ES1.GL_NORMAL_MAP) {
                     checkAndSetUnit(unit, record, caps);
-                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    }
                     unitRecord.textureGenSMode = GL2ES1.GL_NORMAL_MAP;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    }
                     unitRecord.textureGenTMode = GL2ES1.GL_NORMAL_MAP;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_NORMAL_MAP);
+                    }
                     unitRecord.textureGenRMode = GL2ES1.GL_NORMAL_MAP;
                 }
 
@@ -1253,13 +1272,19 @@ public class JoglTextureStateUtil {
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2ES1.GL_REFLECTION_MAP) {
                     checkAndSetUnit(unit, record, caps);
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    }
                     unitRecord.textureGenSMode = GL2ES1.GL_REFLECTION_MAP;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    }
                     unitRecord.textureGenTMode = GL2ES1.GL_REFLECTION_MAP;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2ES1.GL_REFLECTION_MAP);
+                    }
                     unitRecord.textureGenRMode = GL2ES1.GL_REFLECTION_MAP;
                 }
 
@@ -1271,27 +1296,43 @@ public class JoglTextureStateUtil {
 
                 // generate eye linear texture coordinates
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2.GL_EYE_LINEAR) {
-                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    }
                     unitRecord.textureGenSMode = GL2.GL_EYE_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    }
                     unitRecord.textureGenTMode = GL2.GL_EYE_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    }
                     unitRecord.textureGenRMode = GL2.GL_EYE_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_Q, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_Q, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_EYE_LINEAR);
+                    }
                     unitRecord.textureGenQMode = GL2.GL_EYE_LINEAR;
                 }
 
                 record.prepPlane(texture.getEnvPlaneS(), TextureStateRecord.DEFAULT_S_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_S, GL2.GL_EYE_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_S, GL2.GL_EYE_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneT(), TextureStateRecord.DEFAULT_T_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_T, GL2.GL_EYE_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_T, GL2.GL_EYE_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneR(), TextureStateRecord.DEFAULT_R_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_R, GL2.GL_EYE_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_R, GL2.GL_EYE_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneQ(), TextureStateRecord.DEFAULT_Q_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_Q, GL2.GL_EYE_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_Q, GL2.GL_EYE_PLANE, record.plane);
+                }
 
                 setTextureGen(unitRecord, unit, record, caps, true, true, true, true);
                 break;
@@ -1301,27 +1342,43 @@ public class JoglTextureStateUtil {
 
                 // generate object linear texture coordinates
                 if (!unitRecord.isValid() || unitRecord.textureGenSMode != GL2.GL_OBJECT_LINEAR) {
-                    gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    }
                     unitRecord.textureGenSMode = GL2.GL_OBJECT_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    }
                     unitRecord.textureGenTMode = GL2.GL_OBJECT_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_R, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    }
                     unitRecord.textureGenRMode = GL2.GL_OBJECT_LINEAR;
 
-                    gl.getGL2ES1().glTexGeni(GL2.GL_Q, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glTexGeni(GL2.GL_Q, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_OBJECT_LINEAR);
+                    }
                     unitRecord.textureGenQMode = GL2.GL_OBJECT_LINEAR;
                 }
 
                 record.prepPlane(texture.getEnvPlaneS(), TextureStateRecord.DEFAULT_S_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_S, GL2.GL_OBJECT_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_S, GL2.GL_OBJECT_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneT(), TextureStateRecord.DEFAULT_T_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_T, GL2.GL_OBJECT_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_T, GL2.GL_OBJECT_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneR(), TextureStateRecord.DEFAULT_R_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_R, GL2.GL_OBJECT_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_R, GL2.GL_OBJECT_PLANE, record.plane);
+                }
                 record.prepPlane(texture.getEnvPlaneQ(), TextureStateRecord.DEFAULT_Q_PLANE);
-                gl.getGL2ES1().glTexGenfv(GL2.GL_Q, GL2.GL_OBJECT_PLANE, record.plane);
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glTexGenfv(GL2.GL_Q, GL2.GL_OBJECT_PLANE, record.plane);
+                }
 
                 setTextureGen(unitRecord, unit, record, caps, true, true, true, true);
                 break;

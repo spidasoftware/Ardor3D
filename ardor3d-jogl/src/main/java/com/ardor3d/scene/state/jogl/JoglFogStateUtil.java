@@ -43,23 +43,35 @@ public abstract class JoglFogStateUtil {
 
             if (record.isValid()) {
                 if (record.fogStart != state.getStart()) {
-                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_START, state.getStart());
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_START, state.getStart());
+                    }
                     record.fogStart = state.getStart();
                 }
                 if (record.fogEnd != state.getEnd()) {
-                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_END, state.getEnd());
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_END, state.getEnd());
+                    }
                     record.fogEnd = state.getEnd();
                 }
                 if (record.density != state.getDensity()) {
-                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_DENSITY, state.getDensity());
+                    if (gl.isGL2ES1()) {
+                        gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_DENSITY, state.getDensity());
+                    }
                     record.density = state.getDensity();
                 }
             } else {
-                gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_START, state.getStart());
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_START, state.getStart());
+                }
                 record.fogStart = state.getStart();
-                gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_END, state.getEnd());
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_END, state.getEnd());
+                }
                 record.fogEnd = state.getEnd();
-                gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_DENSITY, state.getDensity());
+                if (gl.isGL2ES1()) {
+                    gl.getGL2ES1().glFogf(GL2ES1.GL_FOG_DENSITY, state.getDensity());
+                }
                 record.density = state.getDensity();
             }
 
@@ -107,7 +119,9 @@ public abstract class JoglFogStateUtil {
             record.colorBuff.put(record.fogColor.getRed()).put(record.fogColor.getGreen())
                     .put(record.fogColor.getBlue()).put(record.fogColor.getAlpha());
             record.colorBuff.flip();
-            gl.getGL2ES1().glFogfv(GL2ES1.GL_FOG_COLOR, record.colorBuff);
+            if (gl.isGL2ES1()) {
+                gl.getGL2ES1().glFogfv(GL2ES1.GL_FOG_COLOR, record.colorBuff);
+            }
         }
     }
 
