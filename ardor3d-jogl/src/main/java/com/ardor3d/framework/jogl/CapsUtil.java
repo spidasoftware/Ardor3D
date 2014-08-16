@@ -27,6 +27,13 @@ public class CapsUtil {
         if (isForwardCompatible) {
             // Ardor3D doesn't support forward compatible yet
             profile = GLProfile.getMaxFixedFunc(true);
+        } else {
+            final boolean isES2orES3 = profile.isGLES2() || profile.isGLES3();
+            // Ardor3D doesn't fully support ES 2.0 and later yet, favors ES 1 if possible
+            // FIXME remove this kludge when Ardor3D gets some VAO support
+            if (isES2orES3 && GLProfile.isAvailable(GLProfile.GLES1)) {
+                profile = GLProfile.get(GLProfile.GLES1);
+            }
         }
         return profile;
     }
