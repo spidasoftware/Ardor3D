@@ -184,25 +184,30 @@ public class JoglTextureStateUtil {
                 }
                 logger.warning("Rescaling image to " + w + " x " + h + " !!!");
 
-                // must rescale image to get "top" mipmap texture image
-                final int pixFormat = JoglTextureUtil.getGLPixelFormat(image.getDataFormat());
-                final int pixDataType = JoglTextureUtil.getGLPixelDataType(image.getDataType());
-                final int bpp = ImageUtils.getPixelByteSize(image.getDataFormat(), image.getDataType());
-                final ByteBuffer scaledImage = BufferUtils.createByteBuffer((w + 4) * h * bpp);
-                // ensure the buffer is ready for reading
-                image.getData(0).rewind();
-                final int error = glu.gluScaleImage(pixFormat, actualWidth, actualHeight, pixDataType,
-                        image.getData(0), w, h, pixDataType, scaledImage);
-                if (error != 0) {
-                    final int errorCode = gl.glGetError();
-                    if (errorCode != GL.GL_NO_ERROR) {
-                        throw new GLException(glu.gluErrorString(errorCode));
+                // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
+                if (gl.isGL2() || gl.isGL2ES1()) {
+                    // must rescale image to get "top" mipmap texture image
+                    final int pixFormat = JoglTextureUtil.getGLPixelFormat(image.getDataFormat());
+                    final int pixDataType = JoglTextureUtil.getGLPixelDataType(image.getDataType());
+                    final int bpp = ImageUtils.getPixelByteSize(image.getDataFormat(), image.getDataType());
+                    final ByteBuffer scaledImage = BufferUtils.createByteBuffer((w + 4) * h * bpp);
+                    // ensure the buffer is ready for reading
+                    image.getData(0).rewind();
+                    final int error = glu.gluScaleImage(pixFormat, actualWidth, actualHeight, pixDataType,
+                            image.getData(0), w, h, pixDataType, scaledImage);
+                    if (error != 0) {
+                        final int errorCode = gl.glGetError();
+                        if (errorCode != GL.GL_NO_ERROR) {
+                            throw new GLException(glu.gluErrorString(errorCode));
+                        }
                     }
-                }
 
-                image.setWidth(w);
-                image.setHeight(h);
-                image.setData(scaledImage);
+                    image.setWidth(w);
+                    image.setHeight(h);
+                    image.setData(scaledImage);
+                } else {
+                    logger.warning("GLU cannot rescale the image");
+                }
             }
 
             if (!texture.getMinificationFilter().usesMipMapLevels() && !texture.getTextureStoreFormat().isCompressed()) {
@@ -313,12 +318,21 @@ public class JoglTextureStateUtil {
                                     JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
                                     JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
                         } else {
-                            // send to card
-                            glu.gluBuild2DMipmaps(GL.GL_TEXTURE_2D,
-                                    JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                    image.getWidth(), image.getHeight(),
-                                    JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                    JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                            // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
+                            if (gl.isGL2() || gl.isGL2ES1()) {
+                                // send to card
+                                glu.gluBuild2DMipmaps(GL.GL_TEXTURE_2D,
+                                        JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                        image.getWidth(), image.getHeight(),
+                                        JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                        JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                            } else {
+                                gl.glTexImage2D(GL.GL_TEXTURE_2D, 0,
+                                        JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                        image.getWidth(), image.getHeight(), hasBorder ? 1 : 0,
+                                        JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                        JoglTextureUtil.getGLPixelDataType(image.getDataType()), image.getData(0));
+                            }
                         }
                         break;
                     case OneDimensional:
@@ -398,16 +412,31 @@ public class JoglTextureStateUtil {
                                             image.getData(face.ordinal()));
                                 }
                             } else {
-                                for (final TextureCubeMap.Face face : TextureCubeMap.Face.values()) {
-                                    // ensure the buffer is ready for reading
-                                    image.getData(face.ordinal()).rewind();
-                                    // send to card
-                                    glu.gluBuild2DMipmaps(getGLCubeMapFace(face),
-                                            JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
-                                            image.getWidth(), image.getWidth(),
-                                            JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
-                                            JoglTextureUtil.getGLPixelDataType(image.getDataType()),
-                                            image.getData(face.ordinal()));
+                                // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
+                                if (gl.isGL2() || gl.isGL2ES1()) {
+                                    for (final TextureCubeMap.Face face : TextureCubeMap.Face.values()) {
+                                        // ensure the buffer is ready for reading
+                                        image.getData(face.ordinal()).rewind();
+                                        // send to card
+                                        glu.gluBuild2DMipmaps(getGLCubeMapFace(face),
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                image.getWidth(), image.getWidth(),
+                                                JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                                JoglTextureUtil.getGLPixelDataType(image.getDataType()),
+                                                image.getData(face.ordinal()));
+                                    }
+                                } else {
+                                    for (final TextureCubeMap.Face face : TextureCubeMap.Face.values()) {
+                                        // ensure the buffer is ready for reading
+                                        image.getData(face.ordinal()).rewind();
+                                        // send top level to card
+                                        gl.glTexImage2D(getGLCubeMapFace(face), 0,
+                                                JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
+                                                image.getWidth(), image.getWidth(), hasBorder ? 1 : 0,
+                                                JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
+                                                JoglTextureUtil.getGLPixelDataType(image.getDataType()),
+                                                image.getData(face.ordinal()));
+                                    }
                                 }
                             }
                         } else {
