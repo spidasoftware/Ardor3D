@@ -246,7 +246,7 @@ public class ColladaImporter {
                 _optimizeMeshes, _optimizeSettings, geometryTool);
         final ColladaAnimUtils colladaAnimUtils = new ColladaAnimUtils(colladaStorage, dataCache, colladaDOMUtil,
                 colladaMeshUtils);
-        final ColladaNodeUtils colladaNodeUtils = new ColladaNodeUtils(dataCache, colladaDOMUtil, colladaMaterialUtils,
+        final ColladaNodeUtils colladaNodeUtils = new ColladaNodeUtils(this, dataCache, colladaDOMUtil, colladaMaterialUtils,
                 colladaMeshUtils, colladaAnimUtils);
 
         try {
