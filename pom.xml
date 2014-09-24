@@ -5,10 +5,10 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     
-    <name>Ardor 3D</name>
-    <description>A free, open source 3D graphics engine written in Java</description>
-    <url>http://www.ardor3d.com</url>
-    <inceptionYear>2008</inceptionYear>
+    <name>JogAmp's Ardor3D Continuation</name>
+    <description>A general-purpose, professionally oriented, open source, scenegraph based 3D engine written in Java</description>
+    <url>http://jogamp.org/deployment/ardor3d/</url>
+    <inceptionYear>2014</inceptionYear>
 	
     <licenses>
         <license>
@@ -19,18 +19,24 @@
     </licenses>
 	
     <scm>
-        <connection>scm:git:git://github.com/Renanse/Ardor3D.git</connection>
-        <developerConnection>scm:git:git@github.com:Renanse/Ardor3D.git</developerConnection>
-        <url>https://github.com/Renanse/Ardor3D</url>
+        <connection>scm:git:git://github.com/gouessej/Ardor3D.git</connection>
+        <developerConnection>scm:git:git@github.com:gouessej/Ardor3D.git</developerConnection>
+        <url>https://github.com/gouessej/Ardor3D</url>
     </scm>
     
     <developers>
         <developer>
-            <id>renanse</id>
-            <name>Joshua Slack</name>
-            <email>renanse@gmail.com</email>
+            <id>gouessej</id>
+            <name>Julien Gouesse</name>
+            <url>http://gouessej.wordpress.com</url>
+            <organization>JogAmp community</organization>
+            <organizationUrl>http://jogamp.org</organizationUrl>
         </developer>
     </developers>
+    
+    <issueManagement>
+        <url>https://github.com/gouessej/Ardor3D/issues</url>
+    </issueManagement>
     
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -106,6 +112,14 @@
     </reporting>
    
     <build>
+        <!-- Allows deployment over ssh -->
+        <extensions>
+            <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh-external</artifactId>
+            <version>2.2</version>
+            </extension>
+        </extensions>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -322,20 +336,20 @@
         </dependencies>
     </dependencyManagement>
 
-    <profiles>
-        <!-- This profile activated by specifying -Phudson on command line -->
+    <!-- This profile activated by specifying -Phudson on command line (not used yet) -->
+    <!--<profiles>
         <profile>
             <id>hudson</id>
 		    <distributionManagement>
 		        <repository>
 		            <id>Ardor3D-releases</id>
 		            <name>Ardor3D releases</name>
-		            <url>http://ardor3d.com:8081/nexus/content/repositories/releases</url>
+		            <url>scpexe://jogamp.org/srv/www/jogamp.org/deployment/ardor3d/releases</url>
 		        </repository>
 		        <snapshotRepository>
 		            <id>Ardor3D-snapshots</id>
 		            <name>Ardor3D snapshots</name>
-		            <url>http://ardor3d.com:8081/nexus/content/repositories/snapshots</url>
+		            <url>scpexe://jogamp.org/srv/www/jogamp.org/deployment/ardor3d/snapshots</url>
 		        </snapshotRepository>
 		    </distributionManagement>
             <build>
@@ -351,7 +365,7 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+    </profiles>-->
 
     <!-- this section specifies dependencies that are inherited by all sub-modules -->
     <dependencies>
