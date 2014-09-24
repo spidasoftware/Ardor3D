@@ -10,7 +10,9 @@
 
 package com.ardor3d.extension.terrain.providers.array;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +23,6 @@ import com.ardor3d.extension.terrain.providers.image.ImageTextureSource;
 import com.ardor3d.extension.terrain.util.NormalMapUtil;
 import com.ardor3d.image.Image;
 import com.ardor3d.math.type.ReadOnlyVector3;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class ArrayTerrainDataProvider implements TerrainDataProvider {
     private static final int tileSize = 128;
@@ -49,8 +49,8 @@ public class ArrayTerrainDataProvider implements TerrainDataProvider {
         final int clipLevelCount = 6;
 
         int currentSize = size;
-        heightMaps = Lists.newArrayList();
-        heightMapSizes = Lists.newArrayList();
+        heightMaps = new ArrayList<float[]>();
+        heightMapSizes = new ArrayList<Integer>();
         heightMaps.add(data);
         heightMapSizes.add(currentSize);
         float[] parentHeightMap = data;
@@ -73,7 +73,7 @@ public class ArrayTerrainDataProvider implements TerrainDataProvider {
 
     @Override
     public Map<Integer, String> getAvailableMaps() throws Exception {
-        final Map<Integer, String> maps = Maps.newHashMap();
+        final Map<Integer, String> maps = new HashMap<Integer, String>();
         maps.put(0, "ArrayBasedMap");
 
         return maps;

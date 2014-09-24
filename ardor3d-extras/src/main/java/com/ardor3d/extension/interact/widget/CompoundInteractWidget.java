@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.interact.widget;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -28,7 +29,6 @@ import com.ardor3d.renderer.Renderer;
 import com.ardor3d.scenegraph.Node;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.util.ReadOnlyTimer;
-import com.google.common.collect.Maps;
 
 public class CompoundInteractWidget extends AbstractInteractWidget {
     private static final String MOVE_KEY = "Move";
@@ -38,7 +38,7 @@ public class CompoundInteractWidget extends AbstractInteractWidget {
 
     public static double MIN_SCALE = 0.000001;
 
-    protected Map<String, AbstractInteractWidget> _widgets = Maps.newHashMap();
+    protected Map<String, AbstractInteractWidget> _widgets = new HashMap<String, AbstractInteractWidget>();
 
     protected AbstractInteractWidget _lastInputWidget = null;
 
@@ -50,7 +50,7 @@ public class CompoundInteractWidget extends AbstractInteractWidget {
 
     @Override
     public void addFilter(final UpdateFilter filter) {
-        for(final AbstractInteractWidget widget : _widgets.values()) {
+        for (final AbstractInteractWidget widget : _widgets.values()) {
             widget.addFilter(filter);
         }
         super.addFilter(filter);
@@ -58,7 +58,7 @@ public class CompoundInteractWidget extends AbstractInteractWidget {
 
     @Override
     public void removeFilter(final UpdateFilter filter) {
-        for(final AbstractInteractWidget widget : _widgets.values()) {
+        for (final AbstractInteractWidget widget : _widgets.values()) {
             widget.removeFilter(filter);
         }
         super.removeFilter(filter);
@@ -66,7 +66,7 @@ public class CompoundInteractWidget extends AbstractInteractWidget {
 
     @Override
     public void clearFilters() {
-        for(final AbstractInteractWidget widget : _widgets.values()) {
+        for (final AbstractInteractWidget widget : _widgets.values()) {
             widget.clearFilters();
         }
         super.clearFilters();

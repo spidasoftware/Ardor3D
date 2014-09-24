@@ -11,6 +11,7 @@
 package com.ardor3d.extension.terrain.client;
 
 import java.nio.ByteBuffer;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -27,7 +28,6 @@ import com.ardor3d.extension.terrain.util.Region;
 import com.ardor3d.extension.terrain.util.Tile;
 import com.ardor3d.image.TextureStoreFormat;
 import com.ardor3d.math.MathUtils;
-import com.google.common.collect.Sets;
 
 /**
  * Special tile/grid based cache for texture data
@@ -51,9 +51,9 @@ public class TextureGridCache implements TextureCache, Runnable {
     private final int clipmapLevel;
     private final int requestedLevel;
 
-    private final Set<TileLoadingData> currentTiles = Sets.newHashSet();
-    private Set<TileLoadingData> newThreadTiles = Sets.newHashSet();
-    private Set<TileLoadingData> backThreadTiles = Sets.newHashSet();
+    private final Set<TileLoadingData> currentTiles = new HashSet<TileLoadingData>();
+    private Set<TileLoadingData> newThreadTiles = new HashSet<TileLoadingData>();
+    private Set<TileLoadingData> backThreadTiles = new HashSet<TileLoadingData>();
     private final Object SWAP_LOCK = new Object();
     private int backCurrentTileX = Integer.MAX_VALUE;
     private int backCurrentTileY = Integer.MAX_VALUE;
@@ -69,12 +69,12 @@ public class TextureGridCache implements TextureCache, Runnable {
 
     // Debug
     private final boolean enableDebug = true;
-    private final Set<TileLoadingData> debugTiles = Sets.newHashSet();
+    private final Set<TileLoadingData> debugTiles = new HashSet<TileLoadingData>();
 
     public Set<TileLoadingData> getDebugTiles() {
         Set<TileLoadingData> copyTiles = null;
         synchronized (debugTiles) {
-            copyTiles = Sets.newHashSet(debugTiles);
+            copyTiles = new HashSet<TileLoadingData>(debugTiles);
         }
         return copyTiles;
     }
@@ -183,7 +183,7 @@ public class TextureGridCache implements TextureCache, Runnable {
             backCurrentTileX = tileX;
             backCurrentTileY = tileY;
 
-            final Set<TileLoadingData> newTiles = Sets.newHashSet();
+            final Set<TileLoadingData> newTiles = new HashSet<TileLoadingData>();
             for (int i = 0; i < cacheSize; i++) {
                 for (int j = 0; j < cacheSize; j++) {
                     final int sourceX = tileX + j - cacheSize / 2;

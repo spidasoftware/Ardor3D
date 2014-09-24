@@ -11,6 +11,7 @@
 package com.ardor3d.util.geom;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -21,7 +22,6 @@ import com.ardor3d.scenegraph.IndexBufferData;
 import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.Node;
 import com.ardor3d.scenegraph.Spatial;
-import com.google.common.collect.Maps;
 
 /**
  * This tool assists in reducing geometry information.<br>
@@ -111,8 +111,8 @@ public class GeometryTool {
                 }
             }
 
-            final Map<VertKey, Integer> store = Maps.newHashMap();
-            final Map<Integer, Integer> indexRemap = Maps.newHashMap();
+            final Map<VertKey, Integer> store = new HashMap<VertKey, Integer>();
+            final Map<Integer, Integer> indexRemap = new HashMap<Integer, Integer>();
             int good = 0;
             long group;
             for (int x = 0, max = verts.length; x < max; x++) {

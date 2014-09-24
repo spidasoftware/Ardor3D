@@ -10,11 +10,11 @@
 
 package com.ardor3d.renderer.state.record;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.renderer.state.GLSLShaderObjectsState;
 import com.ardor3d.util.shader.ShaderVariable;
-import com.google.common.collect.Lists;
 
 public class ShaderObjectsStateRecord extends StateRecord {
     // XXX NOTE: This is non-standard. Due to the fact that shader implementations
@@ -22,7 +22,7 @@ public class ShaderObjectsStateRecord extends StateRecord {
     // XXX checking system.
     GLSLShaderObjectsState reference = null;
 
-    public List<ShaderVariable> enabledAttributes = Lists.newArrayList();
+    public List<ShaderVariable> enabledAttributes = new ArrayList<ShaderVariable>();
 
     public int shaderId = -1;
 

@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.terrain.providers.inmemory.data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.ardor3d.extension.terrain.util.Tile;
@@ -20,7 +21,6 @@ import com.ardor3d.math.functions.FbmFunction3D;
 import com.ardor3d.math.functions.Function3D;
 import com.ardor3d.math.functions.Functions;
 import com.ardor3d.math.type.ReadOnlyVector3;
-import com.google.common.collect.Sets;
 
 public class InMemoryTerrainData {
 
@@ -62,8 +62,8 @@ public class InMemoryTerrainData {
         updatedTerrainTiles = new Set[clipmapLevels];
         updatedTextureTiles = new Set[clipmapLevels];
         for (int i = 0; i < clipmapLevels; i++) {
-            updatedTerrainTiles[i] = Sets.newHashSet();
-            updatedTextureTiles[i] = Sets.newHashSet();
+            updatedTerrainTiles[i] = new HashSet<Tile>();
+            updatedTextureTiles[i] = new HashSet<Tile>();
         }
 
         final double procScale = 1.0 / 4000.0;
@@ -175,10 +175,10 @@ public class InMemoryTerrainData {
                     dr = (radius - r) / radius;
                     index = i * side + j;
                     heightData[index] = Math.max(minHeight, Math.min(heightData[index] + dr * offset, maxHeight));
-                    red = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 0] & 0xff, (paint.getRed() * 255)) & 0xff);
-                    green = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 1] & 0xff, (paint.getGreen() * 255)) & 0xff);
-                    blue = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 2] & 0xff, (paint.getBlue() * 255)) & 0xff);
-                    alpha = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 3] & 0xff, (paint.getAlpha() * 255)) & 0xff);
+                    red = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 0] & 0xff, paint.getRed() * 255) & 0xff);
+                    green = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 1] & 0xff, paint.getGreen() * 255) & 0xff);
+                    blue = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 2] & 0xff, paint.getBlue() * 255) & 0xff);
+                    alpha = (byte) ((int) MathUtils.lerp(dr, colorData[index * 4 + 3] & 0xff, paint.getAlpha() * 255) & 0xff);
                     colorData[index * 4 + 0] = red;
                     colorData[index * 4 + 1] = green;
                     colorData[index * 4 + 2] = blue;

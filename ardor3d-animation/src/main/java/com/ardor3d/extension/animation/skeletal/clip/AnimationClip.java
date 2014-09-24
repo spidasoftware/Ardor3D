@@ -12,6 +12,7 @@ package com.ardor3d.extension.animation.skeletal.clip;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.annotation.SavableFactory;
@@ -19,7 +20,6 @@ import com.ardor3d.util.export.InputCapsule;
 import com.ardor3d.util.export.OutputCapsule;
 import com.ardor3d.util.export.Savable;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 /**
  * AnimationClip manages a set of animation channels as a single clip entity.
@@ -41,7 +41,7 @@ public class AnimationClip implements Savable {
      */
     public AnimationClip(final String name) {
         _name = name;
-        _channels = Lists.newArrayList();
+        _channels = new ArrayList<AbstractAnimationChannel>();
     }
 
     /**
@@ -52,7 +52,7 @@ public class AnimationClip implements Savable {
      */
     public AnimationClip(final String name, final List<AbstractAnimationChannel> channels) {
         _name = name;
-        _channels = Lists.newArrayList(channels);
+        _channels = new ArrayList<AbstractAnimationChannel>(channels);
         updateMaxTimeIndex();
     }
 

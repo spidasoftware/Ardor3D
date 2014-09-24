@@ -10,19 +10,19 @@
 
 package com.ardor3d.extension.ui.text.font;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.ardor3d.extension.ui.text.CharacterDescriptor;
 import com.ardor3d.image.Texture2D;
-import com.google.common.collect.Maps;
 
 /**
  * Defines a texture based font for use in the UI system.
  */
 public class UIFont {
 
-    private final Map<Character, CharacterDescriptor> _charDescriptors = Maps.newHashMap();
-    private final Map<Character, Map<Character, Integer>> _kernMap = Maps.newHashMap();
+    private final Map<Character, CharacterDescriptor> _charDescriptors = new HashMap<Character, CharacterDescriptor>();
+    private final Map<Character, Map<Character, Integer>> _kernMap = new HashMap<Character, Map<Character, Integer>>();
     private final Texture2D _fontTexture;
     private final int _fontHeight;
     private final int _fontSize;
@@ -59,7 +59,7 @@ public class UIFont {
     public void addKerning(final char charA, final char charB, final int amount) {
         Map<Character, Integer> map = _kernMap.get(charA);
         if (map == null) {
-            map = Maps.newHashMap();
+            map = new HashMap<Character, Integer>();
             _kernMap.put(charA, map);
         }
 

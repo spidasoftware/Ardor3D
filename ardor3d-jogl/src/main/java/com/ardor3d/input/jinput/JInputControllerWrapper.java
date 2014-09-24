@@ -26,7 +26,6 @@ import com.ardor3d.input.ControllerInfo;
 import com.ardor3d.input.ControllerState;
 import com.ardor3d.input.ControllerWrapper;
 import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.Lists;
 import com.google.common.collect.PeekingIterator;
 
 public class JInputControllerWrapper implements ControllerWrapper {
@@ -34,7 +33,7 @@ public class JInputControllerWrapper implements ControllerWrapper {
     protected final Event _event = new Event();
     protected final List<ControllerEvent> _events = Collections.synchronizedList(new ArrayList<ControllerEvent>());
     protected JInputControllerEventIterator _eventsIt = new JInputControllerEventIterator();
-    protected final List<ControllerInfo> _controllers = Lists.newArrayList();
+    protected final List<ControllerInfo> _controllers = new ArrayList<ControllerInfo>();
     protected static boolean _inited = false;
 
     @Override
@@ -92,8 +91,8 @@ public class JInputControllerWrapper implements ControllerWrapper {
     }
 
     protected ControllerInfo getControllerInfo(final Controller controller) {
-        final List<String> axisNames = Lists.newArrayList();
-        final List<String> buttonNames = Lists.newArrayList();
+        final List<String> axisNames = new ArrayList<String>();
+        final List<String> buttonNames = new ArrayList<String>();
 
         for (final Component comp : controller.getComponents()) {
             if (comp.getIdentifier() instanceof Identifier.Axis) {

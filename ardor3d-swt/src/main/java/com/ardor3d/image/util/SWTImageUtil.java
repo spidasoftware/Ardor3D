@@ -11,6 +11,7 @@
 package com.ardor3d.image.util;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Color;
@@ -19,7 +20,6 @@ import org.eclipse.swt.graphics.PaletteData;
 
 import com.ardor3d.image.Image;
 import com.ardor3d.image.PixelDataType;
-import com.google.common.collect.Lists;
 
 /**
  * Utility methods for converting Ardor3D Images to SWT ImageData.
@@ -65,7 +65,7 @@ public abstract class SWTImageUtil {
         final int width = input.getWidth(), height = input.getHeight();
 
         // create our return list
-        final List<ImageData> rVal = Lists.newArrayList();
+        final List<ImageData> rVal = new ArrayList<ImageData>();
 
         // Calculate our modulation or "tint" values per channel
         final double tRed = tint != null ? tint.getRed() / 255. : 1.0;

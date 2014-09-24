@@ -17,14 +17,13 @@ import com.ardor3d.input.ButtonState;
 import com.ardor3d.input.InputState;
 import com.ardor3d.input.MouseButton;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Maps;
 
 /**
  * A condition that checks the state of the two most commonly used mouse buttons.
  */
 @Immutable
 public final class MouseButtonCondition implements Predicate<TwoInputStates> {
-    private final EnumMap<MouseButton, ButtonState> _states = Maps.newEnumMap(MouseButton.class);
+    private final EnumMap<MouseButton, ButtonState> _states = new EnumMap<MouseButton, ButtonState>(MouseButton.class);
 
     public MouseButtonCondition(final EnumMap<MouseButton, ButtonState> states) {
         _states.putAll(states);

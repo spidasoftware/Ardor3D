@@ -12,16 +12,15 @@ package com.ardor3d.util;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
+import java.util.LinkedList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 public class SimpleContextIdReference<T> extends PhantomReference<T> {
 
     /**
      * Keep a string reference to these objects until their reference is cleared.
      */
-    private static final List<SimpleContextIdReference<?>> REFS = Lists.newLinkedList();
+    private static final List<SimpleContextIdReference<?>> REFS = new LinkedList<SimpleContextIdReference<?>>();
 
     private final int _id;
     private final Object _glContext;

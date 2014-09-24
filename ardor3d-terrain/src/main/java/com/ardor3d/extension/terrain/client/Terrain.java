@@ -47,7 +47,6 @@ import com.ardor3d.scenegraph.Node;
 import com.ardor3d.scenegraph.event.DirtyType;
 import com.ardor3d.scenegraph.hint.DataMode;
 import com.ardor3d.util.resource.ResourceLocatorTool;
-import com.google.common.collect.Lists;
 import com.google.common.io.ByteSource;
 
 /**
@@ -74,7 +73,7 @@ public class Terrain extends Node implements Pickable {
     private GLSLShaderObjectsState _geometryClipmapShader;
 
     /** Reference to the texture clipmap */
-    private final List<TextureClipmap> _textureClipmaps = Lists.newArrayList();
+    private final List<TextureClipmap> _textureClipmaps = new ArrayList<TextureClipmap>();
 
     /** Reference to normal map */
     private TextureClipmap _normalClipmap;
@@ -168,7 +167,7 @@ public class Terrain extends Node implements Pickable {
         setHeightRange(terrainConfiguration.getHeightRangeMin(), terrainConfiguration.getHeightRangeMax());
     }
 
-    private final List<Long> timers = Lists.newArrayList();
+    private final List<Long> timers = new ArrayList<Long>();
 
     @Override
     protected void updateChildren(final double time) {

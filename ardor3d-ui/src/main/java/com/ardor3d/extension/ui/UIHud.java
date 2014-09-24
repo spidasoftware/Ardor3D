@@ -46,7 +46,6 @@ import com.ardor3d.scenegraph.hint.CullHint;
 import com.ardor3d.scenegraph.hint.LightCombineMode;
 import com.ardor3d.scenegraph.hint.TextureCombineMode;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
 
 /**
  * UIHud represents a "Heads Up Display" or the base of a game UI scenegraph. Various UI Input, dragging, events, etc.
@@ -109,7 +108,7 @@ public class UIHud extends Node {
     /**
      * List of hud listeners.
      */
-    private final List<HudListener> _hudListeners = Lists.newArrayList();
+    private final List<HudListener> _hudListeners = new ArrayList<HudListener>();
 
     /**
      * An optional mouseManager, required in order to test mouse is grabbed.
@@ -119,7 +118,7 @@ public class UIHud extends Node {
     /**
      * The list of currently displayed popup menus, with each entry being a submenu of the one previous.
      */
-    private final List<UIPopupMenu> _popupMenus = Lists.newArrayList();
+    private final List<UIPopupMenu> _popupMenus = new ArrayList<UIPopupMenu>();
 
     /**
      * Construct a new UIHud

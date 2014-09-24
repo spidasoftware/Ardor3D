@@ -30,7 +30,6 @@ import com.ardor3d.input.MouseState;
 import com.ardor3d.input.MouseWrapper;
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.EnumMultiset;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.PeekingIterator;
 
@@ -51,7 +50,7 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
     private MouseState _lastState = null;
 
     private final Multiset<MouseButton> _clicks = EnumMultiset.create(MouseButton.class);
-    private final EnumMap<MouseButton, Long> _lastClickTime = Maps.newEnumMap(MouseButton.class);
+    private final EnumMap<MouseButton, Long> _lastClickTime = new EnumMap<MouseButton, Long>(MouseButton.class);
     private final EnumSet<MouseButton> _clickArmed = EnumSet.noneOf(MouseButton.class);
 
     public SwtMouseWrapper(final Control control) {
@@ -91,7 +90,7 @@ public class SwtMouseWrapper implements MouseWrapper, MouseListener, MouseMoveLi
 
     @Override
     public synchronized void mouseDoubleClick(final MouseEvent mouseEvent) {
-    // ignoring this. We'll handle (multi)click in a uniform way
+        // ignoring this. We'll handle (multi)click in a uniform way
     }
 
     @Override

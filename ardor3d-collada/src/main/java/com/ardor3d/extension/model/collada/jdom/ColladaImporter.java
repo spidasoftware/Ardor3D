@@ -50,7 +50,6 @@ import com.ardor3d.util.resource.ResourceLocatorTool;
 import com.ardor3d.util.resource.ResourceSource;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 /**
@@ -72,7 +71,7 @@ public class ColladaImporter {
     private final EnumSet<MatchCondition> _optimizeSettings = EnumSet.of(MatchCondition.UVs, MatchCondition.Normal,
             MatchCondition.Color);
     private Map<String, Joint> _externalJointMapping;
-    private final List<ColladaExtraPlugin> _extraPlugins = Lists.newArrayList();
+    private final List<ColladaExtraPlugin> _extraPlugins = new ArrayList<ColladaExtraPlugin>();
 
     public boolean isLoadTextures() {
         return _loadTextures;
@@ -246,8 +245,8 @@ public class ColladaImporter {
                 _optimizeMeshes, _optimizeSettings, geometryTool);
         final ColladaAnimUtils colladaAnimUtils = new ColladaAnimUtils(colladaStorage, dataCache, colladaDOMUtil,
                 colladaMeshUtils);
-        final ColladaNodeUtils colladaNodeUtils = new ColladaNodeUtils(this, dataCache, colladaDOMUtil, colladaMaterialUtils,
-                colladaMeshUtils, colladaAnimUtils);
+        final ColladaNodeUtils colladaNodeUtils = new ColladaNodeUtils(this, dataCache, colladaDOMUtil,
+                colladaMaterialUtils, colladaMeshUtils, colladaAnimUtils);
 
         try {
             // Pull in the DOM tree of the Collada resource.

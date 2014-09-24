@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.interact;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,14 +29,13 @@ import com.ardor3d.renderer.Renderer;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.util.ReadOnlyTimer;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
 
 public class InteractManager {
 
     /**
      * List of widgets currently managed by this manager.
      */
-    protected final List<AbstractInteractWidget> _widgets = Lists.newArrayList();
+    protected final List<AbstractInteractWidget> _widgets = new ArrayList<AbstractInteractWidget>();
 
     /**
      * The logical layer used by this manager to receive input events prior to forwarding them to the scene.
@@ -66,7 +66,7 @@ public class InteractManager {
     /**
      * List of filters to modify state prior to applying to a Spatial target.
      */
-    protected List<UpdateFilter> _filters = Lists.newArrayList();
+    protected List<UpdateFilter> _filters = new ArrayList<UpdateFilter>();
 
     public InteractManager() {
         setupLogicalLayer();

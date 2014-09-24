@@ -11,6 +11,7 @@
 package com.ardor3d.extension.ui.text;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.extension.ui.UIComponent;
@@ -25,7 +26,6 @@ import com.ardor3d.renderer.state.BlendState.SourceFunction;
 import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.MeshData;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Lists;
 
 public abstract class TextSelection {
 
@@ -184,7 +184,7 @@ public abstract class TextSelection {
         final RenderedTextData data = getTextData();
         float xStart = 0, xEnd = 0, height = 0, yOffset = 0;
         boolean exit = false;
-        final List<Float> verts = Lists.newArrayList();
+        final List<Float> verts = new ArrayList<Float>();
         for (int j = 0; !exit && j < data._lineEnds.size(); j++) {
             height = data._lineHeights.get(j);
             final int end = data._lineEnds.get(j);

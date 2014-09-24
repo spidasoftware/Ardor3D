@@ -20,7 +20,6 @@ import java.util.List;
 import com.ardor3d.util.export.InputCapsule;
 import com.ardor3d.util.export.OutputCapsule;
 import com.ardor3d.util.export.Savable;
-import com.google.common.collect.Lists;
 
 /**
  * <code>Image</code> defines a data format for a graphical image. The image is defined by a format, a height and width,
@@ -98,7 +97,7 @@ public class Image implements Serializable, Savable {
      */
     public Image(final ImageDataFormat format, final PixelDataType type, final int width, final int height,
             final ByteBuffer data, final int[] mipMapSizes) {
-        this(format, type, width, height, Lists.newArrayList(data), mipMapSizes);
+        this(format, type, width, height, new ArrayList<ByteBuffer>(Arrays.asList(data)), mipMapSizes);
     }
 
     /**
@@ -123,7 +122,7 @@ public class Image implements Serializable, Savable {
      *            the data that contains the image information.
      */
     public void setData(final ByteBuffer data) {
-        _data = Lists.newArrayList(data);
+        _data = new ArrayList<ByteBuffer>(Arrays.asList(data));
     }
 
     /**

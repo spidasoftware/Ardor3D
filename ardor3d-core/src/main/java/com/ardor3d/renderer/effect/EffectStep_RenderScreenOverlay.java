@@ -11,18 +11,18 @@
 package com.ardor3d.renderer.effect;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.ardor3d.renderer.state.RenderState;
-import com.ardor3d.renderer.state.TextureState;
 import com.ardor3d.renderer.state.RenderState.StateType;
-import com.google.common.collect.Maps;
+import com.ardor3d.renderer.state.TextureState;
 
 public class EffectStep_RenderScreenOverlay implements EffectStep {
 
-    private final EnumMap<StateType, RenderState> _states = Maps.newEnumMap(StateType.class);
+    private final EnumMap<StateType, RenderState> _states = new EnumMap<StateType, RenderState>(StateType.class);
     private final TextureState _texState = new TextureState();
-    private final Map<String, Integer> _targetMap = Maps.newHashMap();
+    private final Map<String, Integer> _targetMap = new HashMap<String, Integer>();
 
     public EffectStep_RenderScreenOverlay() {
         _states.put(StateType.Texture, _texState);

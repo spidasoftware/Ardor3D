@@ -10,9 +10,8 @@
 
 package com.ardor3d.renderer.effect;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 /**
  * A RenderEffect object represents a complete set of instructions necessary for applying a specific effect to our
@@ -21,7 +20,7 @@ import com.google.common.collect.Lists;
 public abstract class RenderEffect {
 
     /** A list of logical steps that comprise our effect. */
-    protected final List<EffectStep> _steps = Lists.newArrayList();
+    protected final List<EffectStep> _steps = new ArrayList<EffectStep>();
 
     /** Is this render effect active? */
     protected boolean _enabled = true;

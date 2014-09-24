@@ -11,6 +11,7 @@
 package com.ardor3d.example.renderer;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.example.ExampleBase;
@@ -31,7 +32,6 @@ import com.ardor3d.math.ColorRGBA;
 import com.ardor3d.renderer.state.TextureState;
 import com.ardor3d.scenegraph.shape.Sphere;
 import com.ardor3d.util.TextureKey;
-import com.google.common.collect.Lists;
 
 /**
  * Very simple example showing use of a Texture3D texture.
@@ -78,7 +78,7 @@ public class Texture3DExample extends ExampleBase {
         img.setHeight(32);
         img.setDepth(32);
 
-        final List<ByteBuffer> data = Lists.newArrayList();
+        final List<ByteBuffer> data = new ArrayList<ByteBuffer>();
         for (int i = 0; i < 32; i++) {
             final Image colorImage = GeneratedImageFactory
                     .createSolidColorImage(ColorRGBA.randomColor(null), false, 32);

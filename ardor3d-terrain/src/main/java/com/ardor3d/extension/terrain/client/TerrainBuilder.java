@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.terrain.client;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ import com.ardor3d.extension.terrain.util.TerrainGridCachePanel;
 import com.ardor3d.extension.terrain.util.TextureGridCachePanel;
 import com.ardor3d.math.Vector3;
 import com.ardor3d.renderer.Camera;
-import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 public class TerrainBuilder {
@@ -51,7 +51,7 @@ public class TerrainBuilder {
 
     private boolean showDebugPanels = false;
 
-    private final List<TextureSource> extraTextureSources = Lists.newArrayList();
+    private final List<TextureSource> extraTextureSources = new ArrayList<TextureSource>();
 
     public TerrainBuilder(final TerrainDataProvider terrainDataProvider, final Camera camera) {
         this.terrainDataProvider = terrainDataProvider;
@@ -112,7 +112,7 @@ public class TerrainBuilder {
 
         logger.info("server clipmapLevels: " + clipmapLevels);
 
-        final List<TerrainCache> cacheList = Lists.newArrayList();
+        final List<TerrainCache> cacheList = new ArrayList<TerrainCache>();
         TerrainCache parentCache = null;
 
         final int baseLevel = Math.max(clipmapLevels - clipLevelCount, 0);
@@ -167,7 +167,7 @@ public class TerrainBuilder {
 
         logger.info("server clipmapLevels: " + clipmapLevels);
 
-        final List<TextureCache> cacheList = Lists.newArrayList();
+        final List<TextureCache> cacheList = new ArrayList<TextureCache>();
         TextureCache parentCache = null;
         final int baseLevel = Math.max(clipmapLevels - textureClipLevelCount, 0);
         int level = textureClipLevelCount - 1;

@@ -10,7 +10,9 @@
 
 package com.ardor3d.renderer.effect;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +29,12 @@ import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.scenegraph.hint.CullHint;
 import com.ardor3d.scenegraph.hint.LightCombineMode;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class EffectManager {
 
     protected final DisplaySettings _canvasSettings;
-    protected final List<RenderEffect> _effects = Lists.newArrayList();
-    protected final Map<String, RenderTarget> _renderTargetMap = Maps.newHashMap();
+    protected final List<RenderEffect> _effects = new ArrayList<RenderEffect>();
+    protected final Map<String, RenderTarget> _renderTargetMap = new HashMap<String, RenderTarget>();
     protected Renderer _currentRenderer = null;
     protected RenderTarget _currentRenderTarget = null;
     protected Camera _fsqCamera, _sceneCamera;

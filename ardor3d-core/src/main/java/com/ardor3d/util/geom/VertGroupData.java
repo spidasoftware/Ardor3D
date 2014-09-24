@@ -11,16 +11,16 @@
 package com.ardor3d.util.geom;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.ardor3d.util.geom.GeometryTool.MatchCondition;
-import com.google.common.collect.Maps;
 
 public class VertGroupData {
 
     public static final int DEFAULT_GROUP = 0;
 
-    private final Map<Long, EnumSet<MatchCondition>> _groupConditions = Maps.newHashMap();
+    private final Map<Long, EnumSet<MatchCondition>> _groupConditions = new HashMap<Long, EnumSet<MatchCondition>>();
     private long[] _vertGroups = null;
 
     public VertGroupData() {}

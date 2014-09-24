@@ -12,6 +12,8 @@ package com.ardor3d.extension.atlas;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -31,8 +33,6 @@ import com.ardor3d.renderer.state.TextureState;
 import com.ardor3d.scenegraph.Mesh;
 import com.ardor3d.util.TextureManager;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * A tool that uses the AtlasNode/AtlasPacker algorithm to pack textures into texture atlases. It modifies the uv
@@ -69,15 +69,15 @@ public class TexturePacker {
     private final List<AtlasPacker> packers;
     private final List<ByteBuffer> dataBuffers;
 
-    private final List<Texture> textures = Lists.newArrayList();
+    private final List<Texture> textures = new ArrayList<Texture>();
 
     public TexturePacker(final int atlasWidth, final int atlasHeight) {
         this.atlasWidth = atlasWidth;
         this.atlasHeight = atlasHeight;
 
-        cachedAtlases = Maps.newHashMap();
-        packers = Lists.newArrayList();
-        dataBuffers = Lists.newArrayList();
+        cachedAtlases = new HashMap<TextureParameter, List<TextureParameter>>();
+        packers = new ArrayList<AtlasPacker>();
+        dataBuffers = new ArrayList<ByteBuffer>();
 
         addPacker();
     }
@@ -168,7 +168,7 @@ public class TexturePacker {
             return;
         }
 
-        list = Lists.newArrayList();
+        list = new ArrayList<TextureParameter>();
         cachedAtlases.put(parameterObject, list);
         list.add(parameterObject);
 

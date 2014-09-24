@@ -10,18 +10,18 @@
 
 package com.ardor3d.extension.model.md3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.scenegraph.Node;
-import com.google.common.collect.Lists;
 
 public class Md3DataStore {
 
     private final Node _mainNode;
 
-    private final List<String> _frameNames = Lists.newArrayList();
+    private final List<String> _frameNames = new ArrayList<String>();
 
-    private final List<String> _skinNames = Lists.newArrayList();
+    private final List<String> _skinNames = new ArrayList<String>();
 
     public Md3DataStore(final Node mainNode) {
         super();

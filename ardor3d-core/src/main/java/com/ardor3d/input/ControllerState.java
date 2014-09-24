@@ -19,16 +19,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.ardor3d.annotation.Immutable;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 @Immutable
 public class ControllerState {
 
     public static final ControllerState NOTHING = new ControllerState(0);
 
-    protected final Map<String, Map<String, Float>> _controllerStates = Maps.newLinkedHashMap();
-    protected final List<ControllerEvent> _eventsSinceLastState = Lists.newArrayList();
+    protected final Map<String, Map<String, Float>> _controllerStates = new LinkedHashMap<String, Map<String, Float>>();
+    protected final List<ControllerEvent> _eventsSinceLastState = new ArrayList<ControllerEvent>();
 
     protected ControllerState(final int ignore) {}
 
@@ -96,7 +94,7 @@ public class ControllerState {
     private void duplicateStates(final Map<String, Map<String, Float>> store) {
         store.clear();
         for (final Entry<String, Map<String, Float>> entry : _controllerStates.entrySet()) {
-            store.put(entry.getKey(), Maps.newLinkedHashMap(entry.getValue()));
+            store.put(entry.getKey(), new LinkedHashMap<String, Float>(entry.getValue()));
         }
     }
 

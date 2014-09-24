@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.interact.widget;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,7 +28,6 @@ import com.ardor3d.renderer.Camera;
 import com.ardor3d.renderer.Renderer;
 import com.ardor3d.scenegraph.Node;
 import com.ardor3d.util.ReadOnlyTimer;
-import com.google.common.collect.Lists;
 
 public abstract class AbstractInteractWidget {
 
@@ -51,7 +51,7 @@ public abstract class AbstractInteractWidget {
     /**
      * List of filters to modify state after applying input.
      */
-    protected List<UpdateFilter> _filters = Lists.newArrayList();
+    protected List<UpdateFilter> _filters = new ArrayList<UpdateFilter>();
 
     public AbstractInteractWidget() {
         _results.setCheckDistance(true);

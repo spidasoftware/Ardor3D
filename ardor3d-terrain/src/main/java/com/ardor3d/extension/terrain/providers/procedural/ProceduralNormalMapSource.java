@@ -11,6 +11,7 @@
 package com.ardor3d.extension.terrain.providers.procedural;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
@@ -22,7 +23,6 @@ import com.ardor3d.image.TextureStoreFormat;
 import com.ardor3d.math.Vector3;
 import com.ardor3d.math.functions.Function3D;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Maps;
 
 public class ProceduralNormalMapSource implements TextureSource {
     private final Function3D function;
@@ -44,7 +44,7 @@ public class ProceduralNormalMapSource implements TextureSource {
 
     @Override
     public TextureConfiguration getConfiguration() throws Exception {
-        final Map<Integer, TextureStoreFormat> textureStoreFormat = Maps.newHashMap();
+        final Map<Integer, TextureStoreFormat> textureStoreFormat = new HashMap<Integer, TextureStoreFormat>();
         textureStoreFormat.put(0, TextureStoreFormat.RGB8);
 
         return new TextureConfiguration(availableClipmapLevels, textureStoreFormat, tileSize, 1f, false, false);

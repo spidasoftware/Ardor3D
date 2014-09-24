@@ -10,6 +10,7 @@
 
 package com.ardor3d.example.effect;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +23,6 @@ import com.ardor3d.scenegraph.Line;
 import com.ardor3d.scenegraph.shape.Extrusion;
 import com.ardor3d.spline.CatmullRomSpline;
 import com.ardor3d.spline.Curve;
-import com.google.common.collect.Lists;
 
 /**
  * A demonstration of the Extrusion class - showing how a set of point can be converted into a 3d shape.
@@ -42,7 +42,7 @@ public class ExtrusionExample extends ExampleBase {
         _canvas.getCanvasRenderer().getCamera().setLocation(new Vector3(0, 0, 80));
         _canvas.getCanvasRenderer().getCamera().lookAt(new Vector3(), Vector3.UNIT_Y);
 
-        final List<ReadOnlyVector3> path = Lists.newArrayList();
+        final List<ReadOnlyVector3> path = new ArrayList<ReadOnlyVector3>();
         path.add(new Vector3(0, 0, 0));
         path.add(new Vector3(0, 0, 4));
         path.add(new Vector3(1, 0, 8));
@@ -97,7 +97,7 @@ public class ExtrusionExample extends ExampleBase {
 
     private Line createLineStrip(final boolean loop) {
         // Create a line with our example "makeLine" method. See method below.
-        final ReadOnlyVector3[] vectors = { // 
+        final ReadOnlyVector3[] vectors = { //
         new Vector3(0, 0, 0), //
                 new Vector3(5, 0, 0), //
                 new Vector3(5, 5, 0), //

@@ -12,11 +12,11 @@ package com.ardor3d.util;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 
 public class ContextIdReference<T> extends PhantomReference<T> {
@@ -24,7 +24,7 @@ public class ContextIdReference<T> extends PhantomReference<T> {
     /**
      * Keep a strong reference to these objects until their reference is cleared.
      */
-    private static final List<ContextIdReference<?>> REFS = Lists.newLinkedList();
+    private static final List<ContextIdReference<?>> REFS = new LinkedList<ContextIdReference<?>>();
 
     private final Map<Object, Integer> _idCache;
     private Integer _singleContextId;

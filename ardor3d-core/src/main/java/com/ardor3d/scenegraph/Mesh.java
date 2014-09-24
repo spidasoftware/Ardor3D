@@ -12,6 +12,7 @@ package com.ardor3d.scenegraph;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -47,7 +48,6 @@ import com.ardor3d.util.geom.BufferUtils;
 import com.ardor3d.util.scenegraph.RenderDelegate;
 import com.ardor3d.util.stat.StatCollector;
 import com.ardor3d.util.stat.StatType;
-import com.google.common.collect.Lists;
 
 /**
  * A Mesh is a spatial describing a renderable geometric object. Data about the mesh is stored locally using MeshData.
@@ -559,7 +559,7 @@ public class Mesh extends Spatial implements Renderable, Pickable {
 
     @Override
     public IntersectionRecord intersectsPrimitivesWhere(final Ray3 ray) {
-        final List<PrimitiveKey> primitives = Lists.newArrayList();
+        final List<PrimitiveKey> primitives = new ArrayList<PrimitiveKey>();
 
         // What about Lines and Points?
         final CollisionTree ct = CollisionTreeManager.getInstance().getCollisionTree(this);

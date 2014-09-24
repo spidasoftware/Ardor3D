@@ -1,9 +1,8 @@
 
 package com.ardor3d.extension.terrain.util;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 /**
  * Utility class used by the mailbox update system.
@@ -11,8 +10,8 @@ import com.google.common.collect.Lists;
  * @param <T>
  */
 public class DoubleBufferedList<T> {
-    private List<T> frontList = Lists.newArrayList();
-    private List<T> backList = Lists.newArrayList();
+    private List<T> frontList = new ArrayList<T>();
+    private List<T> backList = new ArrayList<T>();
 
     /**
      * The add method can be called at any point.

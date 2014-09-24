@@ -12,6 +12,8 @@ package com.ardor3d.extension.ui.text.font;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
@@ -26,8 +28,6 @@ import com.ardor3d.ui.text.BMFont.Char;
 import com.ardor3d.util.export.binary.BinaryImporter;
 import com.ardor3d.util.resource.ResourceLocatorTool;
 import com.ardor3d.util.resource.URLResourceSource;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 /**
  * Provides BMFonts for use in UIFont.
@@ -36,9 +36,9 @@ public class BMFontProvider implements FontProvider {
 
     private static Logger logger = Logger.getLogger(BMFontProvider.class.getName());
 
-    protected Map<UIFont, Integer> _scoreMap = Maps.newHashMap();
+    protected Map<UIFont, Integer> _scoreMap = new HashMap<UIFont, Integer>();
 
-    protected final Set<FontInfo> _fonts = Sets.newHashSet();
+    protected final Set<FontInfo> _fonts = new HashSet<FontInfo>();
 
     public void addFont(final String source, final String family, final int size, final boolean bold,
             final boolean italic) {
@@ -128,7 +128,7 @@ public class BMFontProvider implements FontProvider {
                 }
             }
 
-            final Map<Character, CharacterDescriptor> descriptors = Maps.newHashMap();
+            final Map<Character, CharacterDescriptor> descriptors = new HashMap<Character, CharacterDescriptor>();
             for (final int val : closest.bmFont.getMappedChars()) {
                 final Char c = closest.bmFont.getChar(val);
                 final CharacterDescriptor desc = new CharacterDescriptor(c.x, c.y, c.width, c.height, c.xadvance,

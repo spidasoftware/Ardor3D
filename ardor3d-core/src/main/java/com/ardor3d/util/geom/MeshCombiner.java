@@ -12,6 +12,8 @@ package com.ardor3d.util.geom;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
@@ -28,7 +30,6 @@ import com.ardor3d.scenegraph.Node;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.scenegraph.visitor.Visitor;
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 /**
@@ -62,7 +63,7 @@ public class MeshCombiner {
     }
 
     public final static Mesh combine(final Spatial source, final MeshCombineLogic logic) {
-        final List<Mesh> sources = Lists.newArrayList();
+        final List<Mesh> sources = new ArrayList<Mesh>();
         source.acceptVisitor(new Visitor() {
             @Override
             public void visit(final Spatial spatial) {
@@ -85,7 +86,7 @@ public class MeshCombiner {
      * @return the combined Mesh.
      */
     public final static Mesh combine(final Mesh... sources) {
-        return combine(Lists.newArrayList(sources));
+        return combine(new ArrayList<Mesh>(Arrays.asList(sources)));
     }
 
     /**
@@ -128,7 +129,7 @@ public class MeshCombiner {
         protected EnumMap<StateType, RenderState> states = null;
         protected MeshData data = new MeshData();
         protected BoundingVolume volumeType = null;
-        protected List<Mesh> sources = Lists.newArrayList();
+        protected List<Mesh> sources = new ArrayList<Mesh>();
         private FloatBufferData vertices;
         private FloatBufferData colors;
         private FloatBufferData normals;
@@ -236,7 +237,7 @@ public class MeshCombiner {
             normals = useNormals ? new FloatBufferData(totalVertices * 3, 3) : null;
             data.setNormalCoords(normals);
 
-            texCoordsList = Lists.newArrayListWithCapacity(maxTextures);
+            texCoordsList = new ArrayList<FloatBufferData>(maxTextures);
             for (int i = 0; i < maxTextures; i++) {
                 texCoordsList.add(new FloatBufferData(totalVertices * texCoords, texCoords));
             }
@@ -358,8 +359,8 @@ class IndexCombiner {
     }
 
     public void saveTo(final MeshData data) {
-        final List<IntBuffer> sections = Lists.newArrayList();
-        final List<IndexMode> modes = Lists.newArrayList();
+        final List<IntBuffer> sections = new ArrayList<IntBuffer>();
+        final List<IndexMode> modes = new ArrayList<IndexMode>();
         int max = 0;
         // walk through index modes and combine those we can.
         for (final IndexMode mode : sectionMap.keySet()) {

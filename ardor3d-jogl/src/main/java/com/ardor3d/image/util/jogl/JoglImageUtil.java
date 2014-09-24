@@ -11,6 +11,7 @@
 package com.ardor3d.image.util.jogl;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.media.nativewindow.util.PixelFormat;
@@ -18,7 +19,6 @@ import javax.media.nativewindow.util.PixelFormat;
 import com.ardor3d.framework.jogl.CapsUtil;
 import com.ardor3d.image.Image;
 import com.ardor3d.scene.state.jogl.util.JoglTextureUtil;
-import com.google.common.collect.Lists;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.util.GLPixelBuffer.GLPixelAttributes;
 import com.jogamp.opengl.util.texture.TextureData;
@@ -57,7 +57,7 @@ public class JoglImageUtil {
         final int width = input.getWidth(), height = input.getHeight();
 
         // create our return list
-        final List<TextureData> rVal = Lists.newArrayList();
+        final List<TextureData> rVal = new ArrayList<TextureData>();
 
         // go through each layer
         for (int i = 0; i < size; i++) {

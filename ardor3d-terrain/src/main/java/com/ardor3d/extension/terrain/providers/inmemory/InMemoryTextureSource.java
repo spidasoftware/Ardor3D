@@ -11,6 +11,8 @@
 package com.ardor3d.extension.terrain.providers.inmemory;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -21,8 +23,6 @@ import com.ardor3d.extension.terrain.providers.inmemory.data.InMemoryTerrainData
 import com.ardor3d.extension.terrain.util.Tile;
 import com.ardor3d.image.TextureStoreFormat;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 
 public class InMemoryTextureSource implements TextureSource {
     private final int tileSize;
@@ -37,7 +37,7 @@ public class InMemoryTextureSource implements TextureSource {
 
     @Override
     public TextureConfiguration getConfiguration() throws Exception {
-        final Map<Integer, TextureStoreFormat> textureStoreFormat = Maps.newHashMap();
+        final Map<Integer, TextureStoreFormat> textureStoreFormat = new HashMap<Integer, TextureStoreFormat>();
         textureStoreFormat.put(0, TextureStoreFormat.RGBA8);
 
         return new TextureConfiguration(availableClipmapLevels, textureStoreFormat, tileSize, 1f, true, true);
@@ -48,7 +48,7 @@ public class InMemoryTextureSource implements TextureSource {
             final int numTilesY) throws Exception {
         final int baseClipmapLevel = availableClipmapLevels - clipmapLevel - 1;
 
-        final Set<Tile> validTiles = Sets.newHashSet();
+        final Set<Tile> validTiles = new HashSet<Tile>();
 
         final int levelSize = 1 << baseClipmapLevel;
         final int size = inMemoryTerrainData.getSide();
@@ -77,7 +77,7 @@ public class InMemoryTextureSource implements TextureSource {
 
         final int baseClipmapLevel = availableClipmapLevels - clipmapLevel - 1;
 
-        final Set<Tile> tiles = Sets.newHashSet();
+        final Set<Tile> tiles = new HashSet<Tile>();
 
         synchronized (updatedTiles[baseClipmapLevel]) {
             if (updatedTiles[baseClipmapLevel].isEmpty()) {

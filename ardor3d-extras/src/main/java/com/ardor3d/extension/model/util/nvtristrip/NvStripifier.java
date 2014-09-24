@@ -10,12 +10,11 @@
 
 package com.ardor3d.extension.model.util.nvtristrip;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 /**
  * Ported from <a href="http://developer.nvidia.com/object/nvtristrip_library.html">NVIDIA's NvTriStrip Library</a>
@@ -25,7 +24,7 @@ final class NvStripifier {
 
     public static int CACHE_INEFFICIENCY = 6;
 
-    protected List<Integer> _indices = Lists.newArrayList();
+    protected List<Integer> _indices = new ArrayList<Integer>();
     protected int _cacheSize;
     protected int _minStripLength;
     protected float _meshJump;
@@ -59,12 +58,12 @@ final class NvStripifier {
         _indices = in_indices;
 
         // build the stripification info
-        final List<NvFaceInfo> allFaceInfos = Lists.newArrayList();
-        final List<NvEdgeInfo> allEdgeInfos = Lists.newArrayList();
+        final List<NvFaceInfo> allFaceInfos = new ArrayList<NvFaceInfo>();
+        final List<NvEdgeInfo> allEdgeInfos = new ArrayList<NvEdgeInfo>();
 
         buildStripifyInfo(allFaceInfos, allEdgeInfos, maxIndex);
 
-        final List<NvStripInfo> allStrips = Lists.newArrayList();
+        final List<NvStripInfo> allStrips = new ArrayList<NvStripInfo>();
 
         // stripify
         findAllStrips(allStrips, allFaceInfos, allEdgeInfos, numSamples);
@@ -519,11 +518,11 @@ final class NvStripifier {
             //
             final List<NvStripInfo>[] experiments = new List[numSamples * 6];
             for (int i = 0; i < experiments.length; i++) {
-                experiments[i] = Lists.newArrayList();
+                experiments[i] = new ArrayList<NvStripInfo>();
             }
 
             int experimentIndex = 0;
-            final Set<NvFaceInfo> resetPoints = Sets.newHashSet();
+            final Set<NvFaceInfo> resetPoints = new HashSet<NvFaceInfo>();
             for (int i = 0; i < numSamples; i++) {
 
                 // Try to find another good reset point.
@@ -650,7 +649,7 @@ final class NvStripifier {
     void splitUpStripsAndOptimize(final List<NvStripInfo> allStrips, final List<NvStripInfo> outStrips,
             final List<NvEdgeInfo> edgeInfos, final List<NvFaceInfo> outFaceList) {
         final int threshold = _cacheSize;
-        final List<NvStripInfo> tempStrips = Lists.newArrayList();
+        final List<NvStripInfo> tempStrips = new ArrayList<NvStripInfo>();
 
         // split up strips into threshold-sized pieces
         for (int i = 0; i < allStrips.size(); i++) {
@@ -747,7 +746,7 @@ final class NvStripifier {
         }
 
         // add small strips to face list
-        final List<NvStripInfo> tempStrips2 = Lists.newArrayList();
+        final List<NvStripInfo> tempStrips2 = new ArrayList<NvStripInfo>();
         removeSmallStrips(tempStrips, tempStrips2, outFaceList);
 
         outStrips.clear();
@@ -868,7 +867,7 @@ final class NvStripifier {
             final List<NvFaceInfo> faceList) {
         faceList.clear();
         allBigStrips.clear(); // make sure these are empty
-        final List<NvFaceInfo> tempFaceList = Lists.newArrayList();
+        final List<NvFaceInfo> tempFaceList = new ArrayList<NvFaceInfo>();
 
         for (int i = 0; i < allStrips.size(); i++) {
             final NvStripInfo allStripI = allStrips.get(i);

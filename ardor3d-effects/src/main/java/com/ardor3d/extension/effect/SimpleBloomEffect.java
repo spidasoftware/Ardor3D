@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.effect;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.extension.effect.bloom.BloomRenderPass;
@@ -25,14 +26,13 @@ import com.ardor3d.renderer.state.GLSLShaderObjectsState;
 import com.ardor3d.renderer.state.RenderState.StateType;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.util.resource.ResourceLocatorTool;
-import com.google.common.collect.Lists;
 
 public class SimpleBloomEffect extends RenderEffect {
     protected static final String RT_MAIN = "LDRBloomEffect.MAIN";
     protected static final String RT_SECONDARY = "LDRBloomEffect.SECONDARY";
 
     protected String shaderDirectory = "com/ardor3d/extension/effect/";
-    protected final List<Spatial> _bloomItems = Lists.newArrayList();
+    protected final List<Spatial> _bloomItems = new ArrayList<Spatial>();
 
     protected float _downsampleRatio = .33f;
     private final GLSLShaderObjectsState _extractionShader, _blurHorizShader, _blurVertShader;
@@ -102,8 +102,8 @@ public class SimpleBloomEffect extends RenderEffect {
         final int downsampledHeight = Math.round(canvas.getHeight() * _downsampleRatio);
         final int downsampledWidth = Math.round(canvas.getWidth() * _downsampleRatio);
 
-        final RenderTarget_Texture2D main = new RenderTarget_Texture2D(downsampledWidth, downsampledHeight, manager
-                .getOutputFormat());
+        final RenderTarget_Texture2D main = new RenderTarget_Texture2D(downsampledWidth, downsampledHeight,
+                manager.getOutputFormat());
         main.getTexture().setWrap(WrapMode.Clamp);
         manager.getRenderTargetMap().put(RT_MAIN, main);
 

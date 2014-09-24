@@ -18,13 +18,12 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.google.common.collect.Sets;
 
 /**
  * Manager class for locator utility classes used to find various assets. (XXX: Needs more documentation)
@@ -163,7 +162,7 @@ public class ResourceLocatorTool {
      * @return a set containing the located URLs of the named resource.
      */
     public static Set<URL> getClassPathResources(final Class<?> clazz, final String name) {
-        final Set<URL> results = Sets.newHashSet();
+        final Set<URL> results = new HashSet<URL>();
         Enumeration<URL> urls = null;
         try {
             urls = Thread.currentThread().getContextClassLoader().getResources(name);

@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.ui.text.parser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -21,7 +22,6 @@ import com.ardor3d.extension.ui.text.StyleConstants;
 import com.ardor3d.extension.ui.text.StyleSpan;
 import com.ardor3d.math.ColorRGBA;
 import com.ardor3d.math.type.ReadOnlyColorRGBA;
-import com.google.common.collect.Lists;
 
 public class ForumLikeMarkupParser implements StyleParser {
 
@@ -38,7 +38,7 @@ public class ForumLikeMarkupParser implements StyleParser {
         int index = 0;
         TagStatus tagStatus = TagStatus.NONE;
         String currTagText = "";
-        final LinkedList<StyleSpan> buildingSpans = Lists.newLinkedList();
+        final LinkedList<StyleSpan> buildingSpans = new LinkedList<StyleSpan>();
         final StringTokenizer st = new StringTokenizer(text, "[]\\", true);
         String token;
         while (st.hasMoreTokens()) {
@@ -184,12 +184,12 @@ public class ForumLikeMarkupParser implements StyleParser {
         }
 
         // list of spans, sorted by start index
-        final List<StyleSpan> starts = Lists.newArrayList();
+        final List<StyleSpan> starts = new ArrayList<StyleSpan>();
         starts.addAll(spans);
         Collections.sort(starts);
 
         // list of spans, to be sorted by end index
-        final List<StyleSpan> ends = Lists.newLinkedList();
+        final List<StyleSpan> ends = new LinkedList<StyleSpan>();
 
         final StringBuilder builder = new StringBuilder();
 

@@ -17,9 +17,8 @@ import com.ardor3d.annotation.Immutable;
 import com.google.common.collect.EnumMultiset;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultiset;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multiset;
 import com.google.common.collect.ImmutableMultiset.Builder;
+import com.google.common.collect.Multiset;
 
 /**
  * Describes the mouse state at some point in time.
@@ -139,7 +138,7 @@ public class MouseState {
     public EnumMap<MouseButton, ButtonState> getButtonStates(final EnumMap<MouseButton, ButtonState> store) {
         EnumMap<MouseButton, ButtonState> rVal = store;
         if (store == null) {
-            rVal = Maps.newEnumMap(MouseButton.class);
+            rVal = new EnumMap<MouseButton, ButtonState>(MouseButton.class);
         }
         rVal.clear();
         rVal.putAll(_buttonStates);

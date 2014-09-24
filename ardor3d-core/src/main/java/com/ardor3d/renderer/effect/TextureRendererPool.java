@@ -11,18 +11,18 @@
 package com.ardor3d.renderer.effect;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.ardor3d.renderer.ContextManager;
 import com.ardor3d.renderer.Renderer;
 import com.ardor3d.renderer.TextureRenderer;
 import com.ardor3d.renderer.TextureRendererFactory;
-import com.google.common.collect.Lists;
 
 public enum TextureRendererPool {
     INSTANCE;
 
-    private final List<TextureRenderer> renderers = Lists.newLinkedList();
+    private final List<TextureRenderer> renderers = new LinkedList<TextureRenderer>();
 
     public static TextureRenderer fetch(final int width, final int height, final Renderer renderer) {
         for (final Iterator<TextureRenderer> it = INSTANCE.renderers.iterator(); it.hasNext();) {

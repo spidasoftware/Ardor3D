@@ -32,7 +32,6 @@ import com.ardor3d.util.export.InputCapsule;
 import com.ardor3d.util.export.OutputCapsule;
 import com.ardor3d.util.export.Savable;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 
 /**
@@ -58,7 +57,7 @@ public class MeshData implements Savable {
     protected FloatBufferData _colorCoords;
     protected FloatBufferData _fogCoords;
     protected FloatBufferData _tangentCoords;
-    protected List<FloatBufferData> _textureCoords = Lists.newArrayListWithCapacity(1);
+    protected List<FloatBufferData> _textureCoords = new ArrayList<FloatBufferData>(1);
 
     /** Interleaved data (for VBO id use). */
     protected FloatBufferData _interleaved;

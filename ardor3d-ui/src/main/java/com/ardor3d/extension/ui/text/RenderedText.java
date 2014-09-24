@@ -10,7 +10,9 @@
 
 package com.ardor3d.extension.ui.text;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.ardor3d.math.Vector2;
@@ -21,12 +23,11 @@ import com.ardor3d.scenegraph.Renderable;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.scenegraph.event.DirtyType;
 import com.ardor3d.util.scenegraph.RenderDelegate;
-import com.google.common.collect.Lists;
 
 public class RenderedText extends Node implements Renderable {
 
     protected String _plainText = null;
-    protected List<StyleSpan> _parsedStyles = Lists.newLinkedList();
+    protected List<StyleSpan> _parsedStyles = new LinkedList<StyleSpan>();
 
     protected float _width;
     protected float _height;
@@ -202,11 +203,11 @@ public class RenderedText extends Node implements Renderable {
     }
 
     public static class RenderedTextData {
-        public List<Integer> _xStarts = Lists.newArrayList();
-        public List<Integer> _lineHeights = Lists.newArrayList();
-        public List<Integer> _lineEnds = Lists.newArrayList();
-        public List<Integer> _fontHeights = Lists.newArrayList();
-        public List<CharacterDescriptor> _characters = Lists.newArrayList();
+        public List<Integer> _xStarts = new ArrayList<Integer>();
+        public List<Integer> _lineHeights = new ArrayList<Integer>();
+        public List<Integer> _lineEnds = new ArrayList<Integer>();
+        public List<Integer> _fontHeights = new ArrayList<Integer>();
+        public List<CharacterDescriptor> _characters = new ArrayList<CharacterDescriptor>();
 
         public RenderedTextData() {}
 

@@ -10,13 +10,13 @@
 
 package com.ardor3d.extension.ui.layout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.extension.ui.UIComponent;
 import com.ardor3d.extension.ui.UIContainer;
 import com.ardor3d.math.Rectangle2;
 import com.ardor3d.scenegraph.Spatial;
-import com.google.common.collect.Lists;
 
 /**
  * This layout places components in either a horizontal or vertical row, ordered as they are placed in their container.
@@ -94,8 +94,8 @@ public class RowLayout extends UILayout {
         final Rectangle2 storeB = Rectangle2.fetchTempInstance();
 
         // Grab a list of components, squeezing them down to their min size on the flow axis
-        List<UIComponent> comps = Lists.newArrayList();
-        List<UIComponent> compsBack = Lists.newArrayList();
+        List<UIComponent> comps = new ArrayList<UIComponent>();
+        List<UIComponent> compsBack = new ArrayList<UIComponent>();
         for (int i = 0; i < content.size(); i++) {
             final Spatial spat = content.get(i);
             if (spat instanceof UIComponent) {
@@ -179,8 +179,8 @@ public class RowLayout extends UILayout {
                 final Rectangle2 rect = comp.getRelativeComponentBounds(storeA);
 
                 if (_horizontal) {
-                    comp.setLocalXY(x - rect.getX(), Math.max(container.getContentHeight() / 2 - rect.getHeight() / 2
-                            - rect.getY(), 0));
+                    comp.setLocalXY(x - rect.getX(),
+                            Math.max(container.getContentHeight() / 2 - rect.getHeight() / 2 - rect.getY(), 0));
                     x += rect.getWidth();
                 } else {
                     comp.setLocalXY(Math.max(container.getContentWidth() / 2 - rect.getWidth() / 2 - rect.getX(), 0), y

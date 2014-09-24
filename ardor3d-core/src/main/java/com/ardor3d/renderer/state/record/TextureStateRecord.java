@@ -20,7 +20,6 @@ import com.ardor3d.math.Vector3;
 import com.ardor3d.math.type.ReadOnlyVector4;
 import com.ardor3d.renderer.state.TextureState;
 import com.ardor3d.util.geom.BufferUtils;
-import com.google.common.collect.Maps;
 
 public class TextureStateRecord extends StateRecord {
 
@@ -47,7 +46,7 @@ public class TextureStateRecord extends StateRecord {
     public final DoubleBuffer tmp_matrixBuffer = BufferUtils.createDoubleBuffer(16);
 
     public TextureStateRecord() {
-        textures = Maps.newHashMap();
+        textures = new HashMap<Integer, TextureRecord>();
         units = new TextureUnitRecord[TextureState.MAX_TEXTURES];
         for (int i = 0; i < units.length; i++) {
             units[i] = new TextureUnitRecord();

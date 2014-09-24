@@ -26,8 +26,6 @@ import com.ardor3d.input.MouseState;
 import com.ardor3d.input.MouseWrapper;
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.EnumMultiset;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.PeekingIterator;
 import com.jogamp.newt.event.MouseEvent;
@@ -38,7 +36,7 @@ import com.jogamp.newt.opengl.GLWindow;
 public class JoglNewtMouseWrapper implements MouseWrapper, MouseListener {
 
     @GuardedBy("this")
-    protected final LinkedList<MouseState> _upcomingEvents = Lists.newLinkedList();
+    protected final LinkedList<MouseState> _upcomingEvents = new LinkedList<MouseState>();
 
     @GuardedBy("this")
     protected JoglNewtMouseIterator _currentIterator = null;
@@ -55,7 +53,7 @@ public class JoglNewtMouseWrapper implements MouseWrapper, MouseListener {
     protected boolean _skipAutoRepeatEvents = false;
 
     protected final Multiset<MouseButton> _clicks = EnumMultiset.create(MouseButton.class);
-    protected final EnumMap<MouseButton, Long> _lastClickTime = Maps.newEnumMap(MouseButton.class);
+    protected final EnumMap<MouseButton, Long> _lastClickTime = new EnumMap<MouseButton, Long>(MouseButton.class);
     protected final EnumSet<MouseButton> _clickArmed = EnumSet.noneOf(MouseButton.class);
 
     protected int _ignoreX = Integer.MAX_VALUE;

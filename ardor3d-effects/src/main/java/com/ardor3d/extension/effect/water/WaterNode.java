@@ -12,6 +12,7 @@ package com.ardor3d.extension.effect.water;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +48,6 @@ import com.ardor3d.scenegraph.hint.TextureCombineMode;
 import com.ardor3d.scenegraph.shape.Quad;
 import com.ardor3d.util.TextureManager;
 import com.ardor3d.util.resource.ResourceLocatorTool;
-import com.google.common.collect.Lists;
 
 /**
  * The WaterNode handles rendering of a water effect on all of it's children. What is reflected in the water is
@@ -70,8 +70,8 @@ public class WaterNode extends Node {
     protected Texture2D textureRefract;
     protected Texture2D textureDepth;
 
-    protected ArrayList<Spatial> renderList = Lists.newArrayList();
-    protected ArrayList<Texture> texArray = Lists.newArrayList();
+    protected List<Spatial> renderList = new ArrayList<Spatial>();
+    protected List<Texture> texArray = new ArrayList<Texture>();
     protected Node skyBox;
 
     protected GLSLShaderObjectsState waterShader;

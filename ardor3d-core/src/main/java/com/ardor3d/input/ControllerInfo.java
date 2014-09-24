@@ -13,8 +13,6 @@ package com.ardor3d.input;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 public class ControllerInfo {
 
     private final String _controllerName;
@@ -23,8 +21,8 @@ public class ControllerInfo {
 
     public ControllerInfo(final String controllerName, final List<String> axisNames, final List<String> buttonNames) {
         _controllerName = controllerName;
-        _axisNames = Lists.newArrayList(axisNames);
-        _buttonNames = Lists.newArrayList(buttonNames);
+        _axisNames = new ArrayList<String>(axisNames);
+        _buttonNames = new ArrayList<String>(buttonNames);
     }
 
     public String getControllerName() {

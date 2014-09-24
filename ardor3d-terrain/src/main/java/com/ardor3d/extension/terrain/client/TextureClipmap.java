@@ -13,8 +13,10 @@ package com.ardor3d.extension.terrain.client;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -28,9 +30,9 @@ import com.ardor3d.image.Image;
 import com.ardor3d.image.ImageDataFormat;
 import com.ardor3d.image.PixelDataType;
 import com.ardor3d.image.Texture;
-import com.ardor3d.image.Texture3D;
 import com.ardor3d.image.Texture.MagnificationFilter;
 import com.ardor3d.image.Texture.MinificationFilter;
+import com.ardor3d.image.Texture3D;
 import com.ardor3d.math.MathUtils;
 import com.ardor3d.math.Vector3;
 import com.ardor3d.math.type.ReadOnlyVector3;
@@ -39,8 +41,6 @@ import com.ardor3d.renderer.state.GLSLShaderObjectsState;
 import com.ardor3d.util.TextureKey;
 import com.ardor3d.util.geom.BufferUtils;
 import com.ardor3d.util.resource.ResourceLocatorTool;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 /**
  * An implementation of texture clipmapping
@@ -60,7 +60,7 @@ public class TextureClipmap {
     private Texture3D textureClipmap;
     private GLSLShaderObjectsState textureClipmapShader;
 
-    private final List<LevelData> levelDataList = Lists.newArrayList();
+    private final List<LevelData> levelDataList = new ArrayList<LevelData>();
 
     private final FloatBuffer sliceDataBuffer;
 
@@ -115,7 +115,7 @@ public class TextureClipmap {
         createTexture();
     }
 
-    private final List<Long> timers = Lists.newArrayList();
+    private final List<Long> timers = new ArrayList<Long>();
 
     public void update(final Renderer renderer, final ReadOnlyVector3 position) {
         eyePosition.set(position);
@@ -279,7 +279,7 @@ public class TextureClipmap {
 
                 Collections.sort(regionList, regionSorter);
 
-                final Set<Integer> affectedUnits = Sets.newHashSet();
+                final Set<Integer> affectedUnits = new HashSet<Integer>();
                 for (int i = regionList.size() - 1; i >= 0; i--) {
                     final Region region = regionList.get(i);
 
@@ -326,8 +326,8 @@ public class TextureClipmap {
         final Region region = new Region(level - 1, x * 2, y * 2, width * 2, height * 2);
         if (!regionList.contains(region)) {
             regionList.add(region);
-            recursiveAddUpdates(regionList, region.getLevel(), region.getX(), region.getY(), region.getWidth(), region
-                    .getHeight());
+            recursiveAddUpdates(regionList, region.getLevel(), region.getX(), region.getY(), region.getWidth(),
+                    region.getHeight());
         }
     }
 

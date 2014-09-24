@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.animation.skeletal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,6 @@ import com.ardor3d.extension.animation.skeletal.util.LoggingMap;
 import com.ardor3d.scenegraph.Spatial;
 import com.ardor3d.util.ReadOnlyTimer;
 import com.ardor3d.util.Timer;
-import com.google.common.collect.Lists;
 import com.google.common.collect.MapMaker;
 
 /**
@@ -61,7 +61,7 @@ public class AnimationManager {
     protected AnimationApplier _applier;
 
     /** Our animation layers. */
-    protected final List<AnimationLayer> _layers = Lists.newArrayList();
+    protected final List<AnimationLayer> _layers = new ArrayList<AnimationLayer>();
 
     /**
      * A map of key->Double values, allowing control over elements under this manager without needing precise knowledge
@@ -97,7 +97,7 @@ public class AnimationManager {
     /**
      * Listeners for changes to this manager's AnimationUpdateState.
      */
-    protected final List<AnimationUpdateStateListener> _updateStateListeners = Lists.newArrayList();
+    protected final List<AnimationUpdateStateListener> _updateStateListeners = new ArrayList<AnimationUpdateStateListener>();
 
     /**
      * Construct a new AnimationManager.
@@ -130,10 +130,9 @@ public class AnimationManager {
         layer.setManager(this);
         _layers.add(layer);
 
+        _applyToPoses = new ArrayList<SkeletonPose>();
         if (pose != null) {
-            _applyToPoses = Lists.newArrayList(pose);
-        } else {
-            _applyToPoses = Lists.newArrayList();
+            _applyToPoses.add(pose);
         }
 
         _valuesStore.setLogOnReplace(false);

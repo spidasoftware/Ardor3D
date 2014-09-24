@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.terrain.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ardor3d.extension.terrain.client.ClipmapLevel;
@@ -22,7 +23,6 @@ import com.ardor3d.math.Vector3;
 import com.ardor3d.math.type.ReadOnlyRay3;
 import com.ardor3d.math.type.ReadOnlyTransform;
 import com.ardor3d.math.type.ReadOnlyVector3;
-import com.google.common.collect.Lists;
 
 /**
  * A picking assistant to be used with ClipmapLevel and an AbstractBresenhamTracer.
@@ -57,7 +57,7 @@ public class ClipmapTerrainPicker {
             final Class<? extends AbstractBresenhamTracer> tracerClass, final int maxChecks,
             final Vector3 initialSpacing) throws InstantiationException, IllegalAccessException {
         _clipmapLevels = levels;
-        _tracers = Lists.newArrayList();
+        _tracers = new ArrayList<AbstractBresenhamTracer>();
         for (int i = 0, max = levels.size(); i < max; i++) {
             final AbstractBresenhamTracer tracer = tracerClass.newInstance();
             final int space = 1 << i;

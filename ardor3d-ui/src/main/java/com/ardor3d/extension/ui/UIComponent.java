@@ -10,6 +10,7 @@
 
 package com.ardor3d.extension.ui;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
@@ -46,7 +47,6 @@ import com.ardor3d.renderer.state.RenderState.StateType;
 import com.ardor3d.scenegraph.Node;
 import com.ardor3d.scenegraph.event.DirtyType;
 import com.ardor3d.scenegraph.hint.PickingHint;
-import com.google.common.collect.Maps;
 
 /**
  * Base UI class. All UI components/widgets/controls extend this class.
@@ -93,9 +93,9 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
     private static int _defaultFontSize = 18;
 
     /** The default font styles to use. */
-    private static Map<String, Object> _defaultFontStyles = Maps.newHashMap();
+    private static Map<String, Object> _defaultFontStyles = new HashMap<String, Object>();
     /** The font styles to use for text on this component, if needed. */
-    private Map<String, Object> _fontStyles = Maps.newHashMap();
+    private Map<String, Object> _fontStyles = new HashMap<String, Object>();
 
     /** Optional information used by a parent container's layout. */
     private UILayoutData _layoutData = null;
@@ -232,7 +232,7 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
         if (getParent() != null && getParent() instanceof UIComponent) {
             styles = ((UIComponent) getParent()).getFontStyles();
         } else {
-            styles = Maps.newHashMap(UIComponent._defaultFontStyles);
+            styles = new HashMap<String, Object>(UIComponent._defaultFontStyles);
             styles.put(StyleConstants.KEY_COLOR, UIComponent.DEFAULT_FOREGROUND_COLOR);
         }
         styles.putAll(_fontStyles);
@@ -1166,9 +1166,9 @@ public abstract class UIComponent extends Node implements UIKeyHandler {
      */
     public static void setDefaultFontStyles(final Map<String, Object> defaultStyles) {
         if (defaultStyles == null) {
-            UIComponent._defaultFontStyles = Maps.newHashMap();
+            UIComponent._defaultFontStyles = new HashMap<String, Object>();
         } else {
-            UIComponent._defaultFontStyles = Maps.newHashMap(defaultStyles);
+            UIComponent._defaultFontStyles = new HashMap<String, Object>(defaultStyles);
         }
     }
 
