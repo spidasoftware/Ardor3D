@@ -225,12 +225,14 @@ public class BoundingSphere extends BoundingVolume {
         }
     }
 
+    // FIXME move this method into an helper class
     public static void populateFromBuffer(final Vector3 vector, final float[] buf, final int index) {
         vector.setX(buf[index * 3]);
         vector.setY(buf[index * 3 + 1]);
         vector.setZ(buf[index * 3 + 2]);
     }
 
+    // FIXME move this method into an helper class
     public static void setInBuffer(final ReadOnlyVector3 vector, final float[] buf, final int index) {
         if (buf == null) {
             return;
