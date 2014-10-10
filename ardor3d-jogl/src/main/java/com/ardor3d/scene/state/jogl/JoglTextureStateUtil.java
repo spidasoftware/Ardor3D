@@ -68,6 +68,8 @@ import com.ardor3d.util.stat.StatType;
 public class JoglTextureStateUtil {
     private static final Logger logger = Logger.getLogger(JoglTextureStateUtil.class.getName());
 
+    private static GLU _glu;
+
     public final static void load(final Texture texture, final int unit) {
         if (texture == null) {
             return;
@@ -130,7 +132,9 @@ public class JoglTextureStateUtil {
         final Texture.Type type = texture.getType();
 
         final GL gl = GLContext.getCurrentGL();
-        final GLU glu = GLU.createGLU(gl);
+        if (_glu == null) {
+            _glu = GLU.createGLU(gl);
+        }
 
         // bind our texture id to this unit.
         doTextureBind(texture, unit, false);
@@ -193,12 +197,12 @@ public class JoglTextureStateUtil {
                     final ByteBuffer scaledImage = BufferUtils.createByteBuffer((w + 4) * h * bpp);
                     // ensure the buffer is ready for reading
                     image.getData(0).rewind();
-                    final int error = glu.gluScaleImage(pixFormat, actualWidth, actualHeight, pixDataType,
+                    final int error = _glu.gluScaleImage(pixFormat, actualWidth, actualHeight, pixDataType,
                             image.getData(0), w, h, pixDataType, scaledImage);
                     if (error != 0) {
                         final int errorCode = gl.glGetError();
                         if (errorCode != GL.GL_NO_ERROR) {
-                            throw new GLException(glu.gluErrorString(errorCode));
+                            throw new GLException(_glu.gluErrorString(errorCode));
                         }
                     }
 
@@ -329,7 +333,7 @@ public class JoglTextureStateUtil {
                             // FIXME workaround for the bug 1045: https://jogamp.org/bugzilla/show_bug.cgi?id=1045
                             if (gl.isGL2() /* || gl.isGL2ES1() */) {
                                 // send to card
-                                glu.gluBuild2DMipmaps(GL.GL_TEXTURE_2D,
+                                _glu.gluBuild2DMipmaps(GL.GL_TEXTURE_2D,
                                         JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
                                         image.getWidth(), image.getHeight(),
                                         JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
@@ -422,7 +426,7 @@ public class JoglTextureStateUtil {
                                         // ensure the buffer is ready for reading
                                         image.getData(face.ordinal()).rewind();
                                         // send to card
-                                        glu.gluBuild2DMipmaps(getGLCubeMapFace(face),
+                                        _glu.gluBuild2DMipmaps(getGLCubeMapFace(face),
                                                 JoglTextureUtil.getGLInternalFormat(texture.getTextureStoreFormat()),
                                                 image.getWidth(), image.getWidth(),
                                                 JoglTextureUtil.getGLPixelFormat(image.getDataFormat()),
