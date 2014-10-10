@@ -117,7 +117,7 @@ public class JoglRenderer extends AbstractRenderer {
 
     private FloatBuffer _transformBuffer;
     private final Matrix4 _transformMatrix = new Matrix4();
-    private GLU _glu;
+    private final GLU _glu = new GLU();// only used to get error strings
 
     /**
      * Constructor instantiates a new <code>JoglRenderer</code> object.
@@ -679,9 +679,6 @@ public class JoglRenderer extends AbstractRenderer {
     @Override
     public void checkCardError() throws Ardor3dException {
         final GL gl = GLContext.getCurrentGL();
-        if (_glu == null) {
-            _glu = GLU.createGLU(gl);
-        }
 
         try {
             final int errorCode = gl.glGetError();
