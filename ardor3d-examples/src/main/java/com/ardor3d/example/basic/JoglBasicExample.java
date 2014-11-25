@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -19,7 +19,7 @@ import com.ardor3d.framework.Scene;
 import com.ardor3d.framework.jogl.JoglCanvasRenderer;
 import com.ardor3d.framework.jogl.JoglNewtWindow;
 import com.ardor3d.image.Texture;
-import com.ardor3d.image.util.awt.AWTImageLoader;
+import com.ardor3d.image.util.jogl.JoglImageLoader;
 import com.ardor3d.intersection.PickResults;
 import com.ardor3d.math.MathUtils;
 import com.ardor3d.math.Matrix3;
@@ -42,7 +42,7 @@ import com.ardor3d.util.resource.SimpleResourceLocator;
  * This jogl-based example is meant to show how to use Ardor3D at the most primitive level, forsaking the use of
  * ExampleBase and much of our framework classes and interfaces.
  * </p>
- * 
+ *
  * <p>
  * Also of note, this example does not allow choosing of properties on launch. It also does not handle input or show any
  * special debugging. This is to simplify the example to the basic essentials.
@@ -100,7 +100,7 @@ public class JoglBasicExample implements Scene {
 
     /**
      * Setup a jogl canvas and canvas renderer.
-     * 
+     *
      * @return the canvas.
      */
     private JoglNewtWindow initJogl() {
@@ -149,8 +149,8 @@ public class JoglBasicExample implements Scene {
             }
         });
 
-        // Add our awt based image loader.
-        AWTImageLoader.registerLoader();
+        // Add our newt based image loader.
+        JoglImageLoader.registerLoader();
 
         // Set the location of our example resources.
         try {
