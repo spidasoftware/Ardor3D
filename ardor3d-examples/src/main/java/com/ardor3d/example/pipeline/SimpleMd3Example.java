@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -20,9 +20,9 @@ import com.ardor3d.math.Vector3;
 import com.ardor3d.scenegraph.Node;
 
 /**
- * Simplest example of loading a model in MD3 format. FIXME update the description and the thumbnail
+ * Simplest example of loading a model in MD3 format. FIXME update the thumbnail
  */
-@Purpose(htmlDescriptionKey = "com.ardor3d.example.pipeline.SimpleMd2Example", //
+@Purpose(htmlDescriptionKey = "com.ardor3d.example.pipeline.SimpleMd3Example", //
 thumbnailPath = "com/ardor3d/example/media/thumbnails/pipeline_SimpleMd2Example.jpg", //
 maxHeapMemory = 64)
 public class SimpleMd3Example extends ExampleBase {

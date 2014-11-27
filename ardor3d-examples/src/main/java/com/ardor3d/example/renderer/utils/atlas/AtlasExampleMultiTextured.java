@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -55,7 +55,7 @@ import com.ardor3d.util.geom.MeshCombiner;
  * Example showing how to use the TexturePacker to create a texture atlas. Also shows the benefits of using it together
  * with the MeshCombiner.
  */
-@Purpose(htmlDescriptionKey = "com.ardor3d.example.basic.AtlasExampleMultiTextured", //
+@Purpose(htmlDescriptionKey = "com.ardor3d.example.renderer.utils.atlas.AtlasExampleMultiTextured", //
 thumbnailPath = "com/ardor3d/example/media/thumbnails/basic_BoxExample.jpg", //
 maxHeapMemory = 64)
 public class AtlasExampleMultiTextured extends ExampleBase {
