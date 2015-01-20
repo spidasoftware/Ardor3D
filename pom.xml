@@ -48,6 +48,7 @@
         <module>ardor3d-savable</module>
         <module>ardor3d-math</module>
         <module>ardor3d-core</module>
+        <module>ardor3d-jinput</module>
         <module>ardor3d-jogl</module>
         <module>ardor3d-swt</module>
         <module>ardor3d-awt</module>

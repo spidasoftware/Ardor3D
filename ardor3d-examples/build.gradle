@@ -3,6 +3,7 @@ description = 'Ardor 3D Examples'
 dependencies {
   compile project(':ardor3d-awt')
   compile project(':ardor3d-swt')
+  compile project(':ardor3d-jinput')
   compile project(':ardor3d-jogl')
   compile project(':ardor3d-effects')
   compile project(':ardor3d-extras')
