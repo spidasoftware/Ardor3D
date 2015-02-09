@@ -10,8 +10,8 @@
 
 package com.ardor3d.renderer.jogl.state.record;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLContext;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
 
 import com.ardor3d.renderer.state.record.RendererRecord;
 

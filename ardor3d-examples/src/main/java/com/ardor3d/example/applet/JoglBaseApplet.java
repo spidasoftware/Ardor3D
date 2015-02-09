@@ -17,7 +17,7 @@ import java.awt.event.ComponentEvent;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 
-import javax.media.nativewindow.util.DimensionImmutable;
+import com.jogamp.nativewindow.util.DimensionImmutable;
 
 import com.ardor3d.annotation.MainThread;
 import com.ardor3d.framework.DisplaySettings;

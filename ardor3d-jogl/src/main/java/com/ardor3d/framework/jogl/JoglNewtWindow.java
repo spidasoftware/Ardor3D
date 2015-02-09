@@ -13,10 +13,10 @@ package com.ardor3d.framework.jogl;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import javax.media.nativewindow.util.Dimension;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.GLRunnable;
+import com.jogamp.nativewindow.util.Dimension;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.GLRunnable;
 
 import com.ardor3d.annotation.MainThread;
 import com.ardor3d.framework.DisplaySettings;

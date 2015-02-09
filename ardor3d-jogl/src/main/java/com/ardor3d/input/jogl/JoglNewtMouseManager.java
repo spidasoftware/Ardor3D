@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -12,16 +12,15 @@ package com.ardor3d.input.jogl;
 
 import java.nio.ByteBuffer;
 
-import javax.media.nativewindow.util.Dimension;
-import javax.media.nativewindow.util.DimensionImmutable;
-import javax.media.nativewindow.util.PixelFormat;
-import javax.media.nativewindow.util.PixelRectangle;
-
 import com.ardor3d.framework.jogl.NewtWindowContainer;
 import com.ardor3d.image.Image;
 import com.ardor3d.input.GrabbedState;
 import com.ardor3d.input.MouseCursor;
 import com.ardor3d.input.MouseManager;
+import com.jogamp.nativewindow.util.Dimension;
+import com.jogamp.nativewindow.util.DimensionImmutable;
+import com.jogamp.nativewindow.util.PixelFormat;
+import com.jogamp.nativewindow.util.PixelRectangle;
 import com.jogamp.newt.Display.PointerIcon;
 import com.jogamp.newt.opengl.GLWindow;
 
@@ -51,8 +50,8 @@ public class JoglNewtMouseManager implements MouseManager {
 
         PixelFormat pixFormat = null;
         for (final PixelFormat pf : PixelFormat.values()) {
-            if (pf.componentCount == image.getDataFormat().getComponents()
-                    && pf.bytesPerPixel() == image.getDataType().getBytesPerPixel(pf.componentCount)) {
+            if (pf.comp.componenCount() == image.getDataFormat().getComponents()
+                    && pf.comp.bytesPerPixel() == image.getDataType().getBytesPerPixel(pf.comp.componenCount())) {
                 pixFormat = pf;
                 break;
             }

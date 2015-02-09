@@ -12,8 +12,8 @@ package com.ardor3d.renderer.jogl.state.record;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.GLContext;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.GLContext;
 
 public class JoglRealMatrixBackend implements JoglMatrixBackend {
 

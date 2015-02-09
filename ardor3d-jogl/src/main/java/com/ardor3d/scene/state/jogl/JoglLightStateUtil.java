@@ -10,11 +10,11 @@
 
 package com.ardor3d.scene.state.jogl;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.fixedfunc.GLLightingFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.fixedfunc.GLLightingFunc;
 
 import com.ardor3d.light.DirectionalLight;
 import com.ardor3d.light.Light;

@@ -1,7 +1,7 @@
 package com.ardor3d.framework.jogl;
 
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLRunnable;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLRunnable;
 
 public class JoglDrawerRunnable implements GLRunnable {
 	

@@ -13,9 +13,9 @@ package com.ardor3d.framework.jogl;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CountDownLatch;
 
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLRunnable;
-import javax.media.opengl.awt.GLCanvas;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLRunnable;
+import com.jogamp.opengl.awt.GLCanvas;
 import javax.swing.SwingUtilities;
 
 import com.ardor3d.annotation.MainThread;

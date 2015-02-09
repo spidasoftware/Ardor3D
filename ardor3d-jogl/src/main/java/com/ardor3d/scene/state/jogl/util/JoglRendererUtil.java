@@ -12,8 +12,8 @@ package com.ardor3d.scene.state.jogl.util;
 
 import java.util.Stack;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLContext;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLContext;
 
 import com.ardor3d.math.Rectangle2;
 import com.ardor3d.math.type.ReadOnlyRectangle2;

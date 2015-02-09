@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -14,12 +14,11 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.nativewindow.util.PixelFormat;
-
 import com.ardor3d.framework.jogl.CapsUtil;
 import com.ardor3d.image.Image;
 import com.ardor3d.scene.state.jogl.util.JoglTextureUtil;
 import com.jogamp.common.nio.Buffers;
+import com.jogamp.nativewindow.util.PixelFormat;
 import com.jogamp.opengl.util.GLPixelBuffer.GLPixelAttributes;
 import com.jogamp.opengl.util.texture.TextureData;
 
@@ -31,7 +30,7 @@ public class JoglImageUtil {
     /**
      * Convert the given Ardor3D Image to a List of TextureData instances. It is a List because Ardor3D Images may
      * contain multiple layers (for example, in the case of cube maps or 3D textures).
-     * 
+     *
      * @param input
      *            the Ardor3D Image to convert
      * @return the TextureData instance(s) created in the conversion
@@ -43,7 +42,7 @@ public class JoglImageUtil {
     /**
      * Convert the given Ardor3D Image to a List of TextureData instances. It is a List because Ardor3D Images may
      * contain multiple layers (for example, in the case of cube maps or 3D textures).
-     * 
+     *
      * @param capsUtil
      * @param input
      *            the Ardor3D Image to convert
@@ -88,7 +87,7 @@ public class JoglImageUtil {
                 default:
                     pixelFormat = null;
             }
-            final GLPixelAttributes pixelAtt = GLPixelAttributes.convert(pixelFormat, capsUtil.getProfile());
+            final GLPixelAttributes pixelAtt = GLPixelAttributes.convert(capsUtil.getProfile(), pixelFormat, false);
             // pixel data type = internal format?
             final TextureData image = new TextureData(capsUtil.getProfile(), pixDataType, width, height, border,
                     pixelAtt, false, false, false, dest, null);
