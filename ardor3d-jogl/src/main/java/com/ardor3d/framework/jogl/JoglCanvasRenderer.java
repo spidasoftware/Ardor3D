@@ -71,7 +71,7 @@ public class JoglCanvasRenderer implements CanvasRenderer {
     /**
      * Default constructor, with debug disabled, using the default utility for the capabilities and with context drop
      * and reclaim on draw disabled
-     * 
+     *
      * @param scene
      *            data related to the scene (cannot be null)
      */
@@ -81,7 +81,7 @@ public class JoglCanvasRenderer implements CanvasRenderer {
 
     /**
      * Main constructor
-     * 
+     *
      * @param scene
      *            data related to the scene
      * @param useDebug

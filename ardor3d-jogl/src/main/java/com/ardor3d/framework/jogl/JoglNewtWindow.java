@@ -114,12 +114,77 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
         return _newtWindow.getContext();
     }
 
+    /**
+     * Returns the width of the client area including insets (window decorations) in window units.
+     *
+     * @return width of the client area including insets (window decorations) in window units
+     */
     public int getWidth() {
+        return _newtWindow.getWidth() + (_newtWindow.getInsets() == null ? 0 : _newtWindow.getInsets().getTotalWidth());
+    }
+
+    /**
+     * Returns the width of the client area including insets (window decorations) in pixel units.
+     *
+     * @return width of the client area including insets (window decorations) in pixel units
+     */
+    public int getWidthInPixelUnits() {
+        return _newtWindow.convertToPixelUnits(new int[] { getWidth(), 0 })[0];
+    }
+
+    /**
+     * Returns the width of the client area excluding insets (window decorations) in window units.
+     *
+     * @return width of the client area excluding insets (window decorations) in window units
+     */
+    public int getSurfaceWidthInWindowUnits() {
         return _newtWindow.getWidth();
     }
 
+    /**
+     * Returns the width of the client area excluding insets (window decorations) in pixel units.
+     *
+     * @return width of the client area excluding insets (window decorations) in pixel units
+     */
+    public int getSurfaceWidth() {
+        return _newtWindow.getSurfaceWidth();
+    }
+
+    /**
+     * Returns the height of the client area including insets (window decorations) in window units.
+     *
+     * @return height of the client area including insets (window decorations) in window units
+     */
     public int getHeight() {
+        return _newtWindow.getHeight()
+                + (_newtWindow.getInsets() == null ? 0 : _newtWindow.getInsets().getTotalHeight());
+    }
+
+    /**
+     * Returns the height of the client area including insets (window decorations) in pixel units.
+     *
+     * @return height of the client area including insets (window decorations) in pixel units
+     */
+    public int getHeightInPixelUnits() {
+        return _newtWindow.convertToPixelUnits(new int[] { 0, getHeight() })[1];
+    }
+
+    /**
+     * Returns the height of the client area excluding insets (window decorations) in window units.
+     *
+     * @return height of the client area excluding insets (window decorations) in window units
+     */
+    public int getSurfaceHeightInWindowUnits() {
         return _newtWindow.getHeight();
+    }
+
+    /**
+     * Returns the height of the client area excluding insets (window decorations) in pixel units.
+     *
+     * @return height of the client area excluding insets (window decorations) in pixel units
+     */
+    public int getSurfaceHeight() {
+        return _newtWindow.getSurfaceHeight();
     }
 
     public int getX() {
@@ -144,7 +209,7 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
 
     /**
      * Enables or disables automatic buffer swapping for this JoglNewtWindow. By default this property is set to false
-     * 
+     *
      * @param autoSwapBufferModeEnabled
      */
     public void setAutoSwapBufferMode(final boolean autoSwapBufferModeEnabled) {
@@ -260,7 +325,7 @@ public class JoglNewtWindow implements NativeCanvas, NewtWindowContainer {
 
     @Override
     public void moveWindowTo(final int locX, final int locY) {
-        _newtWindow.setPosition(locX, locY);
+        _newtWindow.setTopLevelPosition(locX, locY);
     }
 
     @Override
