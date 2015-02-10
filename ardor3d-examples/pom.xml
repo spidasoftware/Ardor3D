@@ -129,6 +129,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>ardor3d-jogl-swt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>ardor3d-effects</artifactId>
             <version>${project.version}</version>
         </dependency>

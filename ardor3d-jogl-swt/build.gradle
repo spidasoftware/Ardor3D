@@ -1,0 +1,7 @@
+
+description = 'Ardor 3D JOGL SWT'
+dependencies {
+  compile project(':ardor3d-core')
+  compile project(':ardor3d-swt')
+  compile project(':ardor3d-jogl')
+}

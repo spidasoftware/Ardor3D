@@ -5,6 +5,7 @@ dependencies {
   compile project(':ardor3d-swt')
   compile project(':ardor3d-jinput')
   compile project(':ardor3d-jogl')
+  compile project(':ardor3d-jogl-swt')
   compile project(':ardor3d-effects')
   compile project(':ardor3d-extras')
   compile project(':ardor3d-collada')
