@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -14,13 +14,6 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
 import java.util.logging.Logger;
-
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GL2ES2;
-import com.jogamp.opengl.GL3;
-import com.jogamp.opengl.GL4;
-import com.jogamp.opengl.GLContext;
 
 import com.ardor3d.renderer.ContextCapabilities;
 import com.ardor3d.renderer.ContextManager;
@@ -34,6 +27,11 @@ import com.ardor3d.scene.state.jogl.shader.JoglShaderUtil;
 import com.ardor3d.util.Ardor3dException;
 import com.ardor3d.util.geom.BufferUtils;
 import com.ardor3d.util.shader.ShaderVariable;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES2;
+import com.jogamp.opengl.GL3;
+import com.jogamp.opengl.GLContext;
 
 public abstract class JoglShaderObjectsStateUtil {
     private static final Logger logger = Logger.getLogger(JoglShaderObjectsStateUtil.class.getName());
@@ -49,7 +47,7 @@ public abstract class JoglShaderObjectsStateUtil {
 
         if (state._programID == -1) {
             if (gl.isGL2()) {
-                state._programID = gl.getGL2().glCreateProgramObjectARB();
+                state._programID = (int) gl.getGL2().glCreateProgramObjectARB();
             } else {
                 if (gl.isGL2ES2()) {
                     state._programID = gl.getGL2ES2().glCreateProgram();
@@ -62,7 +60,7 @@ public abstract class JoglShaderObjectsStateUtil {
                 removeVertShader(state);
             }
             if (gl.isGL2()) {
-                state._vertexShaderID = gl.getGL2().glCreateShaderObjectARB(GL2ES2.GL_VERTEX_SHADER);
+                state._vertexShaderID = (int) gl.getGL2().glCreateShaderObjectARB(GL2ES2.GL_VERTEX_SHADER);
             } else {
                 if (gl.isGL2ES2()) {
                     state._vertexShaderID = gl.getGL2ES2().glCreateShader(GL2ES2.GL_VERTEX_SHADER);
@@ -118,7 +116,7 @@ public abstract class JoglShaderObjectsStateUtil {
             }
 
             if (gl.isGL2()) {
-                state._fragmentShaderID = gl.getGL2().glCreateShaderObjectARB(GL2ES2.GL_FRAGMENT_SHADER);
+                state._fragmentShaderID = (int) gl.getGL2().glCreateShaderObjectARB(GL2ES2.GL_FRAGMENT_SHADER);
             } else {
                 if (gl.isGL2ES2()) {
                     state._fragmentShaderID = gl.getGL2ES2().glCreateShader(GL2ES2.GL_FRAGMENT_SHADER);
@@ -175,7 +173,7 @@ public abstract class JoglShaderObjectsStateUtil {
                 }
 
                 if (gl.isGL2()) {
-                    state._geometryShaderID = gl.getGL2().glCreateShaderObjectARB(GL3.GL_GEOMETRY_SHADER);
+                    state._geometryShaderID = (int) gl.getGL2().glCreateShaderObjectARB(GL3.GL_GEOMETRY_SHADER);
                 } else {
                     if (gl.isGL2ES2()) {
                         state._geometryShaderID = gl.getGL2ES2().glCreateShader(GL3.GL_GEOMETRY_SHADER);
@@ -233,11 +231,11 @@ public abstract class JoglShaderObjectsStateUtil {
                 }
 
                 if (gl.isGL2()) {
-                    state._tessellationControlShaderID = gl.getGL2()
-                            .glCreateShaderObjectARB(GL4.GL_TESS_CONTROL_SHADER);
+                    state._tessellationControlShaderID = (int) gl.getGL2().glCreateShaderObjectARB(
+                            GL3.GL_TESS_CONTROL_SHADER);
                 } else {
                     if (gl.isGL2ES2()) {
-                        state._tessellationControlShaderID = gl.getGL2ES2().glCreateShader(GL4.GL_TESS_CONTROL_SHADER);
+                        state._tessellationControlShaderID = gl.getGL2ES2().glCreateShader(GL3.GL_TESS_CONTROL_SHADER);
                     }
                 }
 
@@ -291,12 +289,12 @@ public abstract class JoglShaderObjectsStateUtil {
                 }
 
                 if (gl.isGL2()) {
-                    state._tessellationEvaluationShaderID = gl.getGL2().glCreateShaderObjectARB(
-                            GL4.GL_TESS_CONTROL_SHADER);
+                    state._tessellationEvaluationShaderID = (int) gl.getGL2().glCreateShaderObjectARB(
+                            GL3.GL_TESS_CONTROL_SHADER);
                 } else {
                     if (gl.isGL2ES2()) {
                         state._tessellationEvaluationShaderID = gl.getGL2ES2().glCreateShader(
-                                GL4.GL_TESS_CONTROL_SHADER);
+                                GL3.GL_TESS_CONTROL_SHADER);
                     }
                 }
 
@@ -496,7 +494,7 @@ public abstract class JoglShaderObjectsStateUtil {
 
     /**
      * Check for program errors. If an error is detected, program exits.
-     * 
+     *
      * @param compilerState
      *            the compiler state for a given shader
      * @param id

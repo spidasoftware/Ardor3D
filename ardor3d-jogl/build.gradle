@@ -2,6 +2,6 @@
 description = 'Ardor 3D JOGL'
 dependencies {
   compile project(':ardor3d-core')
-    compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version:'2.3.0-rc-20150205'
-    compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version:'2.3.0-rc-20150205'
+    compile group: 'org.jogamp.gluegen', name: 'gluegen-rt-main', version:'2.3.0'
+    compile group: 'org.jogamp.jogl', name: 'jogl-all-main', version:'2.3.0'
 }
