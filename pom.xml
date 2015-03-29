@@ -259,7 +259,7 @@
     <!-- these properties help simplify specifying some commonly occurring variables -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jogamp.version>2.3.0</jogamp.version>
+        <jogamp.version>2.3.1</jogamp.version>
         <swt.version>3.8</swt.version>
     </properties>
 
