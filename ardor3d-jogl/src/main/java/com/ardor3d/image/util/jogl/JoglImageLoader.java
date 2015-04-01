@@ -3,7 +3,7 @@
  *
  * This file is part of Ardor3D.
  *
- * Ardor3D is free software: you can redistribute it and/or modify it 
+ * Ardor3D is free software: you can redistribute it and/or modify it
  * under the terms of its license which may be found in the accompanying
  * LICENSE file or at <http://www.ardor3d.com/LICENSE>.
  */
@@ -157,7 +157,7 @@ public class JoglImageLoader implements ImageLoader {
 
     /**
      * Returns the hypothetical file suffix by looking at the first bytes
-     * 
+     *
      * @param is
      *            data source
      * @return file suffix of the data source
@@ -169,30 +169,44 @@ public class JoglImageLoader implements ImageLoader {
             try {
                 final byte[] b = new byte[32];
                 is.read(b);
-                if ((b[0] == 0xff && b[1] == 0xd8) || (b[0] == -1 && b[1] == -40)
-                        || (b[0] == 0x4A && b[1] == 0x46 && b[2] == 0x49 && b[3] == 0x46)
-                        || (b[0] == 0x45 && b[1] == 0x78 && b[2] == 0x69 && b[3] == 0x66)) {
+                /**
+                 * http://www.faqs.org/faqs/jpeg-faq/part1/
+                 * http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=54989
+                 */
+                if ((b[0] == 0xff && b[1] == 0xd8 /* && b[2] == 0xff */)
+                        || (b[0] == 0x4A && b[1] == 0x46 && b[2] == 0x49 && b[3] == 0x46)/* JFIF */
+                        || (b[0] == 0x45 && b[1] == 0x78 && b[2] == 0x69 && b[3] == 0x66)/* EXIF */) {
                     return TextureIO.JPG;
                 }
                 /**
-                 * Apache Commons Imaging and JOGL (jogamp.opengl.util.png.PngHelperInternal.getPngIdSignature()) don't
-                 * use the same signature for PNG files
+                 * http://www.libpng.org/pub/png/spec/1.1/PNG-Rationale.html#R.PNG-file-signature
                  */
-                if ((b[0] == 0x89 || b[0] == -119) && b[1] == 'P' && b[2] == 'N' && b[3] == 'G' && b[4] == '\r'
-                        && b[5] == '\n' && b[6] == 0x1A && b[7] == '\n') {
+                if (b[0] == 0x89 && b[1] == 0x50 && b[2] == 0x4E && b[3] == 0x47 /* 'P' 'N' 'G', ascii code */
+                        && b[4] == 0x0D && b[5] == 0x0A && b[6] == 0x1A && b[7] == 0x0A) {
                     return TextureIO.PNG;
                 }
-                // icns
-                if (b[0] == 0x69 && b[1] == 0x63 && b[2] == 0x6e && b[3] == 0x73) {
-                    // Apple Icon Image
+                /**
+                 * Apple Icon Image
+                 *
+                 * 'i' 'c' 'n' 's' ascii code
+                 */
+                if (b[0] == 0x69 && b[1] == 0x63 && b[2] == 0x6E && b[3] == 0x73) {
                     return "icns";
                 }
-                // GIF87a or GIF89a
+                /**
+                 * http://www.w3.org/Graphics/GIF/spec-gif87a.txt http://www.w3.org/Graphics/GIF/spec-gif89a.txt
+                 *
+                 * GIF87A or GIF89A ascii code
+                 */
                 if (b[0] == 0x47 && b[1] == 0x49 && b[2] == 0x46 && b[3] == 0x38 && (b[4] == 0x37 || b[4] == 0x39)
                         && b[5] == 0x61) {
                     return TextureIO.GIF;
                 }
-                // BM
+                /**
+                 * http://www.fileformat.info/format/bmp/spec/e27073c25463436f8a64fa789c886d9c/view.htm
+                 *
+                 * BM ascii code
+                 */
                 if (b[0] == 0x42 && b[1] == 0x4d) {
                     return "bmp";
                 }
@@ -202,7 +216,10 @@ public class JoglImageLoader implements ImageLoader {
                 if (b[0] == 0x0A && b[1] == 0x05 && b[2] == 0x01 && b[3] == 0x08) {
                     return "pcx";
                 }
-                if (b[0] == 0x50 && (b[1] == 0x33 || b[1] == 0x36)) {
+                /**
+                 * http://netpbm.sourceforge.net/doc/ppm.html
+                 */
+                if (b[0] == 0x50 && (b[1] == 0x33 /* plain */|| b[1] == 0x36)) {
                     return TextureIO.PPM;
                 }
                 if (b[0] == 0x38 && b[1] == 0x42 && b[2] == 0x50 && b[3] == 0x53 && b[4] == 0x00 && b[5] == 0x01
@@ -210,22 +227,44 @@ public class JoglImageLoader implements ImageLoader {
                     // Adobe PhotoShop
                     return "psd";
                 }
+                /**
+                 * http://partners.adobe.com/public/developer/en/tiff/TIFF6.pdf
+                 *
+                 * intentionally detects only the little endian tiff images ("II" in the spec)
+                 */
                 if (b[0] == 0x49 && b[1] == 0x49 && b[2] == 0x2A && b[3] == 0x00) {
                     return TextureIO.TIFF;
                 }
-                if (b[0] == 0x01 && b[1] == 0xDA && b[2] == 0x01 && b[3] == 0x01 && b[4] == 0x00 && b[5] == 0x03) {
+                /**
+                 * http://paulbourke.net/dataformats/sgirgb/sgiversion.html
+                 *
+                 * "474 saved as a short" 474 = 0x01DA
+                 */
+                if (b[0] == 0x01 && b[1] == 0xDA /* && b[2] == 0x01 && b[3] == 0x01 && b[4] == 0x00 && b[5] == 0x03 */) {
                     return TextureIO.SGI_RGB;
                 }
-                if (b[0] == 0x20 && b[1] == 0x53 && b[2] == 0x44 && b[3] == 0x44) {
+                /**
+                 * 'D' 'D' 'S' ' ' ascii code
+                 */
+                if (b[0] == 0x44 && b[1] == 0x44 && b[2] == 0x53 && b[3] == 0x20) {
                     return TextureIO.DDS;
                 }
+                /**
+                 * http://netpbm.sourceforge.net/doc/pam.html
+                 */
                 if (b[0] == 0x50 && b[1] == 0x37) {
                     return TextureIO.PAM;
                 }
-                if (b[0] == 0x50 && (b[1] == 0x32 || b[1] == 0x35)) {
+                /**
+                 * http://netpbm.sourceforge.net/doc/pgm.html
+                 */
+                if (b[0] == 0x50 && (b[1] == 0x32 /* plain */|| b[1] == 0x35)) {
                     return "pgm";
                 }
-                if (b[0] == 0x50 && (b[1] == 0x31 || b[1] == 0x34)) {
+                /**
+                 * http://netpbm.sourceforge.net/doc/pbm.html
+                 */
+                if (b[0] == 0x50 && (b[1] == 0x31 /* plain */|| b[1] == 0x34)) {
                     return "pbm";
                 }
                 if (b[0] == 0x3D && b[1] == 0x02) {
