@@ -95,7 +95,7 @@ public abstract class JoglShaderObjectsStateUtil {
                     gl.getGL2ES2().glGetShaderiv(state._vertexShaderID, GL2ES2.GL_COMPILE_STATUS, compiled);
                 }
             }
-            checkProgramError(compiled.get(0), state._vertexShaderID, state._vertexShaderName);
+            checkShaderError(compiled.get(0), state._vertexShaderID, state._vertexShaderName);
 
             // Attach the program
             if (gl.isGL2()) {
@@ -151,7 +151,7 @@ public abstract class JoglShaderObjectsStateUtil {
                     gl.getGL2ES2().glGetShaderiv(state._fragmentShaderID, GL2ES2.GL_COMPILE_STATUS, compiled);
                 }
             }
-            checkProgramError(compiled.get(0), state._fragmentShaderID, state._vertexShaderName);
+            checkShaderError(compiled.get(0), state._fragmentShaderID, state._vertexShaderName);
 
             // Attach the program
             if (gl.isGL2()) {
@@ -208,7 +208,7 @@ public abstract class JoglShaderObjectsStateUtil {
                         gl.getGL2ES2().glGetShaderiv(state._geometryShaderID, GL2ES2.GL_COMPILE_STATUS, compiled);
                     }
                 }
-                checkProgramError(compiled.get(0), state._geometryShaderID, state._geometryShaderName);
+                checkShaderError(compiled.get(0), state._geometryShaderID, state._geometryShaderName);
 
                 // Attach the program
                 if (gl.isGL2()) {
@@ -268,7 +268,7 @@ public abstract class JoglShaderObjectsStateUtil {
                                 compiled);
                     }
                 }
-                checkProgramError(compiled.get(0), state._tessellationControlShaderID,
+                checkShaderError(compiled.get(0), state._tessellationControlShaderID,
                         state._tessellationControlShaderName);
 
                 // Attach the program
@@ -327,7 +327,7 @@ public abstract class JoglShaderObjectsStateUtil {
                                 compiled);
                     }
                 }
-                checkProgramError(compiled.get(0), state._tessellationEvaluationShaderID,
+                checkShaderError(compiled.get(0), state._tessellationEvaluationShaderID,
                         state._tessellationEvaluationShaderName);
 
                 // Attach the program
@@ -493,14 +493,14 @@ public abstract class JoglShaderObjectsStateUtil {
     }
 
     /**
-     * Check for program errors. If an error is detected, program exits.
+     * Check for shader errors. If an error is detected, program exits.
      *
      * @param compilerState
      *            the compiler state for a given shader
-     * @param id
+     * @param shaderId
      *            shader's id
      */
-    private static void checkProgramError(final int compilerState, final int id, final String shaderName) {
+    private static void checkShaderError(final int compilerState, final int shaderId, final String shaderName) {
         final GL gl = GLContext.getCurrentGL();
 
         if (compilerState == GL.GL_FALSE) {
@@ -508,10 +508,10 @@ public abstract class JoglShaderObjectsStateUtil {
             final IntBuffer iVal = context.getDirectNioBuffersSet().getSingleIntBuffer();
             iVal.clear();
             if (gl.isGL2()) {
-                gl.getGL2().glGetObjectParameterivARB(id, GL2.GL_OBJECT_INFO_LOG_LENGTH_ARB, iVal);
+                gl.getGL2().glGetObjectParameterivARB(shaderId, GL2.GL_OBJECT_INFO_LOG_LENGTH_ARB, iVal);
             } else {
                 if (gl.isGL2ES2()) {
-                    gl.getGL2ES2().glGetProgramiv(id, GL2ES2.GL_INFO_LOG_LENGTH, iVal);
+                    gl.getGL2ES2().glGetShaderiv(shaderId, GL2ES2.GL_INFO_LOG_LENGTH, iVal);
                 }
             }
             final int length = iVal.get(0);
@@ -527,10 +527,10 @@ public abstract class JoglShaderObjectsStateUtil {
                     infoLog = BufferUtils.createByteBuffer(length);
                 }
                 if (gl.isGL2()) {
-                    gl.getGL2().glGetInfoLogARB(id, infoLog.limit(), iVal, infoLog);
+                    gl.getGL2().glGetInfoLogARB(shaderId, infoLog.limit(), iVal, infoLog);
                 } else {
                     if (gl.isGL2ES2()) {
-                        gl.getGL2ES2().glGetProgramInfoLog(id, infoLog.limit(), iVal, infoLog);
+                        gl.getGL2ES2().glGetShaderInfoLog(shaderId, infoLog.limit(), iVal, infoLog);
                     }
                 }
 
