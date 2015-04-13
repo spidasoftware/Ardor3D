@@ -5,6 +5,33 @@ allprojects  {
 version = '1.0-SNAPSHOT'
 }
 
+buildscript {
+
+	try {
+		project.ext.m2Settings = [exposed:"https://dev.spidasoftware.com/artifactory/exposed-repo"]//default
+		def m2Root = new XmlSlurper().parse(new File(System.getProperty("user.home"), ".m2/settings.xml"))
+		def m2Spida = m2Root.servers.server.find{ it.id.text() == "spida" }
+		def m2Repos = m2Root.profiles.profile.find{ it.id.text() == "artifactory" }.properties
+		if(m2Spida && m2Repos){
+			project.ext.m2Settings = [username: m2Spida.username.text(), password: m2Spida.password.text(), exposed: m2Repos.exposedLocation.text()]
+		}
+	} catch(ex){
+		println ex.message //use ex.printStackTrace() if you want to show the full stacktrace
+	}
+//
+//	//uncomment to print out maven settings
+//	//println "m2Settings: ${m2Settings}"
+//
+//	repositories {
+//		mavenCentral()
+//		maven { url m2Settings.exposed }
+//	}
+//
+//	dependencies {
+//		classpath (group: 'com.spidasoftware', name:'releaseNotes', version:'0.1-SNAPSHOT', changing:true)
+//	}
+}
+
 subprojects {
   apply plugin: 'java'
   sourceCompatibility = 1.6
@@ -14,6 +41,14 @@ subprojects {
 classifier = 'sources'
 from sourceSets.main.allSource
 
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url: m2Settings.exposed) {
+			authentication(userName: m2Settings.username, password: m2Settings.password)
+		}
+	}
 }
 artifacts.archives packageSources
   repositories {
